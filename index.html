@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Taller de Dolçaina i Tabalet — Arbre de Fites</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+
+  :root {
+    --bg: #0e0c08;
+    --bg2: #171410;
+    --gold: #c9a84c;
+    --gold-light: #e8c87a;
+    --gold-dim: #7a6430;
+    --amber: #d4722a;
+    --cream: #f0e6cc;
+    --cream-dim: #9a8e78;
+    --locked: #2a2620;
+    --locked-border: #3d3830;
+    --locked-text: #5a5448;
+    --node-w: 220px;
+    --node-gap: 32px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Crimson Pro', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.5;
+  }
+
+  header {
+    text-align: center;
+    padding: 48px 24px 32px;
+    border-bottom: 1px solid #2a2518;
+    position: relative;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .header-eyebrow {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .header-sub {
+    color: var(--cream-dim);
+    font-size: 1rem;
+    font-style: italic;
+  }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 20px 24px;
+    border-bottom: 1px solid #1e1c17;
+    font-size: 0.8rem;
+    color: var(--cream-dim);
+    letter-spacing: 0.04em;
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .legend-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+  .dot-unlocked { background: var(--gold); }
+  .dot-locked { background: var(--locked-border); }
+  .dot-completed { background: #4a8c5c; }
+
+  /* Main tree layout */
+  .tree-container {
+    padding: 48px 16px 80px;
+    overflow-x: auto;
+  }
+
+  .tree-root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    min-width: fit-content;
+    margin: 0 auto;
+  }
+
+  /* Branch row */
+  .branch-row {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* Branch column */
+  .branch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    position: relative;
+  }
+
+  .branch-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  /* Connector lines */
+  .connector-v {
+    width: 2px;
+    height: 32px;
+    background: linear-gradient(180deg, var(--gold-dim), #2a2518);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .connector-v.locked {
+    background: linear-gradient(180deg, var(--locked-border), #1a1815);
+  }
+
+  .connector-h-wrap {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    width: 100%;
+    justify-content: center;
+    height: 32px;
+    margin-bottom: 0;
+  }
+
+  /* Node card */
+  .node {
+    width: var(--node-w);
+    background: var(--bg2);
+    border: 1px solid var(--gold-dim);
+    border-radius: 4px;
+    padding: 16px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+  }
+
+  .node:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(201, 168, 76, 0.15);
+  }
+
+  .node.locked {
+    background: var(--locked);
+    border-color: var(--locked-border);
+    cursor: default;
+  }
+  .node.locked:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--locked-border);
+  }
+
+  .node.completed {
+    border-color: #3d6b4a;
+    background: #0f1a13;
+  }
+  .node.completed:hover {
+    border-color: #4a8c5c;
+    box-shadow: 0 8px 32px rgba(74, 140, 92, 0.12);
+  }
+
+  /* Corner ornament */
+  .node::before {
+    content: '';
+    position: absolute;
+    top: 4px; left: 4px;
+    width: 8px; height: 8px;
+    border-top: 1px solid var(--gold-dim);
+    border-left: 1px solid var(--gold-dim);
+  }
+  .node::after {
+    content: '';
+    position: absolute;
+    bottom: 4px; right: 4px;
+    width: 8px; height: 8px;
+    border-bottom: 1px solid var(--gold-dim);
+    border-right: 1px solid var(--gold-dim);
+  }
+  .node.locked::before, .node.locked::after {
+    border-color: var(--locked-border);
+  }
+
+  .node-id {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--gold-dim);
+    margin-bottom: 8px;
+    font-family: 'Cinzel', serif;
+  }
+  .node.locked .node-id { color: var(--locked-text); }
+
+  .node-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--cream);
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+  .node.locked .node-title { color: var(--locked-text); }
+  .node.completed .node-title { color: #7ac492; }
+
+  .node-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+  .tag {
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    padding: 2px 6px;
+    border: 1px solid var(--gold-dim);
+    border-radius: 2px;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+  }
+  .node.locked .tag { border-color: #2a2620; color: #3a3630; }
+
+  .node-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: rgba(201, 168, 76, 0.05);
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+  .node.locked .node-badge {
+    background: rgba(0,0,0,0.2);
+    border-color: #1e1c17;
+  }
+
+  .badge-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+  }
+
+  .badge-text { flex: 1; }
+  .badge-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    display: block;
+  }
+  .node.locked .badge-name { color: var(--locked-text); }
+  .badge-desc {
+    font-size: 0.68rem;
+    color: var(--cream-dim);
+    font-style: italic;
+    display: block;
+    margin-top: 2px;
+  }
+  .node.locked .badge-desc { color: #3a3630; }
+
+  .node-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .node-status {
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .status-unlocked { color: var(--gold-dim); }
+  .status-locked { color: #3a3630; }
+  .status-completed { color: #4a8c5c; }
+
+  .node-btn {
+    font-size: 0.62rem;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border: 1px solid var(--gold-dim);
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+  .node-btn:hover {
+    background: rgba(201, 168, 76, 0.1);
+    border-color: var(--gold);
+  }
+
+  /* Lock icon */
+  .lock-icon {
+    position: absolute;
+    top: 12px; right: 12px;
+    opacity: 0.3;
+  }
+
+  /* Completion check */
+  .check-icon {
+    position: absolute;
+    top: 12px; right: 12px;
+    color: #4a8c5c;
+    font-size: 14px;
+  }
+
+  /* Horizontal connector between branches */
+  .h-connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 32px;
+    width: 100%;
+  }
+
+  .branch-connector-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .modal-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal {
+    background: var(--bg2);
+    border: 1px solid var(--gold-dim);
+    border-radius: 4px;
+    max-width: 520px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 32px;
+    position: relative;
+    transform: translateY(16px);
+    transition: transform 0.2s;
+  }
+  .modal-overlay.open .modal {
+    transform: translateY(0);
+  }
+
+  .modal::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: none;
+    border: none;
+    color: var(--cream-dim);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: color 0.2s;
+  }
+  .modal-close:hover { color: var(--cream); }
+
+  .modal-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 8px;
+    font-family: 'Cinzel', serif;
+  }
+
+  .modal-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: var(--gold-light);
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .modal-desc {
+    color: var(--cream-dim);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .modal-section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #2a2518;
+  }
+
+  .modal-badge {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: rgba(201, 168, 76, 0.05);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    border-radius: 4px;
+    margin-bottom: 24px;
+  }
+
+  .modal-badge-icon { width: 48px; height: 48px; flex-shrink: 0; }
+
+  .modal-badge-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .modal-badge-desc {
+    color: var(--cream-dim);
+    font-size: 0.85rem;
+    font-style: italic;
+  }
+
+  .material-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .material-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border: 1px solid #2a2518;
+    border-radius: 3px;
+    text-decoration: none;
+    color: var(--cream);
+    transition: all 0.2s;
+    font-size: 0.85rem;
+  }
+  .material-item:hover {
+    border-color: var(--gold-dim);
+    background: rgba(201, 168, 76, 0.05);
+  }
+  .material-icon { font-size: 1rem; width: 20px; text-align: center; }
+  .material-name { flex: 1; }
+  .material-type {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    font-family: 'Cinzel', serif;
+  }
+
+  .modal-complete-btn {
+    width: 100%;
+    padding: 14px;
+    background: transparent;
+    border: 1px solid var(--gold-dim);
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.25s;
+  }
+  .modal-complete-btn:hover {
+    background: rgba(201, 168, 76, 0.1);
+    border-color: var(--gold);
+  }
+  .modal-complete-btn.done {
+    border-color: #3d6b4a;
+    color: #4a8c5c;
+  }
+  .modal-complete-btn.done:hover {
+    background: rgba(74, 140, 92, 0.08);
+  }
+
+  /* Progress bar */
+  .progress-bar-wrap {
+    padding: 12px 24px;
+    border-bottom: 1px solid #1e1c17;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .progress-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    white-space: nowrap;
+  }
+  .progress-bar {
+    flex: 1;
+    height: 3px;
+    background: #2a2518;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+    border-radius: 2px;
+    transition: width 0.5s ease;
+  }
+  .progress-pct {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  /* SVG badges */
+  .badge-svg-wrap svg { width: 100%; height: 100%; }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    :root { --node-w: 175px; }
+    .branch-row { gap: 12px; }
+    .modal { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-eyebrow">Ateneu / L'Ardada · Taller de Percussió</div>
+  <h1>Arbre de Fites</h1>
+  <div class="header-sub">Dolçaina i Tabalet · Itinerari formatiu</div>
+</header>
+
+<div class="progress-bar-wrap">
+  <span class="progress-label">Progrés general</span>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <span class="progress-pct" id="progressPct">0%</span>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot dot-completed"></div> Completat</div>
+  <div class="legend-item"><div class="legend-dot dot-unlocked"></div> Disponible</div>
+  <div class="legend-item"><div class="legend-dot dot-locked"></div> Bloquejat</div>
+</div>
+
+<div class="tree-container">
+  <div class="tree-root" id="treeRoot"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-eyebrow" id="modalId"></div>
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-desc" id="modalDesc"></div>
+    <div class="modal-section-title">Fita</div>
+    <div class="modal-badge" id="modalBadge"></div>
+    <div class="modal-section-title">Material didàctic</div>
+    <div class="material-list" id="modalMaterials"></div>
+    <button class="modal-complete-btn" id="modalCompleteBtn" onclick="toggleComplete()"></button>
+  </div>
+</div>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────────────
+
+const NODES = [
+  // BRANCA PL AL BEAT
+  {
+    id: "PERC_PL_1",
+    familia: "Percussió",
+    tags: ["Tabal", "Beat", "Mètronom"],
+    titol: "PL al beat · 1 minut",
+    descripcio: "Tocar PL al beat amb mètronom fix durant 1 minut seguit. La base de tot ritme naix d'ací: consistència i puls constant.",
+    prerequisits: [],
+    branca: "pl",
+    ordre: 0,
+    fita: { nom: "Primer Pols", descripcio: "Has mantingut el beat durant 1 minut.", icona: "shield" },
+    material: [
+      { tipus: "pdf", nom: "Exercici PL – Full de pràctica", url: "#" },
+      { tipus: "mp3", nom: "Pista mètronom 60bpm", url: "#" }
+    ]
+  },
+  {
+    id: "PERC_PL_2",
+    familia: "Percussió",
+    tags: ["Tabal", "Beat", "Mètronom"],
+    titol: "PL al beat · 2 minuts",
+    descripcio: "Tocar PL al beat amb mètronom fix durant 2 minuts seguits. Desbloqueja la branca D-E al beat.",
+    prerequisits: ["PERC_PL_1"],
+    branca: "pl",
+    ordre: 1,
+    desbloqueja: ["PERC_DE_1"],
+    fita: { nom: "Pols Constant I", descripcio: "Dos minuts sense perdre el beat.", icona: "star" },
+    material: [
+      { tipus: "pdf", nom: "Exercici PL – 2 minuts", url: "#" },
+      { tipus: "mp3", nom: "Pista mètronom 70bpm", url: "#" }
+    ]
+  },
+  {
+    id: "PERC_PL_3",
+    familia: "Percussió",
+    tags: ["Tabal", "Beat", "Resistència"],
+    titol: "PL al beat · 3 minuts",
+    descripcio: "Tres minuts de beat constant. La resistència musical és tan important com la tècnica.",
+    prerequisits: ["PERC_PL_2"],
+    branca: "pl",
+    ordre: 2,
+    fita: { nom: "Pols Constant II", descripcio: "Tres minuts de beat net.", icona: "star2" },
+    material: [
+      { tipus: "pdf", nom: "Exercici PL – 3 minuts", url: "#" }
+    ]
+  },
+  {
+    id: "PERC_PL_4",
+    familia: "Percussió",
+    tags: ["Tabal", "Beat", "Resistència"],
+    titol: "PL al beat · 5 minuts",
+    descripcio: "Cinc minuts complets. Arribar ací vol dir que el pols ja és part del teu cos.",
+    prerequisits: ["PERC_PL_3"],
+    branca: "pl",
+    ordre: 3,
+    fita: { nom: "Tabalemaster I", descripcio: "Domini del puls bàsic.", icona: "crown" },
+    material: [
+      { tipus: "pdf", nom: "Exercici PL – 5 minuts", url: "#" },
+      { tipus: "mp3", nom: "Pista mètronom 80bpm", url: "#" }
+    ]
+  },
+
+  // BRANCA D-E AL BEAT
+  {
+    id: "PERC_DE_1",
+    familia: "Percussió",
+    tags: ["Tabal", "D-E", "Beat"],
+    titol: "D-E al beat · 1 minut",
+    descripcio: "Alternar D i E al beat durant 1 minut. La coordinació bilateral comença ací.",
+    prerequisits: ["PERC_PL_2"],
+    branca: "de",
+    ordre: 0,
+    fita: { nom: "Doble Impacte I", descripcio: "Primera alternança D-E sostinguda.", icona: "shield" },
+    material: [
+      { tipus: "pdf", nom: "Exercici D-E – 1 minut", url: "#" },
+      { tipus: "mp3", nom: "Referència D-E lent", url: "#" }
+    ]
+  },
+  {
+    id: "PERC_DE_2",
+    familia: "Percussió",
+    tags: ["Tabal", "D-E", "Beat"],
+    titol: "D-E al beat · 2 minuts",
+    descripcio: "Dos minuts d'alternança D-E. Desbloqueja les branques PL-D i PL-E.",
+    prerequisits: ["PERC_DE_1"],
+    branca: "de",
+    ordre: 1,
+    desbloqueja: ["PERC_PLD_1", "PERC_PLE_1"],
+    fita: { nom: "Doble Impacte II", descripcio: "Dos minuts nets de D-E.", icona: "star" },
+    material: [
+      { tipus: "pdf", nom: "Exercici D-E – 2 minuts", url: "#" }
+    ]
+  },
+  {
+    id: "PERC_DE_3",
+    familia: "Percussió",
+    tags: ["Tabal", "D-E", "Resistència"],
+    titol: "D-E al beat · 3 minuts",
+    descripcio: "Tres minuts. La fluïdesa de l'alternança ha de ser automàtica.",
+    prerequisits: ["PERC_DE_2"],
+    branca: "de",
+    ordre: 2,
+    fita: { nom: "Doble Impacte III", descripcio: "Alternança D-E sense esforç visible.", icona: "star2" },
+    material: [
+      { tipus: "pdf", nom: "Exercici D-E – 3 minuts", url: "#" }
+    ]
+  },
+  {
+    id: "PERC_DE_4",
+    familia: "Percussió",
+    tags: ["Tabal", "D-E", "Resistència"],
+    titol: "D-E al beat · 5 minuts",
+    descripcio: "Cinc minuts. Arribar ací és tenir una base sòlida per a qualsevol patró.",
+    prerequisits: ["PERC_DE_3"],
+    branca: "de",
+    ordre: 3,
+    fita: { nom: "Rapatam I", descripcio: "Base D-E completament assentada.", icona: "crown" },
+    material: [
+      { tipus: "pdf", nom: "Exercici D-E – 5 minuts", url: "#" },
+      { tipus: "mp3", nom: "Referència D-E ràpid", url: "#" }
+    ]
+  },
+
+  // BRANCA PL-D AL BEAT
+  {
+    id: "PERC_PLD_1",
+    familia: "Percussió",
+    tags: ["Tabal", "PL-D", "Combinació"],
+    titol: "PL-D al beat · 1 minut",
+    descripcio: "Combinar PL i D alternats al beat. Primer pas cap als patrons compostos.",
+    prerequisits: ["PERC_DE_2"],
+    branca: "pld",
+    ordre: 0,
+    fita: { nom: "Combinació I", descripcio: "Primera combinació PL-D.", icona: "shield" },
+    material: [
+      { tipus: "pdf", nom: "Exercici PL-D – 1 minut", url: "#" }
+    ]
+  },
+  {
+    id: "PERC_PLD_2",
+    familia: "Percussió",
+    tags: ["Tabal", "PL-D", "Combinació"],
+    titol: "PL-D al beat · 2 minuts",
+    descripcio: "Dos minuts de PL-D sostingut.",
+    prerequisits: ["PERC_PLD_1"],
+    branca: "pld",
+    ordre: 1,
+    fita: { nom: "Combinació II", descripcio: "Dos minuts nets de PL-D.", icona: "star" },
+    material: [{ tipus: "pdf", nom: "Exercici PL-D – 2 minuts", url: "#" }]
+  },
+  {
+    id: "PERC_PLD_3",
+    familia: "Percussió",
+    tags: ["Tabal", "PL-D", "Resistència"],
+    titol: "PL-D al beat · 3 minuts",
+    descripcio: "Tres minuts de PL-D.",
+    prerequisits: ["PERC_PLD_2"],
+    branca: "pld",
+    ordre: 2,
+    fita: { nom: "Combinació III", descripcio: "Tres minuts de PL-D fluït.", icona: "star2" },
+    material: [{ tipus: "pdf", nom: "Exercici PL-D – 3 minuts", url: "#" }]
+  },
+  {
+    id: "PERC_PLD_4",
+    familia: "Percussió",
+    tags: ["Tabal", "PL-D", "Resistència"],
+    titol: "PL-D al beat · 5 minuts",
+    descripcio: "Cinc minuts. PL-D assentat i fluid.",
+    prerequisits: ["PERC_PLD_3"],
+    branca: "pld",
+    ordre: 3,
+    fita: { nom: "Corredor I", descripcio: "Domini del patró PL-D.", icona: "crown" },
+    material: [
+      { tipus: "pdf", nom: "Exercici PL-D – 5 minuts", url: "#" },
+      { tipus: "mp3", nom: "Referència PL-D", url: "#" }
+    ]
+  },
+
+  // BRANCA PL-E AL BEAT
+  {
+    id: "PERC_PLE_1",
+    familia: "Percussió",
+    tags: ["Tabal", "PL-E", "Combinació"],
+    titol: "PL-E al beat · 1 minut",
+    descripcio: "Combinar PL i E al beat. Simetria respecte a la branca PL-D.",
+    prerequisits: ["PERC_DE_2"],
+    branca: "ple",
+    ordre: 0,
+    fita: { nom: "Simetria I", descripcio: "Primera combinació PL-E.", icona: "shield" },
+    material: [{ tipus: "pdf", nom: "Exercici PL-E – 1 minut", url: "#" }]
+  },
+  {
+    id: "PERC_PLE_2",
+    familia: "Percussió",
+    tags: ["Tabal", "PL-E", "Combinació"],
+    titol: "PL-E al beat · 2 minuts",
+    descripcio: "Dos minuts de PL-E sostingut.",
+    prerequisits: ["PERC_PLE_1"],
+    branca: "ple",
+    ordre: 1,
+    fita: { nom: "Simetria II", descripcio: "Dos minuts nets de PL-E.", icona: "star" },
+    material: [{ tipus: "pdf", nom: "Exercici PL-E – 2 minuts", url: "#" }]
+  },
+  {
+    id: "PERC_PLE_3",
+    familia: "Percussió",
+    tags: ["Tabal", "PL-E", "Resistència"],
+    titol: "PL-E al beat · 3 minuts",
+    descripcio: "Tres minuts de PL-E.",
+    prerequisits: ["PERC_PLE_2"],
+    branca: "ple",
+    ordre: 2,
+    fita: { nom: "Simetria III", descripcio: "Tres minuts de PL-E fluït.", icona: "star2" },
+    material: [{ tipus: "pdf", nom: "Exercici PL-E – 3 minuts", url: "#" }]
+  },
+  {
+    id: "PERC_PLE_4",
+    familia: "Percussió",
+    tags: ["Tabal", "PL-E", "Resistència"],
+    titol: "PL-E al beat · 5 minuts",
+    descripcio: "Cinc minuts. PL-E assentat i fluid.",
+    prerequisits: ["PERC_PLE_3"],
+    branca: "ple",
+    ordre: 3,
+    fita: { nom: "Corredor II", descripcio: "Domini del patró PL-E.", icona: "crown" },
+    material: [
+      { tipus: "pdf", nom: "Exercici PL-E – 5 minuts", url: "#" },
+      { tipus: "mp3", nom: "Referència PL-E", url: "#" }
+    ]
+  }
+];
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+
+const STATE_KEY = 'dolcaina_completed';
+let completed = new Set(JSON.parse(localStorage.getItem(STATE_KEY) || '[]'));
+let currentNode = null;
+
+function saveState() {
+  localStorage.setItem(STATE_KEY, JSON.stringify([...completed]));
+}
+
+function isUnlocked(node) {
+  return node.prerequisits.every(p => completed.has(p));
+}
+
+function getCompletionPct() {
+  return Math.round((completed.size / NODES.length) * 100);
+}
+
+// ─── BADGES SVG ───────────────────────────────────────────────────────────────
+
+function badgeSVG(type, small = false) {
+  const s = small ? 28 : 48;
+  const svgs = {
+    shield: `<svg width="${s}" height="${s}" viewBox="0 0 48 48" fill="none">
+      <path d="M24 4L8 10v14c0 9 7 16 16 20 9-4 16-11 16-20V10L24 4z" stroke="#c9a84c" stroke-width="1.5" fill="rgba(201,168,76,0.08)"/>
+      <path d="M18 24l4 4 8-8" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>`,
+    star: `<svg width="${s}" height="${s}" viewBox="0 0 48 48" fill="none">
+      <path d="M24 6l4.5 9 10 1.5-7.2 7 1.7 10L24 29l-9 4.5 1.7-10L9.5 16.5l10-1.5L24 6z" stroke="#c9a84c" stroke-width="1.5" fill="rgba(201,168,76,0.08)"/>
+    </svg>`,
+    star2: `<svg width="${s}" height="${s}" viewBox="0 0 48 48" fill="none">
+      <path d="M24 6l4.5 9 10 1.5-7.2 7 1.7 10L24 29l-9 4.5 1.7-10L9.5 16.5l10-1.5L24 6z" stroke="#c9a84c" stroke-width="1.5" fill="rgba(201,168,76,0.15)"/>
+      <path d="M24 13l2.8 5.5 6.2.9-4.5 4.4 1.1 6.2L24 27l-5.6 2.9 1.1-6.2L15 19.4l6.2-.9L24 13z" fill="rgba(201,168,76,0.25)" stroke="#c9a84c" stroke-width="0.8"/>
+    </svg>`,
+    crown: `<svg width="${s}" height="${s}" viewBox="0 0 48 48" fill="none">
+      <path d="M8 34h32M8 34l4-18 8 10 4-14 4 14 8-10 4 18" stroke="#e8c87a" stroke-width="1.5" stroke-linejoin="round" fill="rgba(232,200,122,0.1)"/>
+      <circle cx="24" cy="12" r="2" fill="#e8c87a"/>
+      <circle cx="8" cy="16" r="2" fill="#c9a84c"/>
+      <circle cx="40" cy="16" r="2" fill="#c9a84c"/>
+    </svg>`
+  };
+  return svgs[type] || svgs.shield;
+}
+
+// ─── RENDER ──────────────────────────────────────────────────────────────────
+
+const BRANCHES = [
+  { id: 'pl', label: 'Branca PL al beat' },
+  { id: 'de', label: 'Branca D-E al beat' },
+  { id: 'pld', label: 'Branca PL-D al beat' },
+  { id: 'ple', label: 'Branca PL-E al beat' }
+];
+
+function renderTree() {
+  const root = document.getElementById('treeRoot');
+  root.innerHTML = '';
+
+  // Group nodes by branch
+  const byBranch = {};
+  BRANCHES.forEach(b => { byBranch[b.id] = []; });
+  NODES.forEach(n => { if (byBranch[n.branca]) byBranch[n.branca].push(n); });
+  BRANCHES.forEach(b => byBranch[b.id].sort((a,b2) => a.ordre - b2.ordre));
+
+  // Find max depth
+  const maxDepth = Math.max(...BRANCHES.map(b => byBranch[b.id].length));
+
+  // Top: PL branch alone (root)
+  // Then: DE branch (unlocked by PL_2)
+  // Then: PLD and PLE side by side
+
+  // Layout: row 1 = PL, row 2 = DE, row 3 = PLD + PLE (side by side)
+
+  // ROW 1: PL branch
+  const row1 = div('branch-row');
+  const plBranch = renderBranch('pl', byBranch['pl']);
+  row1.appendChild(plBranch);
+  root.appendChild(row1);
+
+  // Connector from PL to DE
+  const conn1 = div('branch-connector-wrap', 'align-items:center;');
+  const vc1 = div('connector-v' + (completed.has('PERC_PL_2') ? '' : ' locked'));
+  conn1.appendChild(vc1);
+  root.appendChild(conn1);
+
+  // ROW 2: DE branch
+  const row2 = div('branch-row');
+  const deBranch = renderBranch('de', byBranch['de']);
+  row2.appendChild(deBranch);
+  root.appendChild(row2);
+
+  // Connector from DE to PLD+PLE (fork)
+  const forkWrap = div('', 'display:flex;flex-direction:column;align-items:center;');
+  const vc2 = div('connector-v' + (completed.has('PERC_DE_2') ? '' : ' locked'));
+  forkWrap.appendChild(vc2);
+  // Horizontal fork line
+  const hFork = document.createElement('div');
+  hFork.style.cssText = `display:flex;align-items:flex-start;width:${parseInt(getComputedStyle(document.documentElement).getPropertyValue('--node-w')||'220') + 24 + 16}px;height:24px;position:relative;`;
+  // We'll draw a simple SVG fork
+  const forkSvgWrap = document.createElement('div');
+  forkSvgWrap.style.cssText = 'width:100%;display:flex;justify-content:center;';
+  forkSvgWrap.innerHTML = `<svg width="280" height="24" viewBox="0 0 280 24" fill="none">
+    <line x1="140" y1="0" x2="140" y2="24" stroke="${completed.has('PERC_DE_2') ? '#7a6430' : '#2a2518'}" stroke-width="1.5"/>
+    <line x1="70" y1="24" x2="210" y2="24" stroke="${completed.has('PERC_DE_2') ? '#7a6430' : '#2a2518'}" stroke-width="1.5"/>
+    <line x1="70" y1="16" x2="70" y2="24" stroke="${completed.has('PERC_DE_2') ? '#7a6430' : '#2a2518'}" stroke-width="1.5"/>
+    <line x1="210" y1="16" x2="210" y2="24" stroke="${completed.has('PERC_DE_2') ? '#7a6430' : '#2a2518'}" stroke-width="1.5"/>
+  </svg>`;
+  forkWrap.appendChild(forkSvgWrap);
+  root.appendChild(forkWrap);
+
+  // ROW 3: PLD + PLE side by side
+  const row3 = div('branch-row');
+  row3.style.gap = '24px';
+  const pldBranch = renderBranch('pld', byBranch['pld']);
+  const pleBranch = renderBranch('ple', byBranch['ple']);
+  row3.appendChild(pldBranch);
+  row3.appendChild(pleBranch);
+  root.appendChild(row3);
+
+  updateProgress();
+}
+
+function renderBranch(branchaId, nodes) {
+  const wrap = div('branch');
+  const branchInfo = BRANCHES.find(b => b.id === branchaId);
+  const lbl = div('branch-label');
+  lbl.textContent = branchInfo ? branchInfo.label : branchaId;
+  wrap.appendChild(lbl);
+
+  nodes.forEach((node, i) => {
+    const unlocked = isUnlocked(node);
+    const done = completed.has(node.id);
+    const card = renderNode(node, unlocked, done);
+    wrap.appendChild(card);
+
+    if (i < nodes.length - 1) {
+      const vc = div('connector-v' + (done ? '' : ' locked'));
+      wrap.appendChild(vc);
+    }
+  });
+  return wrap;
+}
+
+function renderNode(node, unlocked, done) {
+  const card = div('node' + (!unlocked ? ' locked' : '') + (done ? ' completed' : ''));
+  card.dataset.id = node.id;
+
+  if (!unlocked) {
+    card.innerHTML += `<svg class="lock-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>`;
+  }
+  if (done) {
+    card.innerHTML += `<span class="check-icon">✓</span>`;
+  }
+
+  const idEl = div('node-id'); idEl.textContent = node.id;
+  card.appendChild(idEl);
+
+  const title = div('node-title'); title.textContent = node.titol;
+  card.appendChild(title);
+
+  const tagsEl = div('node-tags');
+  node.tags.forEach(t => {
+    const tag = div('tag'); tag.textContent = t;
+    tagsEl.appendChild(tag);
+  });
+  card.appendChild(tagsEl);
+
+  const badge = div('node-badge');
+  badge.innerHTML = `<div class="badge-icon badge-svg-wrap">${badgeSVG(node.fita.icona, true)}</div>
+    <div class="badge-text">
+      <span class="badge-name">${node.fita.nom}</span>
+      <span class="badge-desc">${node.fita.descripcio}</span>
+    </div>`;
+  card.appendChild(badge);
+
+  const footer = div('node-footer');
+  const status = div('node-status ' + (done ? 'status-completed' : unlocked ? 'status-unlocked' : 'status-locked'));
+  status.textContent = done ? 'Completat' : unlocked ? 'Disponible' : 'Bloquejat';
+  footer.appendChild(status);
+
+  if (unlocked) {
+    const btn = document.createElement('button');
+    btn.className = 'node-btn';
+    btn.textContent = done ? 'Revisar' : 'Obrir';
+    btn.onclick = (e) => { e.stopPropagation(); openModal(node.id); };
+    footer.appendChild(btn);
+  }
+  card.appendChild(footer);
+
+  if (unlocked) {
+    card.onclick = () => openModal(node.id);
+  }
+
+  return card;
+}
+
+function div(cls, style = '') {
+  const el = document.createElement('div');
+  if (cls) el.className = cls;
+  if (style) el.style.cssText = style;
+  return el;
+}
+
+// ─── MODAL ───────────────────────────────────────────────────────────────────
+
+function openModal(id) {
+  const node = NODES.find(n => n.id === id);
+  if (!node) return;
+  currentNode = node;
+  const done = completed.has(id);
+
+  document.getElementById('modalId').textContent = node.id + ' · ' + node.familia;
+  document.getElementById('modalTitle').textContent = node.titol;
+  document.getElementById('modalDesc').textContent = node.descripcio;
+
+  document.getElementById('modalBadge').innerHTML = `
+    <div class="modal-badge-icon badge-svg-wrap">${badgeSVG(node.fita.icona, false)}</div>
+    <div>
+      <span class="modal-badge-name">${node.fita.nom}</span>
+      <span class="modal-badge-desc">${node.fita.descripcio}</span>
+    </div>`;
+
+  const matList = document.getElementById('modalMaterials');
+  matList.innerHTML = '';
+  node.material.forEach(m => {
+    const icons = { pdf: '📄', mp3: '🎵', mp4: '🎬', link: '🔗' };
+    const a = document.createElement('a');
+    a.href = m.url;
+    a.className = 'material-item';
+    a.target = '_blank';
+    a.innerHTML = `<span class="material-icon">${icons[m.tipus] || '📎'}</span>
+      <span class="material-name">${m.nom}</span>
+      <span class="material-type">${m.tipus.toUpperCase()}</span>`;
+    matList.appendChild(a);
+  });
+
+  const btn = document.getElementById('modalCompleteBtn');
+  btn.textContent = done ? '✓ Marcat com a completat' : 'Marcar com a completat';
+  btn.className = 'modal-complete-btn' + (done ? ' done' : '');
+
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  currentNode = null;
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+function toggleComplete() {
+  if (!currentNode) return;
+  const id = currentNode.id;
+  if (completed.has(id)) {
+    completed.delete(id);
+  } else {
+    completed.add(id);
+  }
+  saveState();
+  renderTree();
+  openModal(id);
+}
+
+function updateProgress() {
+  const pct = getCompletionPct();
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+renderTree();
+</script>
+</body>
+</html>
