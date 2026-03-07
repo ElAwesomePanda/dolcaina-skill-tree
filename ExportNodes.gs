@@ -187,8 +187,9 @@ function afegirMaterial(arr, tipus, nom, url) {
 // MENÚ PERSONALITZAT
 // =============================================================================
 function onOpen() {
-  SpreadsheetApp.getUi()
-    .createMenu('Skill Tree')
+  const menu = SpreadsheetApp.getUi().createMenu('Skill Tree')
     .addItem('Exportar nodes.json a GitHub', 'exportarNodes')
-    .addToUi();
+    .addSeparator();
+  afegirMenuDiscourse(menu);
+  menu.addToUi();
 }
