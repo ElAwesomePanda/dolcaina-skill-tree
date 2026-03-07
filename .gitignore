@@ -1,3 +1,7 @@
 .DS_Store 
 Thumbs.db 
 config.gs
+config.json
+.clasp.json
+.claspignore
+appsscript.json
