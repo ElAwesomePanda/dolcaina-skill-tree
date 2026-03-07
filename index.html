@@ -550,6 +550,61 @@
     background: rgba(74, 140, 92, 0.08);
   }
 
+  /* Discourse login bar */
+  .discourse-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    background: rgba(201, 168, 76, 0.04);
+    border-bottom: 1px solid #1e1c17;
+    flex-wrap: wrap;
+  }
+  .discourse-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    white-space: nowrap;
+  }
+  .discourse-input {
+    background: var(--bg);
+    border: 1px solid #3a3428;
+    color: var(--cream);
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    border-radius: 3px;
+    width: 180px;
+    transition: border-color 0.2s;
+  }
+  .discourse-input:focus {
+    outline: none;
+    border-color: var(--gold-dim);
+  }
+  .discourse-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    padding: 6px 14px;
+    border: 1px solid var(--gold-dim);
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .discourse-btn:hover { background: rgba(201,168,76,0.1); border-color: var(--gold); }
+  .discourse-status {
+    font-size: 0.75rem;
+    font-style: italic;
+    color: var(--cream-dim);
+  }
+  .discourse-status.ok { color: #4a8c5c; }
+  .discourse-status.err { color: #8c4a4a; }
+
   /* Progress bar */
   .progress-bar-wrap {
     padding: 12px 24px;
@@ -604,6 +659,13 @@
   <h1>Arbre de Fites</h1>
   <div class="header-sub">Dolçaina i Tabalet · Itinerari formatiu</div>
 </header>
+
+<div class="discourse-bar">
+  <span class="discourse-label">Usuari L'Ardada</span>
+  <input class="discourse-input" type="text" id="discourseUser" placeholder="el teu username..." />
+  <button class="discourse-btn" onclick="syncDiscourse()">Sincronitzar fites</button>
+  <span class="discourse-status" id="discourseStatus"></span>
+</div>
 
 <div class="progress-bar-wrap">
   <span class="progress-label">Progrés general</span>
@@ -872,6 +934,78 @@ const NODES = [
   }
 ];
 
+// ─── DISCOURSE INTEGRATION ───────────────────────────────────────────────────
+
+const DISCOURSE_URL = 'https://ardada.discoursehosting.net';
+const PROXY_URL = 'https://dolcaina-discourse-proxy.guillem-reig-m.workers.dev';
+
+// Mapping: Discourse badge ID → nodes que es marquen com a completats
+const DISCOURSE_BADGE_MAP = {
+  108: ['PERC_PL_1', 'PERC_PL_2', 'PERC_PL_3', 'PERC_PL_4'],   // GiT_PL_al_beat
+  109: ['PERC_DE_1', 'PERC_DE_2', 'PERC_DE_3', 'PERC_DE_4'],   // GiT_DE_al_beat
+  110: ['PERC_PLD_1', 'PERC_PLD_2', 'PERC_PLD_3', 'PERC_PLD_4'], // GiT_PLD_al_beat
+  111: ['PERC_PLE_1', 'PERC_PLE_2', 'PERC_PLE_3', 'PERC_PLE_4'], // GiT_PLE_al_beat
+  107: ['PERC_PL_1','PERC_PL_2','PERC_PL_3','PERC_PL_4',
+        'PERC_DE_1','PERC_DE_2','PERC_DE_3','PERC_DE_4',
+        'PERC_PLD_1','PERC_PLD_2','PERC_PLD_3','PERC_PLD_4',
+        'PERC_PLE_1','PERC_PLE_2','PERC_PLE_3','PERC_PLE_4'], // GiT_Beat_I_Complet
+};
+
+const USER_KEY = 'dolcaina_discourse_user';
+let discourseUser = localStorage.getItem(USER_KEY) || '';
+
+async function syncDiscourse() {
+  const input = document.getElementById('discourseUser').value.trim();
+  const status = document.getElementById('discourseStatus');
+  if (!input) {
+    status.textContent = 'Introdueix el teu username.';
+    status.className = 'discourse-status err';
+    return;
+  }
+  status.textContent = 'Sincronitzant...';
+  status.className = 'discourse-status';
+  try {
+    const res = await fetch(`${PROXY_URL}?username=${input}`);
+    if (!res.ok) throw new Error('Usuari no trobat');
+    const data = await res.json();
+    const badgeIds = new Set(data.user_badges.map(ub => ub.badge_id));
+    let found = 0;
+    for (const [badgeId, nodes] of Object.entries(DISCOURSE_BADGE_MAP)) {
+      if (badgeIds.has(parseInt(badgeId))) {
+        nodes.forEach(n => completed.add(n));
+        found++;
+      }
+    }
+    discourseUser = input;
+    localStorage.setItem(USER_KEY, discourseUser);
+    saveState();
+    renderTree();
+    if (found > 0) {
+      status.textContent = `✓ ${found} fita(es) de branca sincronitzada(es)!`;
+      status.className = 'discourse-status ok';
+    } else {
+      status.textContent = '✓ Connectat. Cap fita de branca encara.';
+      status.className = 'discourse-status ok';
+    }
+  } catch (e) {
+    status.textContent = "Error: usuari no trobat a L'Ardada.";
+    status.className = 'discourse-status err';
+  }
+}
+
+function confirmBranchBadge(badgeId) {
+  const nodes = DISCOURSE_BADGE_MAP[badgeId];
+  if (!nodes) return;
+  const alreadyDone = nodes.every(n => completed.has(n));
+  if (alreadyDone) {
+    nodes.forEach(n => completed.delete(n));
+  } else {
+    nodes.forEach(n => completed.add(n));
+  }
+  saveState();
+  renderTree();
+}
+
 // ─── STATE ───────────────────────────────────────────────────────────────────
 
 const STATE_KEY = 'dolcaina_completed';
@@ -993,6 +1127,9 @@ function renderTree() {
   updateProgress();
 }
 
+// Badge ID per branca
+const BRANCH_BADGE = { pl: 108, de: 109, pld: 110, ple: 111 };
+
 function renderBranch(branchaId, nodes) {
   const wrap = div('branch');
   const branchInfo = BRANCHES.find(b => b.id === branchaId);
@@ -1011,6 +1148,23 @@ function renderBranch(branchaId, nodes) {
       wrap.appendChild(vc);
     }
   });
+
+  // Botó de confirmació de badge de branca
+  const badgeId = BRANCH_BADGE[branchaId];
+  if (badgeId && discourseUser) {
+    const allDone = DISCOURSE_BADGE_MAP[badgeId].every(n => completed.has(n));
+    const vc = div('connector-v' + (allDone ? '' : ' locked'));
+    wrap.appendChild(vc);
+    const btnWrap = div('', 'display:flex;justify-content:center;margin-top:0;');
+    const btn = document.createElement('button');
+    btn.className = 'node-btn';
+    btn.style.cssText = `font-size:0.6rem;padding:5px 10px;border-color:${allDone ? '#3d6b4a' : 'var(--gold-dim)'};color:${allDone ? '#4a8c5c' : 'var(--gold)'};`;
+    btn.textContent = allDone ? '✓ Badge confirmat' : 'Tinc el badge de branca';
+    btn.onclick = () => confirmBranchBadge(badgeId);
+    btnWrap.appendChild(btn);
+    wrap.appendChild(btnWrap);
+  }
+
   return wrap;
 }
 
@@ -1143,6 +1297,9 @@ function updateProgress() {
 }
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
+if (discourseUser) {
+  document.getElementById('discourseUser').value = discourseUser;
+}
 renderTree();
 </script>
 </body>
