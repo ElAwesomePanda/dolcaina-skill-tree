@@ -2,7 +2,10 @@
   {
     "id": "GiT_INICI",
     "familia": "General",
-    "tags": ["Taller", "Benvinguda"],
+    "tags": [
+      "Taller",
+      "Benvinguda"
+    ],
     "titol": "Benvingut al Taller",
     "descripcio": "Estàs apuntat als tallers de Gaita i Tabalet de l'Ateneu. Aquest és el punt de partida de tot l'itinerari formatiu.",
     "prerequisits": [],
@@ -20,43 +23,67 @@
   {
     "id": "PERC_PL_1",
     "familia": "Percussió",
-    "tags": ["Tabal", "Beat", "Mètronom"],
+    "tags": [
+      "Tabal",
+      "Beat",
+      "Mètronom"
+    ],
     "titol": "PL al beat · 1 min",
     "descripcio": "Tocar PL al beat amb mètronom fix durant 1 minut seguit. La base de tot ritme naix d'ací: consistència i puls constant.",
-    "prerequisits": ["GiT_INICI"],
+    "prerequisits": [
+      "GiT_INICI"
+    ],
     "es_fita": false,
-    "discourse_topic_id": null,
+    "discourse_topic_id": 370,
     "material": []
   },
   {
     "id": "PERC_PL_2",
     "familia": "Percussió",
-    "tags": ["Tabal", "Beat", "Mètronom"],
+    "tags": [
+      "Tabal",
+      "Beat",
+      "Mètronom"
+    ],
     "titol": "PL al beat · 2 min",
     "descripcio": "Tocar PL al beat amb mètronom fix durant 2 minuts seguits.",
-    "prerequisits": ["PERC_PL_1"],
+    "prerequisits": [
+      "PERC_PL_1"
+    ],
     "es_fita": false,
-    "discourse_topic_id": null,
+    "discourse_topic_id": 371,
     "material": []
   },
   {
     "id": "PERC_PL_3",
     "familia": "Percussió",
-    "tags": ["Tabal", "Beat", "Resistència"],
+    "tags": [
+      "Tabal",
+      "Beat",
+      "Resistència"
+    ],
     "titol": "PL al beat · 3 min",
     "descripcio": "Tres minuts de beat constant. La resistència musical és tan important com la tècnica.",
-    "prerequisits": ["PERC_PL_2"],
+    "prerequisits": [
+      "PERC_PL_2"
+    ],
     "es_fita": false,
-    "discourse_topic_id": null,
+    "discourse_topic_id": 372,
     "material": []
   },
   {
     "id": "PERC_PL_4",
     "familia": "Percussió",
-    "tags": ["Tabal", "Beat", "Resistència"],
+    "tags": [
+      "Tabal",
+      "Beat",
+      "Resistència"
+    ],
     "titol": "PL al beat · 5 min",
     "descripcio": "Cinc minuts complets. Arribar ací vol dir que el pols ja és part del teu cos.",
-    "prerequisits": ["PERC_PL_3"],
+    "prerequisits": [
+      "PERC_PL_3"
+    ],
     "es_fita": true,
     "fita": {
       "nom": "Tabalemaster I",
@@ -65,49 +92,73 @@
       "discourse_badge_id": 108,
       "discourse_badge_name": "GiT_PL_al_beat"
     },
-    "discourse_topic_id": null,
+    "discourse_topic_id": 373,
     "material": []
   },
   {
     "id": "PERC_DE_1",
     "familia": "Percussió",
-    "tags": ["Tabal", "D-E", "Beat"],
+    "tags": [
+      "Tabal",
+      "D-E",
+      "Beat"
+    ],
     "titol": "D-E al beat · 1 min",
     "descripcio": "Alternar D i E al beat durant 1 minut. La coordinació bilateral comença ací.",
-    "prerequisits": ["PERC_PL_2"],
+    "prerequisits": [
+      "PERC_PL_2"
+    ],
     "es_fita": false,
-    "discourse_topic_id": null,
+    "discourse_topic_id": 374,
     "material": []
   },
   {
     "id": "PERC_DE_2",
     "familia": "Percussió",
-    "tags": ["Tabal", "D-E", "Beat"],
+    "tags": [
+      "Tabal",
+      "D-E",
+      "Beat"
+    ],
     "titol": "D-E al beat · 2 min",
     "descripcio": "Dos minuts d'alternança D-E. Desbloqueja les branques PL-D i PL-E.",
-    "prerequisits": ["PERC_DE_1"],
+    "prerequisits": [
+      "PERC_DE_1"
+    ],
     "es_fita": false,
-    "discourse_topic_id": null,
+    "discourse_topic_id": 375,
     "material": []
   },
   {
     "id": "PERC_DE_3",
     "familia": "Percussió",
-    "tags": ["Tabal", "D-E", "Resistència"],
+    "tags": [
+      "Tabal",
+      "D-E",
+      "Resistència"
+    ],
     "titol": "D-E al beat · 3 min",
     "descripcio": "Tres minuts. La fluïdesa de l'alternança ha de ser automàtica.",
-    "prerequisits": ["PERC_DE_2"],
+    "prerequisits": [
+      "PERC_DE_2"
+    ],
     "es_fita": false,
-    "discourse_topic_id": null,
+    "discourse_topic_id": 376,
     "material": []
   },
   {
     "id": "PERC_DE_4",
     "familia": "Percussió",
-    "tags": ["Tabal", "D-E", "Resistència"],
+    "tags": [
+      "Tabal",
+      "D-E",
+      "Resistència"
+    ],
     "titol": "D-E al beat · 5 min",
     "descripcio": "Cinc minuts. Arribar ací és tenir una base sòlida per a qualsevol patró.",
-    "prerequisits": ["PERC_DE_3"],
+    "prerequisits": [
+      "PERC_DE_3"
+    ],
     "es_fita": true,
     "fita": {
       "nom": "Rapatam I",
@@ -116,49 +167,73 @@
       "discourse_badge_id": 109,
       "discourse_badge_name": "GiT_DE_al_beat"
     },
-    "discourse_topic_id": null,
+    "discourse_topic_id": 377,
     "material": []
   },
   {
     "id": "PERC_PLD_1",
     "familia": "Percussió",
-    "tags": ["Tabal", "PL-D", "Combinació"],
+    "tags": [
+      "Tabal",
+      "PL-D",
+      "Combinació"
+    ],
     "titol": "PL-D al beat · 1 min",
     "descripcio": "Combinar PL i D alternats al beat. Primer pas cap als patrons compostos.",
-    "prerequisits": ["PERC_DE_2"],
+    "prerequisits": [
+      "PERC_DE_2"
+    ],
     "es_fita": false,
-    "discourse_topic_id": null,
+    "discourse_topic_id": 378,
     "material": []
   },
   {
     "id": "PERC_PLD_2",
     "familia": "Percussió",
-    "tags": ["Tabal", "PL-D", "Combinació"],
+    "tags": [
+      "Tabal",
+      "PL-D",
+      "Combinació"
+    ],
     "titol": "PL-D al beat · 2 min",
     "descripcio": "Dos minuts de PL-D sostingut.",
-    "prerequisits": ["PERC_PLD_1"],
+    "prerequisits": [
+      "PERC_PLD_1"
+    ],
     "es_fita": false,
-    "discourse_topic_id": null,
+    "discourse_topic_id": 379,
     "material": []
   },
   {
     "id": "PERC_PLD_3",
     "familia": "Percussió",
-    "tags": ["Tabal", "PL-D", "Resistència"],
+    "tags": [
+      "Tabal",
+      "PL-D",
+      "Resistència"
+    ],
     "titol": "PL-D al beat · 3 min",
     "descripcio": "Tres minuts de PL-D.",
-    "prerequisits": ["PERC_PLD_2"],
+    "prerequisits": [
+      "PERC_PLD_2"
+    ],
     "es_fita": false,
-    "discourse_topic_id": null,
+    "discourse_topic_id": 380,
     "material": []
   },
   {
     "id": "PERC_PLD_4",
     "familia": "Percussió",
-    "tags": ["Tabal", "PL-D", "Resistència"],
+    "tags": [
+      "Tabal",
+      "PL-D",
+      "Resistència"
+    ],
     "titol": "PL-D al beat · 5 min",
     "descripcio": "Cinc minuts. PL-D assentat i fluid.",
-    "prerequisits": ["PERC_PLD_3"],
+    "prerequisits": [
+      "PERC_PLD_3"
+    ],
     "es_fita": true,
     "fita": {
       "nom": "Corredor I",
@@ -167,49 +242,73 @@
       "discourse_badge_id": 110,
       "discourse_badge_name": "GiT_PLD_al_beat"
     },
-    "discourse_topic_id": null,
+    "discourse_topic_id": 381,
     "material": []
   },
   {
     "id": "PERC_PLE_1",
     "familia": "Percussió",
-    "tags": ["Tabal", "PL-E", "Combinació"],
+    "tags": [
+      "Tabal",
+      "PL-E",
+      "Combinació"
+    ],
     "titol": "PL-E al beat · 1 min",
     "descripcio": "Combinar PL i E al beat. Simetria respecte a la branca PL-D.",
-    "prerequisits": ["PERC_DE_2"],
+    "prerequisits": [
+      "PERC_DE_2"
+    ],
     "es_fita": false,
-    "discourse_topic_id": null,
+    "discourse_topic_id": 382,
     "material": []
   },
   {
     "id": "PERC_PLE_2",
     "familia": "Percussió",
-    "tags": ["Tabal", "PL-E", "Combinació"],
+    "tags": [
+      "Tabal",
+      "PL-E",
+      "Combinació"
+    ],
     "titol": "PL-E al beat · 2 min",
     "descripcio": "Dos minuts de PL-E sostingut.",
-    "prerequisits": ["PERC_PLE_1"],
+    "prerequisits": [
+      "PERC_PLE_1"
+    ],
     "es_fita": false,
-    "discourse_topic_id": null,
+    "discourse_topic_id": 383,
     "material": []
   },
   {
     "id": "PERC_PLE_3",
     "familia": "Percussió",
-    "tags": ["Tabal", "PL-E", "Resistència"],
+    "tags": [
+      "Tabal",
+      "PL-E",
+      "Resistència"
+    ],
     "titol": "PL-E al beat · 3 min",
     "descripcio": "Tres minuts de PL-E.",
-    "prerequisits": ["PERC_PLE_2"],
+    "prerequisits": [
+      "PERC_PLE_2"
+    ],
     "es_fita": false,
-    "discourse_topic_id": null,
+    "discourse_topic_id": 384,
     "material": []
   },
   {
     "id": "PERC_PLE_4",
     "familia": "Percussió",
-    "tags": ["Tabal", "PL-E", "Resistència"],
+    "tags": [
+      "Tabal",
+      "PL-E",
+      "Resistència"
+    ],
     "titol": "PL-E al beat · 5 min",
     "descripcio": "Cinc minuts. PL-E assentat i fluid.",
-    "prerequisits": ["PERC_PLE_3"],
+    "prerequisits": [
+      "PERC_PLE_3"
+    ],
     "es_fita": true,
     "fita": {
       "nom": "Corredor II",
@@ -218,7 +317,7 @@
       "discourse_badge_id": 111,
       "discourse_badge_name": "GiT_PLE_al_beat"
     },
-    "discourse_topic_id": null,
+    "discourse_topic_id": 385,
     "material": []
   }
 ]
