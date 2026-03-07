@@ -2,13 +2,7 @@
 // ExportNodes.gs — Dolçaina i Tabalet · Skill Tree
 // Llegeix el full "GiT_Nodes" i publica nodes.json a GitHub Pages
 //
-// CONFIGURACIÓ PRÈVIA (una sola vegada):
-//   Apps Script → Projecte → Propietats del projecte → Propietats de l'script
-//   Afegir les claus:
-//     GITHUB_TOKEN  → ghp_XXXXXXXXXXXXXXXXXXXX
-//     GITHUB_OWNER  → elawesomepanda
-//     GITHUB_REPO   → dolcaina-skill-tree
-//     GITHUB_BRANCH → main
+// CONFIGURACIÓ: edita config.gs (fitxer local, no pujat a GitHub)
 // =============================================================================
 
 const SHEET_NAME  = 'GiT_Nodes';
@@ -106,13 +100,12 @@ function filelaANode(row) {
 // PUSH A GITHUB VIA API REST
 // =============================================================================
 function pushAGitHub(contingut) {
-  const props  = PropertiesService.getScriptProperties().getProperties();
-  const token  = props.GITHUB_TOKEN;
-  const owner  = props.GITHUB_OWNER  || 'elawesomepanda';
-  const repo   = props.GITHUB_REPO   || 'dolcaina-skill-tree';
-  const branch = props.GITHUB_BRANCH || 'main';
+  const token  = CONFIG.GITHUB_TOKEN;
+  const owner  = CONFIG.GITHUB_OWNER;
+  const repo   = CONFIG.GITHUB_REPO;
+  const branch = CONFIG.GITHUB_BRANCH;
 
-  if (!token) throw new Error('Falta GITHUB_TOKEN a les propietats de l\'script.');
+  if (!token || token.startsWith('ghp_XXX')) throw new Error('Configura GITHUB_TOKEN a config.gs.');
 
   const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${GITHUB_PATH}`;
   const headers = {

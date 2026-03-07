@@ -2,11 +2,7 @@
 // ExportDiscourseTopics.gs — Dolçaina i Tabalet · Skill Tree
 // Crea un topic a Discourse per cada node que no en tingui
 //
-// CONFIGURACIÓ PRÈVIA (PropertiesService):
-//   DISCOURSE_API_KEY      → clau API de Discourse (admin)
-//   DISCOURSE_API_USERNAME → username de l'admin que firma les peticions
-//   DISCOURSE_BASE_URL     → https://ardada.discoursehosting.net
-//   DISCOURSE_CATEGORY_ID  → ID de la categoria on crear els topics
+// CONFIGURACIÓ: edita config.gs (fitxer local, no pujat a GitHub)
 // =============================================================================
 
 // Índex de la columna discourse_topic_id al full (0-based)
@@ -22,14 +18,13 @@ function crearTopicsDiscourse() {
     return;
   }
 
-  const props = PropertiesService.getScriptProperties().getProperties();
-  const apiKey      = props.DISCOURSE_API_KEY;
-  const apiUser     = props.DISCOURSE_API_USERNAME;
-  const baseUrl     = (props.DISCOURSE_BASE_URL || 'https://ardada.discoursehosting.net').replace(/\/$/, '');
-  const categoryId  = parseInt(props.DISCOURSE_CATEGORY_ID || '1', 10);
+  const apiKey     = CONFIG.DISCOURSE_API_KEY;
+  const apiUser    = CONFIG.DISCOURSE_API_USERNAME;
+  const baseUrl    = CONFIG.DISCOURSE_BASE_URL.replace(/\/$/, '');
+  const categoryId = CONFIG.DISCOURSE_CATEGORY_ID;
 
-  if (!apiKey || !apiUser) {
-    SpreadsheetApp.getUi().alert('Falta DISCOURSE_API_KEY o DISCOURSE_API_USERNAME a les propietats de l\'script.');
+  if (!apiKey || apiKey.startsWith('XXXX')) {
+    SpreadsheetApp.getUi().alert('Configura DISCOURSE_API_KEY a config.gs.');
     return;
   }
 
