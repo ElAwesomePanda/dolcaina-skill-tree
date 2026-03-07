@@ -435,6 +435,18 @@ h1 {
 .modal-complete-btn.done { border-color: var(--green-dim); color: var(--green); }
 .modal-complete-btn.done:hover { background: rgba(74,140,92,0.06); }
 
+.modal-discourse-link {
+  display: block;
+  color: var(--gold-dim);
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  margin-bottom: 16px;
+  transition: color 0.2s;
+}
+.modal-discourse-link:hover { color: var(--gold); }
+
 /* Zoom controls */
 .zoom-controls {
   position: fixed;
@@ -508,9 +520,10 @@ h1 {
     <div class="modal-eyebrow" id="modalId"></div>
     <div class="modal-title" id="modalTitle"></div>
     <div class="modal-desc" id="modalDesc"></div>
-    <div class="modal-section">Fita</div>
+    <div class="modal-section" id="modalFitaSection">Fita</div>
     <div class="modal-badge-wrap" id="modalBadge"></div>
     <div class="modal-section">Material didàctic</div>
+    <a class="modal-discourse-link" id="modalDiscourseLink" href="#" target="_blank">Veure al fòrum de L'Ardada →</a>
     <div class="material-list" id="modalMaterials"></div>
     <button class="modal-complete-btn" id="modalCompleteBtn" onclick="toggleComplete()"></button>
   </div>
@@ -527,16 +540,8 @@ let NODES = [];
 // ─── DISCOURSE ───────────────────────────────────────────────────────────────
 const DISCOURSE_URL = 'https://ardada.discoursehosting.net';
 const PROXY_URL = 'https://dolcaina-discourse-proxy.guillem-reig-m.workers.dev';
-const DISCOURSE_BADGE_MAP = {
-  108: ['PERC_PL_1','PERC_PL_2','PERC_PL_3','PERC_PL_4'],
-  109: ['PERC_DE_1','PERC_DE_2','PERC_DE_3','PERC_DE_4'],
-  110: ['PERC_PLD_1','PERC_PLD_2','PERC_PLD_3','PERC_PLD_4'],
-  111: ['PERC_PLE_1','PERC_PLE_2','PERC_PLE_3','PERC_PLE_4'],
-  107: ['PERC_PL_1','PERC_PL_2','PERC_PL_3','PERC_PL_4',
-        'PERC_DE_1','PERC_DE_2','PERC_DE_3','PERC_DE_4',
-        'PERC_PLD_1','PERC_PLD_2','PERC_PLD_3','PERC_PLD_4',
-        'PERC_PLE_1','PERC_PLE_2','PERC_PLE_3','PERC_PLE_4'],
-};
+// Construït dinàmicament des de nodes.json després de carregar
+let discourseBadgeMap = {};
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
 const STATE_KEY = 'dolcaina_completed';
@@ -730,7 +735,7 @@ function render() {
 
     div.append('xhtml:div').attr('class', 'nc-id').text(n.id);
     div.append('xhtml:div').attr('class', 'nc-title').text(n.titol);
-    div.append('xhtml:div').attr('class', 'nc-badge').text('⬡ ' + n.fita.nom);
+    div.append('xhtml:div').attr('class', 'nc-badge').text(n.es_fita && n.fita ? n.fita.icona + ' ' + n.fita.nom : '');
     div.append('xhtml:div').attr('class', 'nc-status ' + (done ? 'completed' : unlocked ? 'unlocked' : 'locked'))
       .text(done ? 'Completat' : unlocked ? 'Disponible' : 'Bloquejat');
 
@@ -788,13 +793,36 @@ function openModal(id) {
   if (!node) return;
   currentNode = node;
   const done = completed.has(id);
+
   document.getElementById('modalId').textContent = node.id + ' · ' + node.familia;
   document.getElementById('modalTitle').textContent = node.titol;
   document.getElementById('modalDesc').textContent = node.descripcio;
-  document.getElementById('modalBadge').innerHTML = `
-    <div class="modal-badge-svg">${badgeSVG(node.fita.icona, 44)}</div>
-    <div><span class="modal-badge-name">${node.fita.nom}</span>
-    <span class="modal-badge-desc">${node.fita.descripcio}</span></div>`;
+
+  // Secció fita: només visible si el node és fita
+  const fitaSection = document.getElementById('modalFitaSection');
+  const fitaBadge = document.getElementById('modalBadge');
+  if (node.es_fita && node.fita) {
+    fitaSection.style.display = '';
+    fitaBadge.style.display = '';
+    fitaBadge.innerHTML = `
+      <div style="font-size:2.4rem;line-height:1;flex-shrink:0">${node.fita.icona}</div>
+      <div><span class="modal-badge-name">${node.fita.nom}</span>
+      <span class="modal-badge-desc">${node.fita.descripcio}</span></div>`;
+  } else {
+    fitaSection.style.display = 'none';
+    fitaBadge.style.display = 'none';
+  }
+
+  // Link al topic de Discourse
+  const discourseLink = document.getElementById('modalDiscourseLink');
+  if (node.discourse_topic_id) {
+    discourseLink.style.display = '';
+    discourseLink.href = `${DISCOURSE_URL}/t/${node.discourse_topic_id}`;
+  } else {
+    discourseLink.style.display = 'none';
+  }
+
+  // Material
   const matList = document.getElementById('modalMaterials');
   matList.innerHTML = '';
   const icons = {pdf:'📄',mp3:'🎵',mp4:'🎬',link:'🔗'};
@@ -806,6 +834,7 @@ function openModal(id) {
       <span class="mat-type">${m.tipus.toUpperCase()}</span>`;
     matList.appendChild(a);
   });
+
   const btn = document.getElementById('modalCompleteBtn');
   btn.textContent = done ? '✓ Marcat com a completat' : 'Marcar com a completat';
   btn.className = 'modal-complete-btn' + (done ? ' done' : '');
@@ -835,6 +864,34 @@ function updateProgress() {
   document.getElementById('progressPct').textContent = pct + '%';
 }
 
+// ─── BADGE MAP (dinàmic) ──────────────────────────────────────────────────────
+
+function getAllAncestors(id, nodeMap) {
+  const result = new Set();
+  function traverse(nid) {
+    const n = nodeMap[nid];
+    if (!n) return;
+    n.prerequisits.forEach(pid => {
+      if (!result.has(pid)) { result.add(pid); traverse(pid); }
+    });
+  }
+  traverse(id);
+  return [...result];
+}
+
+function buildBadgeMap(nodes) {
+  const nodeMap = {};
+  nodes.forEach(n => nodeMap[n.id] = n);
+  const map = {};
+  nodes.forEach(n => {
+    if (n.es_fita && n.fita && n.fita.discourse_badge_id) {
+      const ancestors = getAllAncestors(n.id, nodeMap);
+      map[n.fita.discourse_badge_id] = [n.id, ...ancestors];
+    }
+  });
+  return map;
+}
+
 // ─── DISCOURSE SYNC ──────────────────────────────────────────────────────────
 async function syncDiscourse() {
   const input = document.getElementById('discourseUser').value.trim();
@@ -847,7 +904,7 @@ async function syncDiscourse() {
     const data = await res.json();
     const badgeIds = new Set(data.user_badges.map(ub => ub.badge_id));
     let found = 0;
-    for (const [badgeId, nodes] of Object.entries(DISCOURSE_BADGE_MAP)) {
+    for (const [badgeId, nodes] of Object.entries(discourseBadgeMap)) {
       if (badgeIds.has(parseInt(badgeId))) { nodes.forEach(n => completed.add(n)); found++; }
     }
     discourseUser = input;
@@ -882,6 +939,7 @@ async function init() {
     const res = await fetch('nodes.json');
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     NODES = await res.json();
+    discourseBadgeMap = buildBadgeMap(NODES);
     canvas.removeChild(loadingMsg);
     render();
   } catch(e) {
