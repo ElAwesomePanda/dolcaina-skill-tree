@@ -521,91 +521,8 @@ h1 {
 <script>
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
-const NODES = [
-  { id:"PERC_PL_1", familia:"Percussió", tags:["Tabal","Beat","Mètronom"],
-    titol:"PL al beat · 1 min",
-    descripcio:"Tocar PL al beat amb mètronom fix durant 1 minut seguit. La base de tot ritme naix d'ací: consistència i puls constant.",
-    prerequisits:[], fita:{nom:"Primer Pols",descripcio:"Has mantingut el beat durant 1 minut.",icona:"shield"},
-    material:[{tipus:"pdf",nom:"Exercici PL – Full de pràctica",url:"#"},{tipus:"mp3",nom:"Pista mètronom 60bpm",url:"#"}]},
-  { id:"PERC_PL_2", familia:"Percussió", tags:["Tabal","Beat","Mètronom"],
-    titol:"PL al beat · 2 min",
-    descripcio:"Tocar PL al beat amb mètronom fix durant 2 minuts seguits. Desbloqueja la branca D-E al beat.",
-    prerequisits:["PERC_PL_1"], fita:{nom:"Pols Constant I",descripcio:"Dos minuts sense perdre el beat.",icona:"star"},
-    material:[{tipus:"pdf",nom:"Exercici PL – 2 minuts",url:"#"},{tipus:"mp3",nom:"Pista mètronom 70bpm",url:"#"}]},
-  { id:"PERC_PL_3", familia:"Percussió", tags:["Tabal","Beat","Resistència"],
-    titol:"PL al beat · 3 min",
-    descripcio:"Tres minuts de beat constant. La resistència musical és tan important com la tècnica.",
-    prerequisits:["PERC_PL_2"], fita:{nom:"Pols Constant II",descripcio:"Tres minuts de beat net.",icona:"star2"},
-    material:[{tipus:"pdf",nom:"Exercici PL – 3 minuts",url:"#"}]},
-  { id:"PERC_PL_4", familia:"Percussió", tags:["Tabal","Beat","Resistència"],
-    titol:"PL al beat · 5 min",
-    descripcio:"Cinc minuts complets. Arribar ací vol dir que el pols ja és part del teu cos.",
-    prerequisits:["PERC_PL_3"], fita:{nom:"Tabalemaster I",descripcio:"Domini del puls bàsic.",icona:"crown"},
-    material:[{tipus:"pdf",nom:"Exercici PL – 5 minuts",url:"#"},{tipus:"mp3",nom:"Pista mètronom 80bpm",url:"#"}]},
-
-  { id:"PERC_DE_1", familia:"Percussió", tags:["Tabal","D-E","Beat"],
-    titol:"D-E al beat · 1 min",
-    descripcio:"Alternar D i E al beat durant 1 minut. La coordinació bilateral comença ací.",
-    prerequisits:["PERC_PL_2"], fita:{nom:"Doble Impacte I",descripcio:"Primera alternança D-E sostinguda.",icona:"shield"},
-    material:[{tipus:"pdf",nom:"Exercici D-E – 1 minut",url:"#"},{tipus:"mp3",nom:"Referència D-E lent",url:"#"}]},
-  { id:"PERC_DE_2", familia:"Percussió", tags:["Tabal","D-E","Beat"],
-    titol:"D-E al beat · 2 min",
-    descripcio:"Dos minuts d'alternança D-E. Desbloqueja les branques PL-D i PL-E.",
-    prerequisits:["PERC_DE_1"], fita:{nom:"Doble Impacte II",descripcio:"Dos minuts nets de D-E.",icona:"star"},
-    material:[{tipus:"pdf",nom:"Exercici D-E – 2 minuts",url:"#"}]},
-  { id:"PERC_DE_3", familia:"Percussió", tags:["Tabal","D-E","Resistència"],
-    titol:"D-E al beat · 3 min",
-    descripcio:"Tres minuts. La fluïdesa de l'alternança ha de ser automàtica.",
-    prerequisits:["PERC_DE_2"], fita:{nom:"Doble Impacte III",descripcio:"Alternança D-E sense esforç visible.",icona:"star2"},
-    material:[{tipus:"pdf",nom:"Exercici D-E – 3 minuts",url:"#"}]},
-  { id:"PERC_DE_4", familia:"Percussió", tags:["Tabal","D-E","Resistència"],
-    titol:"D-E al beat · 5 min",
-    descripcio:"Cinc minuts. Arribar ací és tenir una base sòlida per a qualsevol patró.",
-    prerequisits:["PERC_DE_3"], fita:{nom:"Rapatam I",descripcio:"Base D-E completament assentada.",icona:"crown"},
-    material:[{tipus:"pdf",nom:"Exercici D-E – 5 minuts",url:"#"},{tipus:"mp3",nom:"Referència D-E ràpid",url:"#"}]},
-
-  { id:"PERC_PLD_1", familia:"Percussió", tags:["Tabal","PL-D","Combinació"],
-    titol:"PL-D al beat · 1 min",
-    descripcio:"Combinar PL i D alternats al beat. Primer pas cap als patrons compostos.",
-    prerequisits:["PERC_DE_2"], fita:{nom:"Combinació I",descripcio:"Primera combinació PL-D.",icona:"shield"},
-    material:[{tipus:"pdf",nom:"Exercici PL-D – 1 minut",url:"#"}]},
-  { id:"PERC_PLD_2", familia:"Percussió", tags:["Tabal","PL-D","Combinació"],
-    titol:"PL-D al beat · 2 min",
-    descripcio:"Dos minuts de PL-D sostingut.",
-    prerequisits:["PERC_PLD_1"], fita:{nom:"Combinació II",descripcio:"Dos minuts nets de PL-D.",icona:"star"},
-    material:[{tipus:"pdf",nom:"Exercici PL-D – 2 minuts",url:"#"}]},
-  { id:"PERC_PLD_3", familia:"Percussió", tags:["Tabal","PL-D","Resistència"],
-    titol:"PL-D al beat · 3 min",
-    descripcio:"Tres minuts de PL-D.",
-    prerequisits:["PERC_PLD_2"], fita:{nom:"Combinació III",descripcio:"Tres minuts de PL-D fluït.",icona:"star2"},
-    material:[{tipus:"pdf",nom:"Exercici PL-D – 3 minuts",url:"#"}]},
-  { id:"PERC_PLD_4", familia:"Percussió", tags:["Tabal","PL-D","Resistència"],
-    titol:"PL-D al beat · 5 min",
-    descripcio:"Cinc minuts. PL-D assentat i fluid.",
-    prerequisits:["PERC_PLD_3"], fita:{nom:"Corredor I",descripcio:"Domini del patró PL-D.",icona:"crown"},
-    material:[{tipus:"pdf",nom:"Exercici PL-D – 5 minuts",url:"#"},{tipus:"mp3",nom:"Referència PL-D",url:"#"}]},
-
-  { id:"PERC_PLE_1", familia:"Percussió", tags:["Tabal","PL-E","Combinació"],
-    titol:"PL-E al beat · 1 min",
-    descripcio:"Combinar PL i E al beat. Simetria respecte a la branca PL-D.",
-    prerequisits:["PERC_DE_2"], fita:{nom:"Simetria I",descripcio:"Primera combinació PL-E.",icona:"shield"},
-    material:[{tipus:"pdf",nom:"Exercici PL-E – 1 minut",url:"#"}]},
-  { id:"PERC_PLE_2", familia:"Percussió", tags:["Tabal","PL-E","Combinació"],
-    titol:"PL-E al beat · 2 min",
-    descripcio:"Dos minuts de PL-E sostingut.",
-    prerequisits:["PERC_PLE_1"], fita:{nom:"Simetria II",descripcio:"Dos minuts nets de PL-E.",icona:"star"},
-    material:[{tipus:"pdf",nom:"Exercici PL-E – 2 minuts",url:"#"}]},
-  { id:"PERC_PLE_3", familia:"Percussió", tags:["Tabal","PL-E","Resistència"],
-    titol:"PL-E al beat · 3 min",
-    descripcio:"Tres minuts de PL-E.",
-    prerequisits:["PERC_PLE_2"], fita:{nom:"Simetria III",descripcio:"Tres minuts de PL-E fluït.",icona:"star2"},
-    material:[{tipus:"pdf",nom:"Exercici PL-E – 3 minuts",url:"#"}]},
-  { id:"PERC_PLE_4", familia:"Percussió", tags:["Tabal","PL-E","Resistència"],
-    titol:"PL-E al beat · 5 min",
-    descripcio:"Cinc minuts. PL-E assentat i fluid.",
-    prerequisits:["PERC_PLE_3"], fita:{nom:"Corredor II",descripcio:"Domini del patró PL-E.",icona:"crown"},
-    material:[{tipus:"pdf",nom:"Exercici PL-E – 5 minuts",url:"#"},{tipus:"mp3",nom:"Referència PL-E",url:"#"}]},
-];
+// NODES s'omple des de nodes.json en init
+let NODES = [];
 
 // ─── DISCOURSE ───────────────────────────────────────────────────────────────
 const DISCOURSE_URL = 'https://ardada.discoursehosting.net';
@@ -946,8 +863,35 @@ async function syncDiscourse() {
 
 // ─── INIT ────────────────────────────────────────────────────────────────────
 if (discourseUser) document.getElementById('discourseUser').value = discourseUser;
-window.addEventListener('resize', render);
-render();
+window.addEventListener('resize', () => { if (NODES.length) render(); });
+
+async function init() {
+  const canvas = document.getElementById('canvas');
+  const topH = document.querySelector('.top-ui').getBoundingClientRect().height;
+  canvas.style.marginTop = topH + 'px';
+  const loadingMsg = document.createElementNS('http://www.w3.org/2000/svg','text');
+  loadingMsg.setAttribute('x','50%'); loadingMsg.setAttribute('y','50%');
+  loadingMsg.setAttribute('text-anchor','middle');
+  loadingMsg.setAttribute('fill','#7a6430');
+  loadingMsg.setAttribute('font-family','Cinzel,serif');
+  loadingMsg.setAttribute('font-size','14');
+  loadingMsg.textContent = 'Carregant nodes…';
+  canvas.appendChild(loadingMsg);
+
+  try {
+    const res = await fetch('nodes.json');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    NODES = await res.json();
+    canvas.removeChild(loadingMsg);
+    render();
+  } catch(e) {
+    loadingMsg.setAttribute('fill','#8c4a4a');
+    loadingMsg.textContent = 'Error carregant nodes.json: ' + e.message;
+    console.error('Error carregant nodes.json:', e);
+  }
+}
+
+init();
 </script>
 </body>
 </html>
