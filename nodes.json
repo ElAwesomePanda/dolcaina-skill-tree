@@ -29,7 +29,7 @@
       "Mètronom"
     ],
     "titol": "PL al beat · 1 min",
-    "descripcio": "Tocar PL al beat amb mètronom fix durant 1 minut seguit. La base de tot ritme naix d'ací: consistència i puls constant.",
+    "descripcio": "Tocar PL al beat amb mètronom fix durant 1 minut seguit. La base de tot ritme naix d'ací: consistència i puls constant. 70 BPM Recomanat.",
     "prerequisits": [
       "GiT_INICI"
     ],
@@ -52,7 +52,7 @@
       "Mètronom"
     ],
     "titol": "PL al beat · 2 min",
-    "descripcio": "Tocar PL al beat amb mètronom fix durant 2 minuts seguits.",
+    "descripcio": "Tocar PL al beat amb mètronom fix durant 2 minuts seguits. 70 BPM Recomanat.",
     "prerequisits": [
       "PERC_PL_1"
     ],
@@ -75,7 +75,7 @@
       "Resistència"
     ],
     "titol": "PL al beat · 3 min",
-    "descripcio": "Tres minuts de beat constant. La resistència musical és tan important com la tècnica.",
+    "descripcio": "Tres minuts de beat constant. La resistència musical és tan important com la tècnica. 70 BPM Recomanat.",
     "prerequisits": [
       "PERC_PL_2"
     ],
@@ -97,16 +97,16 @@
       "Beat",
       "Resistència"
     ],
-    "titol": "PL al beat · 5 min",
-    "descripcio": "Cinc minuts complets. Arribar ací vol dir que el pols ja és part del teu cos.",
+    "titol": "PL al beat · 4 min",
+    "descripcio": "Quatre minuts complets. Arribar ací vol dir que el pols ja és part del teu cos. 70 BPM Recomanat.",
     "prerequisits": [
       "PERC_PL_3"
     ],
     "es_fita": true,
     "fita": {
       "nom": "Tabalemaster I",
-      "descripcio": "Domini del puls bàsic.",
-      "icona": "👑",
+      "descripcio": "Plau i fa sol!",
+      "icona": "🌧️",
       "discourse_badge_id": 108,
       "discourse_badge_name": "GiT_PL_al_beat"
     },
@@ -128,7 +128,7 @@
       "Beat"
     ],
     "titol": "D-E al beat · 1 min",
-    "descripcio": "Alternar D i E al beat durant 1 minut. La coordinació bilateral comença ací.",
+    "descripcio": "Alternar D i E al beat durant 1 minut. La coordinació bilateral comença ací. 70 BPM Recomanat.",
     "prerequisits": [
       "PERC_PL_2"
     ],
@@ -151,7 +151,7 @@
       "Beat"
     ],
     "titol": "D-E al beat · 2 min",
-    "descripcio": "Dos minuts d'alternança D-E. Desbloqueja les branques PL-D i PL-E.",
+    "descripcio": "Dos minuts d'alternança D-E. Desbloqueja les branques PL-D i PL-E. 70 BPM Recomanat.",
     "prerequisits": [
       "PERC_DE_1"
     ],
@@ -174,7 +174,7 @@
       "Resistència"
     ],
     "titol": "D-E al beat · 3 min",
-    "descripcio": "Tres minuts. La fluïdesa de l'alternança ha de ser automàtica.",
+    "descripcio": "Tres minuts. La fluïdesa de l'alternança ha de ser automàtica. 70 BPM Recomanat.",
     "prerequisits": [
       "PERC_DE_2"
     ],
@@ -196,16 +196,16 @@
       "D-E",
       "Resistència"
     ],
-    "titol": "D-E al beat · 5 min",
-    "descripcio": "Cinc minuts. Arribar ací és tenir una base sòlida per a qualsevol patró.",
+    "titol": "D-E al beat · 4 min",
+    "descripcio": "Quatre minuts. Arribar ací és tenir una base sòlida per a qualsevol patró. 70 BPM Recomanat.",
     "prerequisits": [
       "PERC_DE_3"
     ],
     "es_fita": true,
     "fita": {
       "nom": "Rapatam I",
-      "descripcio": "Base D-E completament assentada.",
-      "icona": "🔥",
+      "descripcio": "Domini de l'escala de 1",
+      "icona": "1️⃣",
       "discourse_badge_id": 109,
       "discourse_badge_name": "GiT_DE_al_beat"
     },
@@ -219,6 +219,204 @@
     ]
   },
   {
+    "id": "PERC_DDEE_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "DD-EE",
+      "Beat"
+    ],
+    "titol": "DD-EE al beat · 1 min",
+    "descripcio": "Alternar DD i EE al beat durant 1 minut. Comencem a fraccionar els temps. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DDEE_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT DDEE Beat",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "id": "PERC_DDEE_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "DD-EE",
+      "Beat"
+    ],
+    "titol": "DD-EE al beat · 2 min",
+    "descripcio": "Dos minuts d'alternança DD-EE. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DDEE_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT DDEE Beat",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "id": "PERC_DDEE_3",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "DD-EE",
+      "Resistència"
+    ],
+    "titol": "DD-EE al beat · 3 min",
+    "descripcio": "Tres minuts de DD-EE. Fiquem a prova la resistència. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DDEE_3"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT DDEE Beat",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "id": "PERC_DDEE_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "DD-EE",
+      "Resistència"
+    ],
+    "titol": "DD-EE al beat · 4 min",
+    "descripcio": "Aguantar Quatre minuts de DD-EE ja costa una mica més. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DDEE_4"
+    ],
+    "es_fita": true,
+    "fita": {
+      "nom": "Taca-Tata",
+      "descripcio": "Domini de l'escala de 2",
+      "icona": "2️⃣",
+      "discourse_badge_id": 113,
+      "discourse_badge_name": "GiT_DDEE_al_beat"
+    },
+    "discourse_topic_id": null,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT DDEE Beat",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "id": "PERC_DEDx_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "DEDx",
+      "Beat"
+    ],
+    "titol": "DED al beat · 1 min",
+    "descripcio": "Tocar DED al beat amb mètronom fix durant 1 minut seguit. Pots fer EDE si eres surdo/a. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DEDx_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT DEDx Beat",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "id": "PERC_DEDx_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "DEDx",
+      "Beat"
+    ],
+    "titol": "DED al beat · 2 min",
+    "descripcio": "Tocar DED al beat amb mètronom fix durant 2 minut seguits. Pots fer EDE si eres surdo/a. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DEDx_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT DEDx Beat",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "id": "PERC_DEDx_3",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "DEDx",
+      "Resistència"
+    ],
+    "titol": "DED al beat · 3 min",
+    "descripcio": "Tocar DED al beat amb mètronom fix durant 3 minut seguit. Pots fer EDE si eres surdo/a. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DEDx_3"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT DEDx Beat",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "id": "PERC_DEDx_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "DEDx",
+      "Resistència"
+    ],
+    "titol": "DED al beat · 4 min",
+    "descripcio": "Tocar DED al beat amb mètronom fix durant 4 minut seguit. Pots fer EDE si eres surdo/a. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DEDx_4"
+    ],
+    "es_fita": true,
+    "fita": {
+      "nom": "Tapatam",
+      "descripcio": "Domini de l'escala de 3",
+      "icona": "3️⃣",
+      "discourse_badge_id": 114,
+      "discourse_badge_name": "GiT_DEDx_al_beat"
+    },
+    "discourse_topic_id": null,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT DEDx Beat",
+        "url": ""
+      }
+    ]
+  },
+  {
     "id": "PERC_PLD_1",
     "familia": "Percussió",
     "tags": [
@@ -227,7 +425,7 @@
       "Combinació"
     ],
     "titol": "PL-D al beat · 1 min",
-    "descripcio": "Combinar PL i D alternats al beat. Primer pas cap als patrons compostos.",
+    "descripcio": "Combinar PL i D alternats al beat. Primer pas cap als patrons compostos. 70 BPM Recomanat.",
     "prerequisits": [
       "PERC_DE_2"
     ],
@@ -250,7 +448,7 @@
       "Combinació"
     ],
     "titol": "PL-D al beat · 2 min",
-    "descripcio": "Dos minuts de PL-D sostingut.",
+    "descripcio": "Dos minuts de PL-D sostingut. 70 BPM Recomanat.",
     "prerequisits": [
       "PERC_PLD_1"
     ],
@@ -273,7 +471,7 @@
       "Resistència"
     ],
     "titol": "PL-D al beat · 3 min",
-    "descripcio": "Tres minuts de PL-D.",
+    "descripcio": "Tres minuts de PL-D. 70 BPM Recomanat.",
     "prerequisits": [
       "PERC_PLD_2"
     ],
@@ -295,8 +493,8 @@
       "PL-D",
       "Resistència"
     ],
-    "titol": "PL-D al beat · 5 min",
-    "descripcio": "Cinc minuts. PL-D assentat i fluid.",
+    "titol": "PL-D al beat · 4 min",
+    "descripcio": "Quatre minuts. PL-D assentat i fluid. 70 BPM Recomanat.",
     "prerequisits": [
       "PERC_PLD_3"
     ],
@@ -304,7 +502,7 @@
     "fita": {
       "nom": "Corredor I",
       "descripcio": "Domini del patró PL-D.",
-      "icona": "⚡",
+      "icona": "🫱",
       "discourse_badge_id": 110,
       "discourse_badge_name": "GiT_PLD_al_beat"
     },
@@ -326,7 +524,7 @@
       "Combinació"
     ],
     "titol": "PL-E al beat · 1 min",
-    "descripcio": "Combinar PL i E al beat. Simetria respecte a la branca PL-D.",
+    "descripcio": "Combinar PL i E al beat. Simetria respecte a la branca PL-D. 70 BPM Recomanat.",
     "prerequisits": [
       "PERC_DE_2"
     ],
@@ -349,7 +547,7 @@
       "Combinació"
     ],
     "titol": "PL-E al beat · 2 min",
-    "descripcio": "Dos minuts de PL-E sostingut.",
+    "descripcio": "Dos minuts de PL-E sostingut. 70 BPM Recomanat.",
     "prerequisits": [
       "PERC_PLE_1"
     ],
@@ -372,7 +570,7 @@
       "Resistència"
     ],
     "titol": "PL-E al beat · 3 min",
-    "descripcio": "Tres minuts de PL-E.",
+    "descripcio": "Tres minuts de PL-E. 70 BPM Recomanat.",
     "prerequisits": [
       "PERC_PLE_2"
     ],
@@ -394,8 +592,8 @@
       "PL-E",
       "Resistència"
     ],
-    "titol": "PL-E al beat · 5 min",
-    "descripcio": "Cinc minuts. PL-E assentat i fluid.",
+    "titol": "PL-E al beat · 4 min",
+    "descripcio": "Quatre minuts. PL-E assentat i fluid. 70 BPM Recomanat.",
     "prerequisits": [
       "PERC_PLE_3"
     ],
@@ -403,7 +601,7 @@
     "fita": {
       "nom": "Corredor II",
       "descripcio": "Domini del patró PL-E.",
-      "icona": "💎",
+      "icona": "🫲",
       "discourse_badge_id": 111,
       "discourse_badge_name": "GiT_PLE_al_beat"
     },
@@ -415,5 +613,845 @@
         "url": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/lD7J6GG6ZaE?si=uwtWfpriVsGJYmLV\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
       }
     ]
+  },
+  {
+    "id": "PERC_LAT_11_12_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 001 · El Pas · 11_12 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "GiT_INICI"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_12_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 001 · El Pas · 11_12 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_12_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 001 · El Pas · 11_12 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 002 · L'Espill · 11_21 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 002 · L'Espill · 11_21 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 002 · L'Espill · 11_21 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_12_11_21_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 003 · La Porta · 11_12_11_21 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_12_11_21_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 003 · La Porta · 11_12_11_21 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_11_21_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_12_11_21_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 003 · La Porta · 11_12_11_21 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_11_21_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_11_12_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 004 · La Porta Inversa · 11_21_11_12 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_11_21_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_11_12_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 004 · La Porta Inversa · 11_21_11_12 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_11_12_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_11_12_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 004 · La Porta Inversa · 11_21_11_12 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_11_12_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_12_22_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 005 · La Rampa · 11_21_12_22 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_11_12_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_12_22_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 005 · La Rampa · 11_21_12_22 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_12_22_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_12_22_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 005 · La Rampa · 11_21_12_22 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_12_22_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_12_21_22_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 006 · La Rampa Inversa · 11_12_21_22 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_12_22_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_12_21_22_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 006 · La Rampa Inversa · 11_12_21_22 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_21_22_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_12_21_22_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 006 · La Rampa Inversa · 11_12_21_22 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_21_22_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_14_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/4"
+    ],
+    "titol": "Lat. 007 · El Salt · 11_14 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_21_22_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_14_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/4"
+    ],
+    "titol": "Lat. 007 · El Salt · 11_14 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_14_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_14_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/4"
+    ],
+    "titol": "Lat. 007 · El Salt · 11_14 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_14_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_41_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/4"
+    ],
+    "titol": "Lat. 008 · El Salt Surdo · 11_41 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_14_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_41_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/4"
+    ],
+    "titol": "Lat. 008 · El Salt Surdo · 11_41 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_41_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_41_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/4"
+    ],
+    "titol": "Lat. 008 · El Salt Surdo · 11_41 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_41_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_12_14_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 009 · La Escala Dreta · 11_12_14 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_41_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_12_14_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 009 · La Escala Dreta · 11_12_14 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_14_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_12_14_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 009 · La Escala Dreta · 11_12_14 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_14_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_41_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 010 · La Escala Esquerra · 11_21_41 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_14_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_41_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 010 · La Escala Esquerra · 11_21_41 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_41_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_41_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 010 · La Escala Esquerra · 11_21_41 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_41_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_12_11_14_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 011 · El Tobogan · 11_12_11_14 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_41_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_12_11_14_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 011 · El Tobogan · 11_12_11_14 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_11_14_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_12_11_14_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 011 · El Tobogan · 11_12_11_14 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_11_14_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_11_41_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 012 · El Tobogan Invers · 11_21_11_41 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_11_14_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_11_41_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 012 · El Tobogan Invers · 11_21_11_41 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_11_41_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_11_41_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 012 · El Tobogan Invers · 11_21_11_41 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_11_41_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_12_22_24_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 013 · El Ventall · 11_12_22_24 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_11_41_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_12_22_24_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 013 · El Ventall · 11_12_22_24 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_22_24_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_12_22_24_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 013 · El Ventall · 11_12_22_24 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_22_24_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_22_42_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 014 · El Ventall Invers · 11_21_22_42 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_22_24_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_22_42_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 014 · El Ventall Invers · 11_21_22_42 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_22_42_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_22_42_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 014 · El Ventall Invers · 11_21_22_42 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_22_42_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_12_42_24_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 015 · El Cap de Serp · 11_21_12_42_24 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_22_42_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_12_42_24_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 015 · El Cap de Serp · 11_21_12_42_24 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_12_42_24_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_21_12_42_24_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 015 · El Cap de Serp · 11_21_12_42_24 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_12_42_24_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_12_21_24_42_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 016 · La Cua de Serp · 11_12_21_24_42 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_12_42_24_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_12_21_24_42_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 016 · La Cua de Serp · 11_12_21_24_42 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_21_24_42_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
+  },
+  {
+    "id": "PERC_LAT_11_12_21_24_42_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 016 · La Cua de Serp · 11_12_21_24_42 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_21_24_42_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "material": []
   }
 ]
