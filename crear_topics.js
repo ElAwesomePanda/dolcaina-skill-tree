@@ -109,15 +109,19 @@ function generarCos(row) {
   return lines.join('\n');
 }
 
+function discourseHeaders() {
+  return {
+    'Content-Type': 'application/json',
+    'Api-Key':      CONFIG.DISCOURSE_API_KEY,
+    'Api-Username': CONFIG.DISCOURSE_API_USERNAME,
+  };
+}
+
 async function crearTopic(row) {
   const base = CONFIG.DISCOURSE_BASE_URL.replace(/\/$/, '');
   const res = await fetch(`${base}/posts.json`, {
     method: 'POST',
-    headers: {
-      'Content-Type':  'application/json',
-      'Api-Key':       CONFIG.DISCOURSE_API_KEY,
-      'Api-Username':  CONFIG.DISCOURSE_API_USERNAME,
-    },
+    headers: discourseHeaders(),
     body: JSON.stringify({
       title:    row.titol,
       raw:      generarCos(row),
@@ -129,6 +133,26 @@ async function crearTopic(row) {
     throw new Error(`HTTP ${res.status}: ${JSON.stringify(data).substring(0, 200)}`);
   }
   return data.topic_id;
+}
+
+async function actualitzarTopic(topicId, row) {
+  const base = CONFIG.DISCOURSE_BASE_URL.replace(/\/$/, '');
+  // Obtenim l'ID del primer post del topic
+  const topicRes = await fetch(`${base}/t/${topicId}.json`, { headers: discourseHeaders() });
+  if (!topicRes.ok) throw new Error(`HTTP ${topicRes.status} en llegir topic ${topicId}`);
+  const topicData = await topicRes.json();
+  const postId = topicData.post_stream.posts[0].id;
+
+  // Actualitzem el contingut del post
+  const updateRes = await fetch(`${base}/posts/${postId}.json`, {
+    method: 'PUT',
+    headers: discourseHeaders(),
+    body: JSON.stringify({ post: { raw: generarCos(row) } }),
+  });
+  if (!updateRes.ok) {
+    const err = await updateRes.text();
+    throw new Error(`HTTP ${updateRes.status}: ${err.substring(0, 200)}`);
+  }
 }
 
 // ─── NODES.JSON ──────────────────────────────────────────────────────────────
@@ -207,36 +231,52 @@ async function main() {
   const rows = parseCsv(csvText);
   const headers = Object.keys(rows[0]);
 
-  const pendents = rows.filter(r => r.id && !r.discourse_topic_id);
-  const saltats  = rows.filter(r => r.id &&  r.discourse_topic_id);
+  const pendents    = rows.filter(r => r.id && !r.discourse_topic_id);
+  const ambTopicId  = rows.filter(r => r.id &&  r.discourse_topic_id);
 
-  console.log(`Nodes totals:  ${rows.filter(r => r.id).length}`);
-  console.log(`Ja amb topic:  ${saltats.length}`);
-  console.log(`Pendents:      ${pendents.length}`);
+  console.log(`Nodes totals:      ${rows.filter(r => r.id).length}`);
+  console.log(`Ja amb topic ID:   ${ambTopicId.length}`);
+  console.log(`Sense topic ID:    ${pendents.length}`);
 
-  if (pendents.length === 0) {
-    console.log('\nRes a crear. Generant nodes.json...');
-  } else {
-    console.log('\nCreant topics a Discourse...');
-  }
-
+  const errorsCreacio    = [];
+  const errorsActualitza = [];
   let creats = 0;
-  const errors = [];
+  let actualitzats = 0;
 
-  for (const row of pendents) {
-    try {
-      const topicId = await crearTopic(row);
-      row.discourse_topic_id = String(topicId);
-      console.log(`  ✓ ${row.id} → topic ${topicId}`);
-      creats++;
-      await new Promise(r => setTimeout(r, 700)); // rate limit
-    } catch (e) {
-      console.error(`  ✗ ${row.id}: ${e.message}`);
-      errors.push(row.id);
+  // 1. Actualitzar topics existents
+  if (ambTopicId.length > 0) {
+    console.log('\nActualitzant topics existents a Discourse...');
+    for (const row of ambTopicId) {
+      try {
+        await actualitzarTopic(parseInt(row.discourse_topic_id), row);
+        console.log(`  ✓ ${row.id} (topic ${row.discourse_topic_id}) actualitzat`);
+        actualitzats++;
+        await new Promise(r => setTimeout(r, 700));
+      } catch (e) {
+        console.error(`  ✗ ${row.id}: ${e.message}`);
+        errorsActualitza.push(row.id);
+      }
     }
   }
 
-  // Actualitzar CSV si hi ha canvis
+  // 2. Crear topics nous (nodes sense discourse_topic_id)
+  if (pendents.length > 0) {
+    console.log('\nCreant topics nous a Discourse...');
+    for (const row of pendents) {
+      try {
+        const topicId = await crearTopic(row);
+        row.discourse_topic_id = String(topicId);
+        console.log(`  ✓ ${row.id} → topic ${topicId}`);
+        creats++;
+        await new Promise(r => setTimeout(r, 700));
+      } catch (e) {
+        console.error(`  ✗ ${row.id}: ${e.message}`);
+        errorsCreacio.push(row.id);
+      }
+    }
+  }
+
+  // Actualitzar CSV si hi ha IDs nous
   if (creats > 0) {
     writeFileSync('./GiT_Nodes.csv', serializeCsv(rows, headers), 'utf8');
     console.log(`\nCSV actualitzat (${creats} IDs nous).`);
@@ -254,6 +294,9 @@ async function main() {
     });
     console.log(sep);
   }
+
+  console.log(`\nResum: ${actualitzats} actualitzats, ${creats} creats.`);
+  const errors = [...errorsCreacio, ...errorsActualitza];
 
   // Generar nodes.json
   const nodes = rows.filter(r => r.id).map(filelaANode);
