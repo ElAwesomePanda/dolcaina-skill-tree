@@ -320,7 +320,7 @@ h1 {
   background: var(--bg2);
   border: 1px solid var(--gold-dim);
   border-radius: 4px;
-  max-width: 500px;
+  max-width: 620px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
@@ -447,6 +447,156 @@ h1 {
 }
 .modal-discourse-link:hover { color: var(--gold); }
 
+/* Video embed */
+.video-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 6px;
+}
+.video-wrapper {
+  margin-bottom: 8px;
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid #2a2518;
+  background: #000;
+}
+.video-wrapper iframe {
+  width: 100%;
+  aspect-ratio: 16/9;
+  height: auto;
+  display: block;
+  border: none;
+}
+
+/* Metrònom */
+.metronom-panel {
+  position: fixed;
+  bottom: 24px; right: 16px;
+  z-index: 200;
+  background: var(--bg2);
+  border: 1px solid var(--gold-dim);
+  border-radius: 4px;
+  width: 230px;
+  display: none;
+  flex-direction: column;
+}
+.metronom-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.metronom-panel.open { display: flex; }
+.metronom-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px 8px;
+  border-bottom: 1px solid #2a2518;
+}
+.metronom-panel-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+}
+.metronom-close {
+  background: none; border: none;
+  color: var(--cream-dim); font-size: 1rem;
+  cursor: pointer; line-height: 1;
+}
+.metronom-close:hover { color: var(--cream); }
+.metronom-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.metronom-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+}
+.metronom-bpm-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.metronom-bpm-input {
+  background: var(--bg);
+  border: 1px solid #3a3428;
+  color: var(--cream);
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  width: 68px;
+  text-align: center;
+  padding: 3px 6px;
+  border-radius: 3px;
+}
+.metronom-bpm-input:focus { outline: none; border-color: var(--gold-dim); }
+.metronom-slider {
+  width: 100%;
+  accent-color: var(--gold);
+  cursor: pointer;
+}
+.metronom-timer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.metronom-select {
+  background: var(--bg);
+  border: 1px solid #3a3428;
+  color: var(--cream);
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.82rem;
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+.metronom-select:focus { outline: none; border-color: var(--gold-dim); }
+.metronom-beat-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.metronom-beat {
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  background: #2a2518;
+  border: 1px solid #3a3428;
+  flex-shrink: 0;
+  transition: background 0.04s, border-color 0.04s;
+}
+.metronom-beat.on-down { background: var(--gold-light); border-color: var(--gold-light); }
+.metronom-beat.on { background: var(--gold-dim); border-color: var(--gold-dim); }
+.metronom-countdown {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  color: var(--cream-dim);
+  letter-spacing: 0.05em;
+}
+.metronom-start-btn {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  padding: 9px;
+  border: 1px solid var(--gold-dim);
+  background: transparent;
+  color: var(--gold);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+.metronom-start-btn:hover { background: rgba(201,168,76,0.1); }
+.metronom-start-btn.running { border-color: #8c4a4a; color: #c47a7a; }
+.metronom-start-btn.running:hover { background: rgba(140,74,74,0.1); }
+
 /* Zoom controls */
 .zoom-controls {
   position: fixed;
@@ -492,6 +642,7 @@ h1 {
     <span class="discourse-status" id="discourseStatus"></span>
     <div style="flex:1"></div>
     <button class="ctrl-btn" onclick="jumpToLastUnlocked()">▶ Últim node</button>
+    <button class="ctrl-btn" onclick="toggleMetronom()">♩ Mètronom</button>
   </div>
   <div class="progress-bar-wrap">
     <span class="progress-label">Progrés</span>
@@ -526,6 +677,36 @@ h1 {
     <a class="modal-discourse-link" id="modalDiscourseLink" href="#" target="_blank">Veure al fòrum de L'Ardada →</a>
     <div class="material-list" id="modalMaterials"></div>
     <button class="modal-complete-btn" id="modalCompleteBtn" onclick="toggleComplete()"></button>
+  </div>
+</div>
+
+<!-- Metrònom -->
+<div class="metronom-panel" id="metronomPanel">
+  <div class="metronom-header">
+    <span class="metronom-panel-title">♩ Mètronom</span>
+    <button class="metronom-close" onclick="toggleMetronom()">✕</button>
+  </div>
+  <div class="metronom-body">
+    <div class="metronom-bpm-row">
+      <span class="metronom-label">BPM</span>
+      <input class="metronom-bpm-input" type="number" id="metroBpmNum" value="80" min="40" max="240">
+    </div>
+    <input class="metronom-slider" type="range" id="metroBpmRange" min="40" max="240" value="80">
+    <div class="metronom-timer-row">
+      <span class="metronom-label">Timer</span>
+      <select class="metronom-select" id="metroTimer">
+        <option value="0">Lliure</option>
+        <option value="60">1 min</option>
+        <option value="120">2 min</option>
+        <option value="180">3 min</option>
+        <option value="300">5 min</option>
+      </select>
+    </div>
+    <div class="metronom-beat-row">
+      <div class="metronom-beat" id="metroBeat"></div>
+      <span class="metronom-countdown" id="metroCountdown"></span>
+    </div>
+    <button class="metronom-start-btn" id="metroStartBtn" onclick="startStopMetronom()">▶ Iniciar</button>
   </div>
 </div>
 
@@ -827,12 +1008,23 @@ function openModal(id) {
   matList.innerHTML = '';
   const icons = {pdf:'📄',mp3:'🎵',mp4:'🎬',link:'🔗'};
   node.material.forEach(m => {
-    const a = document.createElement('a');
-    a.href = m.url; a.className = 'material-item'; a.target = '_blank';
-    a.innerHTML = `<span class="mat-icon">${icons[m.tipus]||'📎'}</span>
-      <span class="mat-name">${m.nom}</span>
-      <span class="mat-type">${m.tipus.toUpperCase()}</span>`;
-    matList.appendChild(a);
+    if (m.tipus === 'video') {
+      const title = document.createElement('div');
+      title.className = 'video-title';
+      title.textContent = m.nom;
+      matList.appendChild(title);
+      const wrapper = document.createElement('div');
+      wrapper.className = 'video-wrapper';
+      wrapper.innerHTML = m.url;
+      matList.appendChild(wrapper);
+    } else {
+      const a = document.createElement('a');
+      a.href = m.url; a.className = 'material-item'; a.target = '_blank';
+      a.innerHTML = `<span class="mat-icon">${icons[m.tipus]||'📎'}</span>
+        <span class="mat-name">${m.nom}</span>
+        <span class="mat-type">${m.tipus.toUpperCase()}</span>`;
+      matList.appendChild(a);
+    }
   });
 
   const btn = document.getElementById('modalCompleteBtn');
@@ -917,6 +1109,112 @@ async function syncDiscourse() {
     status.className = 'discourse-status err';
   }
 }
+
+// ─── METRÒNOM ────────────────────────────────────────────────────────────────
+let metroAudioCtx = null;
+let metroRunning = false;
+let metroBeatCount = 0;
+let metroNextBeatTime = 0;
+let metroSchedulerTimeout = null;
+let metroTimerEnd = null;
+let metroTimerInterval = null;
+
+function toggleMetronom() {
+  document.getElementById('metronomPanel').classList.toggle('open');
+}
+
+function getMetroBpm() {
+  return Math.max(40, Math.min(240, parseInt(document.getElementById('metroBpmNum').value) || 80));
+}
+
+function playClick(time, isDownbeat) {
+  const osc = metroAudioCtx.createOscillator();
+  const gain = metroAudioCtx.createGain();
+  osc.connect(gain);
+  gain.connect(metroAudioCtx.destination);
+  osc.frequency.value = isDownbeat ? 600 : 1000;
+  const vol = isDownbeat ? 0.5 : 0.3;
+  const dur = isDownbeat ? 0.055 : 0.04;
+  gain.gain.setValueAtTime(vol, time);
+  gain.gain.exponentialRampToValueAtTime(0.001, time + dur);
+  osc.start(time);
+  osc.stop(time + dur);
+}
+
+function flashBeat(isDownbeat) {
+  const dot = document.getElementById('metroBeat');
+  dot.classList.add(isDownbeat ? 'on-down' : 'on');
+  setTimeout(() => dot.classList.remove('on-down', 'on'), 80);
+}
+
+function metroSchedule() {
+  if (!metroRunning) return;
+  const beatInterval = 60 / getMetroBpm();
+  const scheduleAhead = 0.15;
+  while (metroNextBeatTime < metroAudioCtx.currentTime + scheduleAhead) {
+    const isDownbeat = metroBeatCount % 4 === 0;
+    playClick(metroNextBeatTime, isDownbeat);
+    const delay = Math.max(0, (metroNextBeatTime - metroAudioCtx.currentTime) * 1000);
+    const captured = isDownbeat;
+    setTimeout(() => { if (metroRunning) flashBeat(captured); }, delay);
+    metroNextBeatTime += beatInterval;
+    metroBeatCount++;
+  }
+  metroSchedulerTimeout = setTimeout(metroSchedule, 50);
+}
+
+function startStopMetronom() {
+  metroRunning ? stopMetronom() : startMetronom();
+}
+
+function startMetronom() {
+  if (!metroAudioCtx) metroAudioCtx = new AudioContext();
+  if (metroAudioCtx.state === 'suspended') metroAudioCtx.resume();
+  metroRunning = true;
+  metroBeatCount = 0;
+  metroNextBeatTime = metroAudioCtx.currentTime + 0.05;
+  const btn = document.getElementById('metroStartBtn');
+  btn.textContent = '■ Parar';
+  btn.classList.add('running');
+  const secs = parseInt(document.getElementById('metroTimer').value);
+  if (secs > 0) {
+    metroTimerEnd = Date.now() + secs * 1000;
+    updateMetroCountdown();
+    metroTimerInterval = setInterval(() => {
+      if (!metroRunning) return;
+      if (Date.now() >= metroTimerEnd) stopMetronom();
+      else updateMetroCountdown();
+    }, 250);
+  }
+  metroSchedule();
+}
+
+function stopMetronom() {
+  metroRunning = false;
+  clearTimeout(metroSchedulerTimeout);
+  clearInterval(metroTimerInterval);
+  metroTimerEnd = null;
+  const btn = document.getElementById('metroStartBtn');
+  btn.textContent = '▶ Iniciar';
+  btn.classList.remove('running');
+  document.getElementById('metroCountdown').textContent = '';
+  document.getElementById('metroBeat').classList.remove('on', 'on-down');
+}
+
+function updateMetroCountdown() {
+  if (!metroTimerEnd) return;
+  const rem = Math.max(0, Math.ceil((metroTimerEnd - Date.now()) / 1000));
+  const m = Math.floor(rem / 60), s = rem % 60;
+  document.getElementById('metroCountdown').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+}
+
+document.getElementById('metroBpmRange').addEventListener('input', function() {
+  document.getElementById('metroBpmNum').value = this.value;
+});
+document.getElementById('metroBpmNum').addEventListener('input', function() {
+  const v = Math.max(40, Math.min(240, parseInt(this.value) || 80));
+  document.getElementById('metroBpmRange').value = v;
+});
 
 // ─── INIT ────────────────────────────────────────────────────────────────────
 if (discourseUser) document.getElementById('discourseUser').value = discourseUser;

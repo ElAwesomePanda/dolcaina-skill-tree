@@ -58,6 +58,15 @@ function serializeCsv(rows, headers) {
 
 // ─── DISCOURSE ───────────────────────────────────────────────────────────────
 
+function extractYouTubeUrl(iframeHtml) {
+  const srcMatch = iframeHtml.match(/src="([^"]+)"/);
+  if (!srcMatch) return null;
+  const embedUrl = srcMatch[1];
+  const idMatch = embedUrl.match(/\/embed\/([^?&]+)/);
+  if (!idMatch) return embedUrl;
+  return `https://www.youtube.com/watch?v=${idMatch[1]}`;
+}
+
 function generarCos(row) {
   const lines = [];
   lines.push(row.descripcio);
@@ -75,8 +84,15 @@ function generarCos(row) {
     lines.push('');
     lines.push('## Material didàctic');
     materials.forEach(m => {
-      const etiqueta = m.url ? `[${m.nom}](${m.url})` : m.nom;
-      lines.push(`- **${m.tipus.toUpperCase()}** · ${etiqueta}`);
+      if (m.tipus === 'video') {
+        const ytUrl = extractYouTubeUrl(m.url);
+        lines.push('');
+        lines.push(`**${m.nom}**`);
+        if (ytUrl) lines.push(ytUrl); // Discourse fa l'embed automàticament
+      } else {
+        const etiqueta = m.url ? `[${m.nom}](${m.url})` : m.nom;
+        lines.push(`- **${m.tipus.toUpperCase()}** · ${etiqueta}`);
+      }
     });
   }
 
@@ -224,6 +240,19 @@ async function main() {
   if (creats > 0) {
     writeFileSync('./GiT_Nodes.csv', serializeCsv(rows, headers), 'utf8');
     console.log(`\nCSV actualitzat (${creats} IDs nous).`);
+  }
+
+  // Resum de topics creats per a actualitzar el CSV manualment si cal
+  const creatsOk = pendents.filter(r => r.discourse_topic_id);
+  if (creatsOk.length > 0) {
+    const sep = '═'.repeat(44);
+    console.log(`\n${sep}`);
+    console.log(' TOPICS CREATS — copia al CSV si cal');
+    console.log(sep);
+    creatsOk.forEach(r => {
+      console.log(` ${r.id.padEnd(22)} →  ${r.discourse_topic_id}`);
+    });
+    console.log(sep);
   }
 
   // Generar nodes.json
