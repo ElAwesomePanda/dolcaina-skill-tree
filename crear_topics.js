@@ -227,9 +227,20 @@ async function pushAGitHub(contingut) {
 // ─── MAIN ─────────────────────────────────────────────────────────────────────
 
 async function main() {
+  const soloNodes = process.argv.includes('--only-nodes');
+
   const csvText = readFileSync('./GiT_Nodes.csv', 'utf8');
   const rows = parseCsv(csvText);
   const headers = Object.keys(rows[0]);
+
+  // Mode ràpid: només regenerar nodes.json sense tocar Discourse ni GitHub
+  if (soloNodes) {
+    const nodes = rows.filter(r => r.id).map(filelaANode);
+    const json  = JSON.stringify(nodes, null, 2);
+    writeFileSync('./nodes.json', json, 'utf8');
+    console.log(`nodes.json generat (${nodes.length} nodes). [--only-nodes, sense Discourse ni GitHub]`);
+    return;
+  }
 
   const pendents    = rows.filter(r => r.id && !r.discourse_topic_id);
   const ambTopicId  = rows.filter(r => r.id &&  r.discourse_topic_id);
