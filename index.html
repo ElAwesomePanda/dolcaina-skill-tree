@@ -749,9 +749,15 @@ function computeLayout() {
 
   function getLayer(id) {
     const n = nodeMap[id];
+    if (!n) return 0;
     if (n.layer >= 0) return n.layer;
-    if (n.prerequisits.length === 0) { n.layer = 0; return 0; }
-    n.layer = Math.max(...n.prerequisits.map(p => getLayer(p))) + 1;
+    if (n._computing) return 0; // cicle detectat, tallem
+    n._computing = true;
+    const validPrereqs = n.prerequisits.filter(p => nodeMap[p]);
+    n.layer = validPrereqs.length
+      ? Math.max(...validPrereqs.map(p => getLayer(p))) + 1
+      : 0;
+    n._computing = false;
     return n.layer;
   }
   NODES.forEach(n => getLayer(n.id));
