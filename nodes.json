@@ -229,7 +229,7 @@
     "titol": "DD-EE al beat · 1 min",
     "descripcio": "Alternar DD i EE al beat durant 1 minut. Comencem a fraccionar els temps. 70 BPM Recomanat.",
     "prerequisits": [
-      "PERC_DDEE_1"
+      "PERC_DE_3"
     ],
     "es_fita": false,
     "discourse_topic_id": null,
@@ -252,7 +252,7 @@
     "titol": "DD-EE al beat · 2 min",
     "descripcio": "Dos minuts d'alternança DD-EE. 70 BPM Recomanat.",
     "prerequisits": [
-      "PERC_DDEE_2"
+      "PERC_DDEE_1"
     ],
     "es_fita": false,
     "discourse_topic_id": null,
@@ -275,7 +275,7 @@
     "titol": "DD-EE al beat · 3 min",
     "descripcio": "Tres minuts de DD-EE. Fiquem a prova la resistència. 70 BPM Recomanat.",
     "prerequisits": [
-      "PERC_DDEE_3"
+      "PERC_DDEE_2"
     ],
     "es_fita": false,
     "discourse_topic_id": null,
@@ -298,7 +298,7 @@
     "titol": "DD-EE al beat · 4 min",
     "descripcio": "Aguantar Quatre minuts de DD-EE ja costa una mica més. 70 BPM Recomanat.",
     "prerequisits": [
-      "PERC_DDEE_4"
+      "PERC_DDEE_3"
     ],
     "es_fita": true,
     "fita": {
@@ -328,7 +328,7 @@
     "titol": "DED al beat · 1 min",
     "descripcio": "Tocar DED al beat amb mètronom fix durant 1 minut seguit. Pots fer EDE si eres surdo/a. 70 BPM Recomanat.",
     "prerequisits": [
-      "PERC_DEDx_1"
+      "PERC_DE_3"
     ],
     "es_fita": false,
     "discourse_topic_id": null,
@@ -351,7 +351,7 @@
     "titol": "DED al beat · 2 min",
     "descripcio": "Tocar DED al beat amb mètronom fix durant 2 minut seguits. Pots fer EDE si eres surdo/a. 70 BPM Recomanat.",
     "prerequisits": [
-      "PERC_DEDx_2"
+      "PERC_DEDx_1"
     ],
     "es_fita": false,
     "discourse_topic_id": null,
@@ -374,7 +374,7 @@
     "titol": "DED al beat · 3 min",
     "descripcio": "Tocar DED al beat amb mètronom fix durant 3 minut seguit. Pots fer EDE si eres surdo/a. 70 BPM Recomanat.",
     "prerequisits": [
-      "PERC_DEDx_3"
+      "PERC_DEDx_2"
     ],
     "es_fita": false,
     "discourse_topic_id": null,
@@ -397,7 +397,7 @@
     "titol": "DED al beat · 4 min",
     "descripcio": "Tocar DED al beat amb mètronom fix durant 4 minut seguit. Pots fer EDE si eres surdo/a. 70 BPM Recomanat.",
     "prerequisits": [
-      "PERC_DEDx_4"
+      "PERC_DEDx_3"
     ],
     "es_fita": true,
     "fita": {
