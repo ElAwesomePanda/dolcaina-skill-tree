@@ -134,6 +134,8 @@ h1 {
   white-space: nowrap;
 }
 .ctrl-btn:hover { background: rgba(201,168,76,0.1); }
+.ctrl-btn-danger { border-color: #6b3a3a; color: #c47a7a; }
+.ctrl-btn-danger:hover { background: rgba(140,74,74,0.12); border-color: #8c4a4a; }
 
 .discourse-status {
   font-size: 0.7rem;
@@ -643,6 +645,7 @@ h1 {
     <div style="flex:1"></div>
     <button class="ctrl-btn" onclick="jumpToLastUnlocked()">▶ Últim node</button>
     <button class="ctrl-btn" onclick="toggleMetronom()">♩ Mètronom</button>
+    <button class="ctrl-btn ctrl-btn-danger" onclick="resetNodes()">↺ Reset</button>
   </div>
   <div class="progress-bar-wrap">
     <span class="progress-label">Progrés</span>
@@ -699,6 +702,7 @@ h1 {
         <option value="60">1 min</option>
         <option value="120">2 min</option>
         <option value="180">3 min</option>
+        <option value="240">4 min</option>
         <option value="300">5 min</option>
       </select>
     </div>
@@ -1034,19 +1038,48 @@ function openModal(id) {
 }
 
 function closeModal() {
+  // Atura el vídeo buidant l'iframe abans de tancar
+  document.querySelectorAll('.video-wrapper').forEach(w => { w.innerHTML = ''; });
   document.getElementById('modalOverlay').classList.remove('open');
   currentNode = null;
 }
 function closeModalOutside(e) {
   if (e.target === document.getElementById('modalOverlay')) closeModal();
 }
+function getDescendants(id) {
+  const result = new Set();
+  function traverse(nid) {
+    NODES.forEach(n => {
+      if (n.prerequisits.includes(nid) && !result.has(n.id)) {
+        result.add(n.id);
+        traverse(n.id);
+      }
+    });
+  }
+  traverse(id);
+  return result;
+}
+
 function toggleComplete() {
   if (!currentNode) return;
   const id = currentNode.id;
-  if (completed.has(id)) { completed.delete(id); } else { completed.add(id); }
+  if (completed.has(id)) {
+    completed.delete(id);
+    // Desmarcar també tots els descendents
+    getDescendants(id).forEach(d => completed.delete(d));
+  } else {
+    completed.add(id);
+  }
   saveState();
   render();
   openModal(id);
+}
+
+function resetNodes() {
+  if (!confirm('Segur que vols reiniciar tot el progrés? Tots els nodes es marcaran com a no completats.')) return;
+  completed.clear();
+  saveState();
+  render();
 }
 
 // ─── PROGRESS ────────────────────────────────────────────────────────────────
@@ -1133,7 +1166,7 @@ function playClick(time, isDownbeat) {
   osc.connect(gain);
   gain.connect(metroAudioCtx.destination);
   osc.frequency.value = isDownbeat ? 600 : 1000;
-  const vol = isDownbeat ? 0.5 : 0.3;
+  const vol = isDownbeat ? 1.0 : 0.7;
   const dur = isDownbeat ? 0.055 : 0.04;
   gain.gain.setValueAtTime(vol, time);
   gain.gain.exponentialRampToValueAtTime(0.001, time + dur);
