@@ -1025,7 +1025,12 @@ function openModal(id) {
       matList.appendChild(title);
       const wrapper = document.createElement('div');
       wrapper.className = 'video-wrapper';
-      wrapper.innerHTML = m.url;
+      const ytMatch = m.url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?]+)/);
+      if (ytMatch) {
+        wrapper.innerHTML = `<iframe src="https://www.youtube.com/embed/${ytMatch[1]}" frameborder="0" allowfullscreen></iframe>`;
+      } else {
+        wrapper.innerHTML = m.url; // iframe HTML directe (format antic)
+      }
       matList.appendChild(wrapper);
     } else {
       const a = document.createElement('a');
