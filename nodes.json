@@ -39,7 +39,7 @@
       {
         "tipus": "video",
         "nom": "GiT PL Beat",
-        "url": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/aCL3gunnUFo?si=oV3xXdb5v3D5g6qr\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+        "url": "https://www.youtube.com/watch?v=aCL3gunnUFo"
       }
     ]
   },
@@ -62,7 +62,7 @@
       {
         "tipus": "video",
         "nom": "GiT PL Beat",
-        "url": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/aCL3gunnUFo?si=oV3xXdb5v3D5g6qr\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+        "url": "https://www.youtube.com/watch?v=aCL3gunnUFo"
       }
     ]
   },
@@ -85,7 +85,7 @@
       {
         "tipus": "video",
         "nom": "GiT PL Beat",
-        "url": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/aCL3gunnUFo?si=oV3xXdb5v3D5g6qr\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+        "url": "https://www.youtube.com/watch?v=aCL3gunnUFo"
       }
     ]
   },
@@ -104,7 +104,7 @@
     ],
     "es_fita": true,
     "fita": {
-      "nom": "Tabalemaster I",
+      "nom": "Plau i fa sol!",
       "descripcio": "Plau i fa sol!",
       "icona": "🌧️",
       "discourse_badge_id": 108,
@@ -115,7 +115,7 @@
       {
         "tipus": "video",
         "nom": "GiT PL Beat",
-        "url": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/aCL3gunnUFo?si=oV3xXdb5v3D5g6qr\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+        "url": "https://www.youtube.com/watch?v=aCL3gunnUFo"
       }
     ]
   },
@@ -138,7 +138,7 @@
       {
         "tipus": "video",
         "nom": "GiT DE Beat",
-        "url": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/lntQSf4-sEM?si=uu2uiBTkb1w-J4vJ\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+        "url": "https://www.youtube.com/watch?v=lntQSf4-sEM"
       }
     ]
   },
@@ -161,7 +161,7 @@
       {
         "tipus": "video",
         "nom": "GiT DE Beat",
-        "url": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/lntQSf4-sEM?si=uu2uiBTkb1w-J4vJ\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+        "url": "https://www.youtube.com/watch?v=lntQSf4-sEM"
       }
     ]
   },
@@ -184,7 +184,7 @@
       {
         "tipus": "video",
         "nom": "GiT DE Beat",
-        "url": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/lntQSf4-sEM?si=uu2uiBTkb1w-J4vJ\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+        "url": "https://www.youtube.com/watch?v=lntQSf4-sEM"
       }
     ]
   },
@@ -203,7 +203,7 @@
     ],
     "es_fita": true,
     "fita": {
-      "nom": "Rapatam I",
+      "nom": "Domini de l'escala de 1",
       "descripcio": "Domini de l'escala de 1",
       "icona": "1️⃣",
       "discourse_badge_id": 109,
@@ -214,7 +214,7 @@
       {
         "tipus": "video",
         "nom": "GiT DE Beat",
-        "url": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/lntQSf4-sEM?si=uu2uiBTkb1w-J4vJ\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+        "url": "https://www.youtube.com/watch?v=lntQSf4-sEM"
       }
     ]
   },
@@ -232,12 +232,12 @@
       "PERC_DE_3"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
+    "discourse_topic_id": 637,
     "material": [
       {
         "tipus": "video",
         "nom": "GiT DDEE Beat",
-        "url": ""
+        "url": "https://www.youtube.com/watch?v=GwAx7YioMhk"
       }
     ]
   },
@@ -255,12 +255,12 @@
       "PERC_DDEE_1"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
+    "discourse_topic_id": 638,
     "material": [
       {
         "tipus": "video",
         "nom": "GiT DDEE Beat",
-        "url": ""
+        "url": "https://www.youtube.com/watch?v=GwAx7YioMhk"
       }
     ]
   },
@@ -278,12 +278,12 @@
       "PERC_DDEE_2"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
+    "discourse_topic_id": 639,
     "material": [
       {
         "tipus": "video",
         "nom": "GiT DDEE Beat",
-        "url": ""
+        "url": "https://www.youtube.com/watch?v=GwAx7YioMhk"
       }
     ]
   },
@@ -302,18 +302,18 @@
     ],
     "es_fita": true,
     "fita": {
-      "nom": "Taca-Tata",
+      "nom": "Domini de l'escala de 2",
       "descripcio": "Domini de l'escala de 2",
       "icona": "2️⃣",
       "discourse_badge_id": 113,
       "discourse_badge_name": "GiT_DDEE_al_beat"
     },
-    "discourse_topic_id": null,
+    "discourse_topic_id": 640,
     "material": [
       {
         "tipus": "video",
         "nom": "GiT DDEE Beat",
-        "url": ""
+        "url": "https://www.youtube.com/watch?v=GwAx7YioMhk"
       }
     ]
   },
@@ -331,12 +331,12 @@
       "PERC_DE_3"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
+    "discourse_topic_id": 641,
     "material": [
       {
         "tipus": "video",
         "nom": "GiT DEDx Beat",
-        "url": ""
+        "url": "https://www.youtube.com/watch?v=f3JjoxyOcB8"
       }
     ]
   },
@@ -354,12 +354,12 @@
       "PERC_DEDx_1"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
+    "discourse_topic_id": 642,
     "material": [
       {
         "tipus": "video",
         "nom": "GiT DEDx Beat",
-        "url": ""
+        "url": "https://www.youtube.com/watch?v=f3JjoxyOcB8"
       }
     ]
   },
@@ -377,12 +377,12 @@
       "PERC_DEDx_2"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
+    "discourse_topic_id": 643,
     "material": [
       {
         "tipus": "video",
         "nom": "GiT DEDx Beat",
-        "url": ""
+        "url": "https://www.youtube.com/watch?v=f3JjoxyOcB8"
       }
     ]
   },
@@ -401,18 +401,18 @@
     ],
     "es_fita": true,
     "fita": {
-      "nom": "Tapatam",
+      "nom": "Domini de l'escala de 3",
       "descripcio": "Domini de l'escala de 3",
       "icona": "3️⃣",
       "discourse_badge_id": 114,
       "discourse_badge_name": "GiT_DEDx_al_beat"
     },
-    "discourse_topic_id": null,
+    "discourse_topic_id": 644,
     "material": [
       {
         "tipus": "video",
         "nom": "GiT DEDx Beat",
-        "url": ""
+        "url": "https://www.youtube.com/watch?v=f3JjoxyOcB8"
       }
     ]
   },
@@ -435,7 +435,7 @@
       {
         "tipus": "video",
         "nom": "GiT PLD Beat",
-        "url": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/0z0r_n_VOH4?si=ojwIBsPPEwxqi7Tu\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+        "url": "https://www.youtube.com/watch?v=0z0r_n_VOH4"
       }
     ]
   },
@@ -458,7 +458,7 @@
       {
         "tipus": "video",
         "nom": "GiT PLD Beat",
-        "url": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/0z0r_n_VOH4?si=ojwIBsPPEwxqi7Tu\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+        "url": "https://www.youtube.com/watch?v=0z0r_n_VOH4"
       }
     ]
   },
@@ -481,7 +481,7 @@
       {
         "tipus": "video",
         "nom": "GiT PLD Beat",
-        "url": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/0z0r_n_VOH4?si=ojwIBsPPEwxqi7Tu\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+        "url": "https://www.youtube.com/watch?v=0z0r_n_VOH4"
       }
     ]
   },
@@ -500,7 +500,7 @@
     ],
     "es_fita": true,
     "fita": {
-      "nom": "Corredor I",
+      "nom": "Domini del patró PL-D.",
       "descripcio": "Domini del patró PL-D.",
       "icona": "🫱",
       "discourse_badge_id": 110,
@@ -511,7 +511,7 @@
       {
         "tipus": "video",
         "nom": "GiT PLD Beat",
-        "url": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/0z0r_n_VOH4?si=ojwIBsPPEwxqi7Tu\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+        "url": "https://www.youtube.com/watch?v=0z0r_n_VOH4"
       }
     ]
   },
@@ -534,7 +534,7 @@
       {
         "tipus": "video",
         "nom": "GiT PLE Beat",
-        "url": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/lD7J6GG6ZaE?si=uwtWfpriVsGJYmLV\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+        "url": "https://www.youtube.com/watch?v=lD7J6GG6ZaE"
       }
     ]
   },
@@ -557,7 +557,7 @@
       {
         "tipus": "video",
         "nom": "GiT PLE Beat",
-        "url": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/lD7J6GG6ZaE?si=uwtWfpriVsGJYmLV\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+        "url": "https://www.youtube.com/watch?v=lD7J6GG6ZaE"
       }
     ]
   },
@@ -580,7 +580,7 @@
       {
         "tipus": "video",
         "nom": "GiT PLE Beat",
-        "url": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/lD7J6GG6ZaE?si=uwtWfpriVsGJYmLV\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+        "url": "https://www.youtube.com/watch?v=lD7J6GG6ZaE"
       }
     ]
   },
@@ -599,7 +599,7 @@
     ],
     "es_fita": true,
     "fita": {
-      "nom": "Corredor II",
+      "nom": "Domini del patró PL-E.",
       "descripcio": "Domini del patró PL-E.",
       "icona": "🫲",
       "discourse_badge_id": 111,
@@ -610,7 +610,7 @@
       {
         "tipus": "video",
         "nom": "GiT PLE Beat",
-        "url": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/lD7J6GG6ZaE?si=uwtWfpriVsGJYmLV\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+        "url": "https://www.youtube.com/watch?v=lD7J6GG6ZaE"
       }
     ]
   },
@@ -628,8 +628,14 @@
       "GiT_INICI"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
-    "material": []
+    "discourse_topic_id": 645,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 12",
+        "url": "https://www.youtube.com/watch?v=3y1xJ0smDMU"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_12_2",
@@ -645,8 +651,14 @@
       "PERC_LAT_11_12_1"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
-    "material": []
+    "discourse_topic_id": 646,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 12",
+        "url": "https://www.youtube.com/watch?v=3y1xJ0smDMU"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_12_4",
@@ -662,8 +674,14 @@
       "PERC_LAT_11_12_2"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
-    "material": []
+    "discourse_topic_id": 647,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 12",
+        "url": "https://www.youtube.com/watch?v=3y1xJ0smDMU"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_1",
@@ -679,8 +697,14 @@
       "PERC_LAT_11_12_1"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
-    "material": []
+    "discourse_topic_id": 648,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 21",
+        "url": "https://www.youtube.com/watch?v=-Mn92eL39Qo"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_2",
@@ -696,8 +720,14 @@
       "PERC_LAT_11_21_1"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
-    "material": []
+    "discourse_topic_id": 649,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 21",
+        "url": "https://www.youtube.com/watch?v=-Mn92eL39Qo"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_4",
@@ -713,8 +743,14 @@
       "PERC_LAT_11_21_2"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
-    "material": []
+    "discourse_topic_id": 650,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 21",
+        "url": "https://www.youtube.com/watch?v=-Mn92eL39Qo"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_12_11_21_1",
@@ -730,8 +766,14 @@
       "PERC_LAT_11_21_1"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
-    "material": []
+    "discourse_topic_id": 651,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 12 11 21",
+        "url": "https://www.youtube.com/watch?v=vD0bwn4XtvU"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_12_11_21_2",
@@ -747,8 +789,14 @@
       "PERC_LAT_11_12_11_21_1"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
-    "material": []
+    "discourse_topic_id": 652,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 12 11 21",
+        "url": "https://www.youtube.com/watch?v=vD0bwn4XtvU"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_12_11_21_4",
@@ -764,8 +812,14 @@
       "PERC_LAT_11_12_11_21_2"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
-    "material": []
+    "discourse_topic_id": 653,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 12 11 21",
+        "url": "https://www.youtube.com/watch?v=vD0bwn4XtvU"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_11_12_1",
@@ -1031,7 +1085,7 @@
       "1/2",
       "1/4"
     ],
-    "titol": "Lat. 009 · La Escala Dreta · 11_12_14 · 1 min",
+    "titol": "Lat. 009 · L'Escala Dreta · 11_12_14 · 1 min",
     "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
     "prerequisits": [
       "PERC_LAT_11_41_1"
@@ -1049,7 +1103,7 @@
       "1/2",
       "1/4"
     ],
-    "titol": "Lat. 009 · La Escala Dreta · 11_12_14 · 2 min",
+    "titol": "Lat. 009 · L'Escala Dreta · 11_12_14 · 2 min",
     "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
     "prerequisits": [
       "PERC_LAT_11_12_14_1"
@@ -1067,7 +1121,7 @@
       "1/2",
       "1/4"
     ],
-    "titol": "Lat. 009 · La Escala Dreta · 11_12_14 · 4 min",
+    "titol": "Lat. 009 · L'Escala Dreta · 11_12_14 · 4 min",
     "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
     "prerequisits": [
       "PERC_LAT_11_12_14_2"
@@ -1085,14 +1139,20 @@
       "1/2",
       "1/4"
     ],
-    "titol": "Lat. 010 · La Escala Esquerra · 11_21_41 · 1 min",
+    "titol": "Lat. 010 · L'Escala Esquerra · 11_21_41 · 1 min",
     "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
     "prerequisits": [
       "PERC_LAT_11_12_14_1"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
-    "material": []
+    "discourse_topic_id": 654,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 21 41",
+        "url": "https://www.youtube.com/watch?v=Moo6zVC4cPw"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_41_2",
@@ -1103,14 +1163,20 @@
       "1/2",
       "1/4"
     ],
-    "titol": "Lat. 010 · La Escala Esquerra · 11_21_41 · 2 min",
+    "titol": "Lat. 010 · L'Escala Esquerra · 11_21_41 · 2 min",
     "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
     "prerequisits": [
       "PERC_LAT_11_21_41_1"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
-    "material": []
+    "discourse_topic_id": 655,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 21 41",
+        "url": "https://www.youtube.com/watch?v=Moo6zVC4cPw"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_41_4",
@@ -1121,14 +1187,20 @@
       "1/2",
       "1/4"
     ],
-    "titol": "Lat. 010 · La Escala Esquerra · 11_21_41 · 4 min",
+    "titol": "Lat. 010 · L'Escala Esquerra · 11_21_41 · 4 min",
     "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
     "prerequisits": [
       "PERC_LAT_11_21_41_2"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
-    "material": []
+    "discourse_topic_id": 656,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 21 41",
+        "url": "https://www.youtube.com/watch?v=Moo6zVC4cPw"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_12_11_14_1",
@@ -1145,8 +1217,14 @@
       "PERC_LAT_11_21_41_1"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
-    "material": []
+    "discourse_topic_id": 657,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 12 11 14",
+        "url": "https://www.youtube.com/watch?v=d-UqI3hjs-s"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_12_11_14_2",
@@ -1163,8 +1241,14 @@
       "PERC_LAT_11_12_11_14_1"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
-    "material": []
+    "discourse_topic_id": 658,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 12 11 14",
+        "url": "https://www.youtube.com/watch?v=d-UqI3hjs-s"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_12_11_14_4",
@@ -1181,8 +1265,14 @@
       "PERC_LAT_11_12_11_14_2"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
-    "material": []
+    "discourse_topic_id": 659,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 12 11 14",
+        "url": "https://www.youtube.com/watch?v=d-UqI3hjs-s"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_11_41_1",

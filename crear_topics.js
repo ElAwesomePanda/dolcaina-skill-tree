@@ -58,8 +58,11 @@ function serializeCsv(rows, headers) {
 
 // ─── DISCOURSE ───────────────────────────────────────────────────────────────
 
-function extractYouTubeUrl(iframeHtml) {
-  const srcMatch = iframeHtml.match(/src="([^"]+)"/);
+function extractYouTubeUrl(iframeOrUrl) {
+  // URL directa (youtube.com o youtu.be)
+  if (iframeOrUrl.startsWith('http')) return iframeOrUrl;
+  // iframe HTML → extreu la URL
+  const srcMatch = iframeOrUrl.match(/src="([^"]+)"/);
   if (!srcMatch) return null;
   const embedUrl = srcMatch[1];
   const idMatch = embedUrl.match(/\/embed\/([^?&]+)/);
@@ -228,6 +231,7 @@ async function pushAGitHub(contingut) {
 
 async function main() {
   const soloNodes = process.argv.includes('--only-nodes');
+  const dryRun    = process.argv.includes('--dry-run');
 
   const csvText = readFileSync('./GiT_Nodes.csv', 'utf8');
   const rows = parseCsv(csvText);
@@ -242,22 +246,62 @@ async function main() {
     return;
   }
 
-  const pendents    = rows.filter(r => r.id && !r.discourse_topic_id);
-  const ambTopicId  = rows.filter(r => r.id &&  r.discourse_topic_id);
+  const forceAll     = process.argv.includes('--force-all');
+
+  const noValids     = rows.filter(r => r.id && r.valid !== 'TRUE');
+  const valids       = rows.filter(r => r.id && r.valid === 'TRUE');
+  const pendents     = valids.filter(r => !r.discourse_topic_id);
+  const ambTopicId   = valids.filter(r =>  r.discourse_topic_id);
+  const aActualitzar = ambTopicId.filter(r => forceAll || r.force_update === 'TRUE');
+  const saltats      = ambTopicId.filter(r => !forceAll && r.force_update !== 'TRUE');
 
   console.log(`Nodes totals:      ${rows.filter(r => r.id).length}`);
-  console.log(`Ja amb topic ID:   ${ambTopicId.length}`);
-  console.log(`Sense topic ID:    ${pendents.length}`);
+  console.log(`  No vàlids:       ${noValids.length} (saltats)`);
+  console.log(`  Vàlids:          ${valids.length}`);
+  console.log(`    Ja publicats:  ${ambTopicId.length}`);
+  console.log(`    → actualitzar: ${aActualitzar.length}${forceAll ? ' (--force-all)' : ''}`);
+  console.log(`    → saltats:     ${saltats.length}`);
+  console.log(`    A crear:       ${pendents.length}`);
+
+  if (dryRun) {
+    const sep = '─'.repeat(44);
+    if (aActualitzar.length > 0) {
+      console.log(`\n${sep}`);
+      console.log(' ACTUALITZARIEN (force_update=TRUE)');
+      console.log(sep);
+      aActualitzar.forEach(r => console.log(`  ${r.id.padEnd(22)} topic ${r.discourse_topic_id}`));
+    }
+    if (pendents.length > 0) {
+      console.log(`\n${sep}`);
+      console.log(' ES CREARIEN (sense discourse_topic_id)');
+      console.log(sep);
+      pendents.forEach(r => console.log(`  ${r.id}`));
+    }
+    if (saltats.length > 0) {
+      console.log(`\n${sep}`);
+      console.log(' SALTATS (ja publicats, force_update buit)');
+      console.log(sep);
+      saltats.forEach(r => console.log(`  ${r.id.padEnd(22)} topic ${r.discourse_topic_id}`));
+    }
+    if (noValids.length > 0) {
+      console.log(`\n${sep}`);
+      console.log(' NO VÀLIDS (valid≠TRUE, ignorats)');
+      console.log(sep);
+      noValids.forEach(r => console.log(`  ${r.id}`));
+    }
+    console.log(`\n[DRY-RUN] Cap canvi fet. Llança sense --dry-run per executar.`);
+    return;
+  }
 
   const errorsCreacio    = [];
   const errorsActualitza = [];
   let creats = 0;
   let actualitzats = 0;
 
-  // 1. Actualitzar topics existents
-  if (ambTopicId.length > 0) {
-    console.log('\nActualitzant topics existents a Discourse...');
-    for (const row of ambTopicId) {
+  // 1. Actualitzar topics marcats amb force_update (o tots si --force-all)
+  if (aActualitzar.length > 0) {
+    console.log('\nActualitzant topics a Discourse...');
+    for (const row of aActualitzar) {
       try {
         await actualitzarTopic(parseInt(row.discourse_topic_id), row);
         console.log(`  ✓ ${row.id} (topic ${row.discourse_topic_id}) actualitzat`);
@@ -306,7 +350,7 @@ async function main() {
     console.log(sep);
   }
 
-  console.log(`\nResum: ${actualitzats} actualitzats, ${creats} creats.`);
+  console.log(`\nResum: ${actualitzats} actualitzats, ${creats} creats, ${saltats.length} saltats.`);
   const errors = [...errorsCreacio, ...errorsActualitza];
 
   // Generar nodes.json
