@@ -634,6 +634,11 @@
         "tipus": "video",
         "nom": "GiT LAT 11 12",
         "url": "https://www.youtube.com/watch?v=3y1xJ0smDMU"
+      },
+      {
+        "tipus": "image",
+        "nom": "001_elpas_11_12.png",
+        "url": "https://drive.google.com/file/d/18PxhmeiJQdWTbpQyzfT-ZhdIaDkiIzT3"
       }
     ]
   },
@@ -657,6 +662,11 @@
         "tipus": "video",
         "nom": "GiT LAT 11 12",
         "url": "https://www.youtube.com/watch?v=3y1xJ0smDMU"
+      },
+      {
+        "tipus": "image",
+        "nom": "001_elpas_11_12.png",
+        "url": "https://drive.google.com/file/d/18PxhmeiJQdWTbpQyzfT-ZhdIaDkiIzT3"
       }
     ]
   },
@@ -680,6 +690,11 @@
         "tipus": "video",
         "nom": "GiT LAT 11 12",
         "url": "https://www.youtube.com/watch?v=3y1xJ0smDMU"
+      },
+      {
+        "tipus": "image",
+        "nom": "001_elpas_11_12.png",
+        "url": "https://drive.google.com/file/d/18PxhmeiJQdWTbpQyzfT-ZhdIaDkiIzT3"
       }
     ]
   },
@@ -703,6 +718,11 @@
         "tipus": "video",
         "nom": "GiT LAT 11 21",
         "url": "https://www.youtube.com/watch?v=-Mn92eL39Qo"
+      },
+      {
+        "tipus": "image",
+        "nom": "002_lespill_11_21.png",
+        "url": "https://drive.google.com/file/d/1Dzs4Mn34F84xarx6bnOHwsPNkR9bMJuh"
       }
     ]
   },
@@ -726,6 +746,11 @@
         "tipus": "video",
         "nom": "GiT LAT 11 21",
         "url": "https://www.youtube.com/watch?v=-Mn92eL39Qo"
+      },
+      {
+        "tipus": "image",
+        "nom": "002_lespill_11_21.png",
+        "url": "https://drive.google.com/file/d/1Dzs4Mn34F84xarx6bnOHwsPNkR9bMJuh"
       }
     ]
   },
@@ -749,6 +774,11 @@
         "tipus": "video",
         "nom": "GiT LAT 11 21",
         "url": "https://www.youtube.com/watch?v=-Mn92eL39Qo"
+      },
+      {
+        "tipus": "image",
+        "nom": "002_lespill_11_21.png",
+        "url": "https://drive.google.com/file/d/1Dzs4Mn34F84xarx6bnOHwsPNkR9bMJuh"
       }
     ]
   },
@@ -772,6 +802,11 @@
         "tipus": "video",
         "nom": "GiT LAT 11 12 11 21",
         "url": "https://www.youtube.com/watch?v=vD0bwn4XtvU"
+      },
+      {
+        "tipus": "image",
+        "nom": "003_laporta_11_12_11_21.png",
+        "url": "https://drive.google.com/file/d/11srnFdexFanwcJQeIj0kG7c45yXAbEmK"
       }
     ]
   },
@@ -795,6 +830,11 @@
         "tipus": "video",
         "nom": "GiT LAT 11 12 11 21",
         "url": "https://www.youtube.com/watch?v=vD0bwn4XtvU"
+      },
+      {
+        "tipus": "image",
+        "nom": "003_laporta_11_12_11_21.png",
+        "url": "https://drive.google.com/file/d/11srnFdexFanwcJQeIj0kG7c45yXAbEmK"
       }
     ]
   },
@@ -818,6 +858,11 @@
         "tipus": "video",
         "nom": "GiT LAT 11 12 11 21",
         "url": "https://www.youtube.com/watch?v=vD0bwn4XtvU"
+      },
+      {
+        "tipus": "image",
+        "nom": "003_laporta_11_12_11_21.png",
+        "url": "https://drive.google.com/file/d/11srnFdexFanwcJQeIj0kG7c45yXAbEmK"
       }
     ]
   },
@@ -836,7 +881,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "004_laportainv_11_21_11_12.png",
+        "url": "https://drive.google.com/file/d/1Ab0OhAI_ffIkv8ok0chi8boJlpWg83_D"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_11_12_2",
@@ -853,7 +904,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "004_laportainv_11_21_11_12.png",
+        "url": "https://drive.google.com/file/d/1Ab0OhAI_ffIkv8ok0chi8boJlpWg83_D"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_11_12_4",
@@ -870,7 +927,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "004_laportainv_11_21_11_12.png",
+        "url": "https://drive.google.com/file/d/1Ab0OhAI_ffIkv8ok0chi8boJlpWg83_D"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_12_22_1",
@@ -887,7 +950,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "005_larampa_11_21_12_22.png",
+        "url": "https://drive.google.com/file/d/19MZgRadW40KgY3Om3xW4zXl3ycgQYjWw"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_12_22_2",
@@ -904,7 +973,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "005_larampa_11_21_12_22.png",
+        "url": "https://drive.google.com/file/d/19MZgRadW40KgY3Om3xW4zXl3ycgQYjWw"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_12_22_4",
@@ -921,7 +996,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "005_larampa_11_21_12_22.png",
+        "url": "https://drive.google.com/file/d/19MZgRadW40KgY3Om3xW4zXl3ycgQYjWw"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_12_21_22_1",
@@ -938,7 +1019,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "006_larampainv_11_12_21_22.png",
+        "url": "https://drive.google.com/file/d/1BnWAsxkjZfSQ0T6pTRpUu4y5tn609gav"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_12_21_22_2",
@@ -955,7 +1042,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "006_larampainv_11_12_21_22.png",
+        "url": "https://drive.google.com/file/d/1BnWAsxkjZfSQ0T6pTRpUu4y5tn609gav"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_12_21_22_4",
@@ -972,7 +1065,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "006_larampainv_11_12_21_22.png",
+        "url": "https://drive.google.com/file/d/1BnWAsxkjZfSQ0T6pTRpUu4y5tn609gav"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_14_1",
@@ -989,7 +1088,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "007_elsalt_11_14.png",
+        "url": "https://drive.google.com/file/d/1Ts6hlM1X51hagH_V4-2NmJ8jpx6ukc42"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_14_2",
@@ -1006,7 +1111,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "007_elsalt_11_14.png",
+        "url": "https://drive.google.com/file/d/1Ts6hlM1X51hagH_V4-2NmJ8jpx6ukc42"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_14_4",
@@ -1023,7 +1134,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "007_elsalt_11_14.png",
+        "url": "https://drive.google.com/file/d/1Ts6hlM1X51hagH_V4-2NmJ8jpx6ukc42"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_41_1",
@@ -1040,7 +1157,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "008_elsaltsurdo_11_41.png",
+        "url": "https://drive.google.com/file/d/1X-WnkNYlrPFcUgg002pCeZGb6maAsryX"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_41_2",
@@ -1057,7 +1180,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "008_elsaltsurdo_11_41.png",
+        "url": "https://drive.google.com/file/d/1X-WnkNYlrPFcUgg002pCeZGb6maAsryX"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_41_4",
@@ -1074,7 +1203,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "008_elsaltsurdo_11_41.png",
+        "url": "https://drive.google.com/file/d/1X-WnkNYlrPFcUgg002pCeZGb6maAsryX"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_12_14_1",
@@ -1092,7 +1227,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "009_lescaladreta_11_12_14.png",
+        "url": "https://drive.google.com/file/d/1ZGPkAFB47oSQVvthgWgpn3ZFS9ovF1H7"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_12_14_2",
@@ -1110,7 +1251,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "009_lescaladreta_11_12_14.png",
+        "url": "https://drive.google.com/file/d/1ZGPkAFB47oSQVvthgWgpn3ZFS9ovF1H7"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_12_14_4",
@@ -1128,7 +1275,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "009_lescaladreta_11_12_14.png",
+        "url": "https://drive.google.com/file/d/1ZGPkAFB47oSQVvthgWgpn3ZFS9ovF1H7"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_41_1",
@@ -1151,6 +1304,11 @@
         "tipus": "video",
         "nom": "GiT LAT 11 21 41",
         "url": "https://www.youtube.com/watch?v=Moo6zVC4cPw"
+      },
+      {
+        "tipus": "image",
+        "nom": "010_lescalainv_11_21_41.png",
+        "url": "https://drive.google.com/file/d/1MZVohaVDlp3DKTJdOgN6wFjUGu60l7PF"
       }
     ]
   },
@@ -1175,6 +1333,11 @@
         "tipus": "video",
         "nom": "GiT LAT 11 21 41",
         "url": "https://www.youtube.com/watch?v=Moo6zVC4cPw"
+      },
+      {
+        "tipus": "image",
+        "nom": "010_lescalainv_11_21_41.png",
+        "url": "https://drive.google.com/file/d/1MZVohaVDlp3DKTJdOgN6wFjUGu60l7PF"
       }
     ]
   },
@@ -1199,6 +1362,11 @@
         "tipus": "video",
         "nom": "GiT LAT 11 21 41",
         "url": "https://www.youtube.com/watch?v=Moo6zVC4cPw"
+      },
+      {
+        "tipus": "image",
+        "nom": "010_lescalainv_11_21_41.png",
+        "url": "https://drive.google.com/file/d/1MZVohaVDlp3DKTJdOgN6wFjUGu60l7PF"
       }
     ]
   },
@@ -1223,6 +1391,11 @@
         "tipus": "video",
         "nom": "GiT LAT 11 12 11 14",
         "url": "https://www.youtube.com/watch?v=d-UqI3hjs-s"
+      },
+      {
+        "tipus": "image",
+        "nom": "011_eltobogan_11_12_11_14.png",
+        "url": "https://drive.google.com/file/d/1cRlB2il_Sa8RXvVgJsjUAgU3FPtUBooP"
       }
     ]
   },
@@ -1247,6 +1420,11 @@
         "tipus": "video",
         "nom": "GiT LAT 11 12 11 14",
         "url": "https://www.youtube.com/watch?v=d-UqI3hjs-s"
+      },
+      {
+        "tipus": "image",
+        "nom": "011_eltobogan_11_12_11_14.png",
+        "url": "https://drive.google.com/file/d/1cRlB2il_Sa8RXvVgJsjUAgU3FPtUBooP"
       }
     ]
   },
@@ -1271,6 +1449,11 @@
         "tipus": "video",
         "nom": "GiT LAT 11 12 11 14",
         "url": "https://www.youtube.com/watch?v=d-UqI3hjs-s"
+      },
+      {
+        "tipus": "image",
+        "nom": "011_eltobogan_11_12_11_14.png",
+        "url": "https://drive.google.com/file/d/1cRlB2il_Sa8RXvVgJsjUAgU3FPtUBooP"
       }
     ]
   },
@@ -1290,7 +1473,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "012_eltoboganinv_11_21_11_41.png",
+        "url": "https://drive.google.com/file/d/1atWWbLWBVWMeOThPpIe1ns7hpbrkUhbP"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_11_41_2",
@@ -1308,7 +1497,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "012_eltoboganinv_11_21_11_41.png",
+        "url": "https://drive.google.com/file/d/1atWWbLWBVWMeOThPpIe1ns7hpbrkUhbP"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_11_41_4",
@@ -1326,7 +1521,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "012_eltoboganinv_11_21_11_41.png",
+        "url": "https://drive.google.com/file/d/1atWWbLWBVWMeOThPpIe1ns7hpbrkUhbP"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_12_22_24_1",
@@ -1344,7 +1545,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "013_elventall_11_12_22_24.png",
+        "url": "https://drive.google.com/file/d/1ZVf9GlBfWCTTOHIhlRGhxq_khxkmnhoD"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_12_22_24_2",
@@ -1362,7 +1569,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "013_elventall_11_12_22_24.png",
+        "url": "https://drive.google.com/file/d/1ZVf9GlBfWCTTOHIhlRGhxq_khxkmnhoD"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_12_22_24_4",
@@ -1380,7 +1593,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "013_elventall_11_12_22_24.png",
+        "url": "https://drive.google.com/file/d/1ZVf9GlBfWCTTOHIhlRGhxq_khxkmnhoD"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_22_42_1",
@@ -1398,7 +1617,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "014_elventallinv_11_21_22_42.png",
+        "url": "https://drive.google.com/file/d/1jb1t0sWdGZUiasyxMzdKLj2Wj6bg-Wcr"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_22_42_2",
@@ -1416,7 +1641,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "014_elventallinv_11_21_22_42.png",
+        "url": "https://drive.google.com/file/d/1jb1t0sWdGZUiasyxMzdKLj2Wj6bg-Wcr"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_22_42_4",
@@ -1434,7 +1665,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "014_elventallinv_11_21_22_42.png",
+        "url": "https://drive.google.com/file/d/1jb1t0sWdGZUiasyxMzdKLj2Wj6bg-Wcr"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_12_42_24_1",
@@ -1452,7 +1689,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "015_elcapdeserp_11_21_12_42_24.png",
+        "url": "https://drive.google.com/file/d/1vvZIvaWulOI9lfs8nNSa4cU26Blp4eCh"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_12_42_24_2",
@@ -1470,7 +1713,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "015_elcapdeserp_11_21_12_42_24.png",
+        "url": "https://drive.google.com/file/d/1vvZIvaWulOI9lfs8nNSa4cU26Blp4eCh"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_21_12_42_24_4",
@@ -1488,7 +1737,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "015_elcapdeserp_11_21_12_42_24.png",
+        "url": "https://drive.google.com/file/d/1vvZIvaWulOI9lfs8nNSa4cU26Blp4eCh"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_12_21_24_42_1",
@@ -1506,7 +1761,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "016_lacuadeserp_11_12_21_24_42.png",
+        "url": "https://drive.google.com/file/d/1InJLTZWVmxSEE057gTjKficWen0SvWV2"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_12_21_24_42_2",
@@ -1524,7 +1785,13 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "016_lacuadeserp_11_12_21_24_42.png",
+        "url": "https://drive.google.com/file/d/1InJLTZWVmxSEE057gTjKficWen0SvWV2"
+      }
+    ]
   },
   {
     "id": "PERC_LAT_11_12_21_24_42_4",
@@ -1542,6 +1809,12 @@
     ],
     "es_fita": false,
     "discourse_topic_id": null,
-    "material": []
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "016_lacuadeserp_11_12_21_24_42.png",
+        "url": "https://drive.google.com/file/d/1InJLTZWVmxSEE057gTjKficWen0SvWV2"
+      }
+    ]
   }
 ]
