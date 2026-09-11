@@ -26,6 +26,11 @@ operatiu i tot el que és massa menut per a tindre fitxa pròpia.
 
 ## Higiene del repositori
 
+- [x] Primer commit i push de tota la revisió — 2026-09-11 (`1cfb1f8`)
+- [ ] **Incident 2026-09-11**: un `git rebase` va esborrar `GiT_nodes.csv` del
+      disc en aplicar la deixada de versionar `GiT_Nodes.csv` (Windows no
+      distingeix majúscules). Recuperat des del full. Vegeu `DESIGN.md` §7.8b.
+      Valorar un `.gitattributes` o renombrar el fitxer per a llevar l'ambigüitat
 - [ ] Decidir què fer amb els fitxers amb canvis sense confirmar
 - [x] Unificar `GiT_nodes.csv` / `GiT_Nodes.csv` — 2026-09-10: el real passa a
       estar al `.gitignore`, es versiona `GiT_nodes.exemple.csv`, i la ruta és

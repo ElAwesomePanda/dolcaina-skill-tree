@@ -653,6 +653,26 @@ ha cap. A més, la línia de resum de Node desapareix de la pantalla.
 
 ---
 
+### 7.8b Un `git rebase` va esborrar el CSV de treball (2026-09-11)
+
+En reorganitzar el commit que **deixava de versionar** `GiT_Nodes.csv`, Git va
+esborrar el fitxer del disc. Però al disc es diu `GiT_nodes.csv` (ena
+minúscula), i com que Windows no distingeix majúscules, **va esborrar les dades
+de treball de veritat**. Sense avís i sense error.
+
+Es va recuperar tornant a baixar el full (opció 1 del menú), que a més estava
+més al dia que el fitxer perdut. Les còpies de `copies/` també ho haurien
+salvat.
+
+No es pot repetir amb aquest fitxer, perquè ja no està versionat. **Sí que pot
+repetir-se** en qualsevol operació que mou l'arbre de treball a un commit
+anterior a aquell (`git checkout <commit vell>`, `git stash`, un rebase més
+llarg): allà `GiT_Nodes.csv` encara existia.
+
+Abans de qualsevol operació d'eixes: **baixa el full després**, o comprova que
+`GiT_nodes.csv` continua al seu lloc. `npm run validate` t'ho diu de seguida amb
+`ENOENT: no such file or directory, open './GiT_nodes.csv'`.
+
 ### 7.9 Google Drive no serveix com a font d'`<audio>`
 
 Provat el **2026-09-11** amb les quatre variants d'URL:
