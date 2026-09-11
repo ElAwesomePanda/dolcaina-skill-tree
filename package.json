@@ -1,0 +1,22 @@
+{
+  "name": "dolcaina-skill-tree",
+  "version": "1.0.0",
+  "description": "Arbre de fites del Taller de Dolçaina i Tabalet — Ateneu L'Ardada",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "validate": "node crear_topics.js --validate",
+    "dry": "node crear_topics.js --dry-run",
+    "nodes": "node crear_topics.js --only-nodes",
+    "publish": "node crear_topics.js",
+    "serve": "npx --yes serve . -l 3111"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElAwesomePanda/dolcaina-skill-tree.git"
+  }
+}

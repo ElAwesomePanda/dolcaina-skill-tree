@@ -257,5 +257,6 @@ PLD·1min ──► ... ──► PLD·5min     PLE·1min ──► ... ──�
 	- **User Level:** `Single User`
 	- **User:** el teu usuari admin
 	- **Scope:** `Global` (de moment, després ho podem restringir)
-	- Key: 1d64258335c4e7bf3f4719d6dd0385e5ac4b908cfd41a5347ef71134075c54e6
+	- Key: *(esborrada d'ací el 2026-09-10 — estava exposada en un repositori públic.
+	  La clau en ús viu a `config.json`, que no està versionat. Vegeu `docs/MILLORES.md` M-01.)*
 - Materials (Google Drive): per configurar

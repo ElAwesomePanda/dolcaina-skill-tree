@@ -191,6 +191,7 @@ h1 {
 .dot-completed { background: var(--green); }
 .dot-unlocked { background: var(--gold); }
 .dot-locked { background: #2a2520; border: 1px solid #3a3430; }
+.dot-preparacio { background: transparent; border: 1px dashed var(--locked-text); }
 
 .footer-credit {
   position: fixed;
@@ -236,6 +237,18 @@ h1 {
   cursor: default;
 }
 .node-card.locked:hover { border-color: var(--locked-border); box-shadow: none; }
+/* «En preparació»: node definit al CSV però encara sense tema al fòrum.
+   Es dibuixa perquè es veja l'itinerari que ve, però no es pot completar.
+   Ha de ser l'estat MÉS callat de tots: ni tan sols està en joc encara, i no
+   pot competir visualment amb els nodes que l'alumne sí que pot obrir.
+   L'opacity ho baixa tot de colp i garanteix que cap element intern se n'isca. */
+.node-card.preparacio {
+  background: transparent;
+  border: 1px dashed var(--locked-border);
+  cursor: default;
+  opacity: 0.45;
+}
+.node-card.preparacio:hover { border-color: var(--locked-border); box-shadow: none; }
 .node-card.completed { background: #0d1710; border-color: var(--green-dim); }
 .node-card.completed:hover { border-color: var(--green); box-shadow: 0 4px 20px rgba(74,140,92,0.12); }
 
@@ -248,6 +261,7 @@ h1 {
   border-left: 1px solid var(--gold-dim);
 }
 .node-card.locked::before { border-color: var(--locked-border); }
+.node-card.preparacio::before { display: none; }
 .node-card.completed::before { border-color: var(--green-dim); }
 
 .nc-id {
@@ -257,6 +271,10 @@ h1 {
   color: var(--gold-dim);
 }
 .node-card.locked .nc-id { color: var(--locked-text); }
+.node-card.preparacio .nc-id { color: var(--locked-text); }
+/* Sense això el títol es queda en --cream i és el text més clar de la pantalla. */
+.node-card.preparacio .nc-title { color: var(--locked-text); }
+.node-card.preparacio .nc-badge { color: var(--locked-text); }
 
 .nc-title {
   font-family: 'Cinzel', serif;
@@ -289,6 +307,7 @@ h1 {
 .nc-status.unlocked { color: var(--gold-dim); }
 .nc-status.locked { color: var(--locked-text); }
 .nc-status.completed { color: var(--green); }
+.nc-status.preparacio { color: var(--locked-text); font-style: italic; }
 
 .nc-lock {
   position: absolute;
@@ -399,6 +418,41 @@ h1 {
 }
 .modal-badge-desc { color: var(--cream-dim); font-size: 0.8rem; font-style: italic; }
 .material-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
+/* Bloc d'àudio: capçalera amb el nom + reproductor natiu del navegador. */
+.audio-block {
+  background: var(--bg2);
+  border: 1px solid #2a2518;
+  border-radius: 3px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.audio-head { display: flex; align-items: center; gap: 10px; }
+/* Els controls natius són clars i canten damunt d'un fons fosc. L'invert els
+   posa en to fosc; el hue-rotate compensa el gir de color que fa l'invert. */
+/* L'iframe de Drive ja ve en to fosc i encaixa sense retocs. */
+.audio-wrapper { width: 100%; }
+.audio-wrapper iframe {
+  width: 100%;
+  height: 62px;
+  border: 0;
+  display: block;
+}
+/* Només per a àudio que NO estiga a Drive: controls natius, que són clars. */
+.audio-player {
+  width: 100%;
+  height: 34px;
+  filter: invert(0.88) hue-rotate(180deg);
+}
+.audio-fallback {
+  font-size: 0.72rem;
+  font-style: italic;
+  color: var(--gold-dim);
+  text-decoration: none;
+}
+.audio-fallback:hover { text-decoration: underline; }
+
 .material-item {
   display: flex; align-items: center; gap: 10px;
   padding: 8px 12px;
@@ -410,6 +464,9 @@ h1 {
   transition: all 0.2s;
 }
 .material-item:hover { border-color: var(--gold-dim); background: rgba(201,168,76,0.04); }
+.material-item-img { flex-direction: column; align-items: stretch; gap: 8px; }
+.mat-image-preview { width: 100%; max-height: 130px; object-fit: cover; border-radius: 2px; opacity: 0.88; display: block; }
+.mat-item-row { display: flex; align-items: center; gap: 10px; }
 .mat-icon { font-size: 0.95rem; width: 18px; text-align: center; }
 .mat-name { flex: 1; }
 .mat-type {
@@ -656,6 +713,7 @@ h1 {
     <div class="legend-item"><div class="legend-dot dot-completed"></div> Completat</div>
     <div class="legend-item"><div class="legend-dot dot-unlocked"></div> Disponible</div>
     <div class="legend-item"><div class="legend-dot dot-locked"></div> Bloquejat</div>
+    <div class="legend-item"><div class="legend-dot dot-preparacio"></div> En preparació</div>
   </div>
 </div>
 
@@ -737,7 +795,18 @@ let currentNode = null;
 
 function saveState() { localStorage.setItem(STATE_KEY, JSON.stringify([...completed])); }
 function isUnlocked(node) { return node.prerequisits.every(p => completed.has(p)); }
-function getCompletionPct() { return Math.round((completed.size / NODES.length) * 100); }
+// El progrés compta només sobre els nodes PUBLICATS: els que estan «en
+// preparació» no es poden completar, així que ni sumen ni resten. El numerador
+// també es filtra, perquè `completed` pot arrossegar ids que ja no compten
+// (esborranys marcats abans, o nodes llevats del CSV): sense això el
+// percentatge podria passar del 100 %.
+function getCompletionPct() {
+  const publicats = new Set(NODES.filter(n => n.publicat !== false).map(n => n.id));
+  if (!publicats.size) return 0;
+  let fets = 0;
+  completed.forEach(id => { if (publicats.has(id)) fets++; });
+  return Math.round((fets / publicats.size) * 100);
+}
 
 // ─── SUGIYAMA LAYOUT ─────────────────────────────────────────────────────────
 const NODE_W = 200, NODE_H = 110, H_GAP = 50, V_GAP = 80;
@@ -904,7 +973,10 @@ function render() {
 
   // Draw nodes as foreignObject
   nodes.forEach(n => {
-    const unlocked = isUnlocked(n);
+    // Un node «en preparació» encara no té tema al fòrum: es dibuixa perquè es
+    // veja l'itinerari que ve, però no es pot obrir ni completar.
+    const preparacio = n.publicat === false;
+    const unlocked = !preparacio && isUnlocked(n);
     const done = completed.has(n.id);
 
     const fo = g.append('foreignObject')
@@ -913,11 +985,16 @@ function render() {
       .attr('width', NODE_W)
       .attr('height', NODE_H);
 
+    const estat = preparacio ? ' preparacio'
+                : done       ? ' completed'
+                : !unlocked  ? ' locked' : '';
+
     const div = fo.append('xhtml:div')
-      .attr('class', 'node-card' + (done ? ' completed' : !unlocked ? ' locked' : ''))
+      .attr('class', 'node-card' + estat)
       .attr('xmlns', 'http://www.w3.org/1999/xhtml');
 
-    if (!unlocked && !done) {
+    // El cadenat només té sentit si el node es podrà obrir algun dia.
+    if (!preparacio && !unlocked && !done) {
       div.append('xhtml:span').attr('class', 'nc-lock').text('🔒');
     }
     if (done) {
@@ -927,8 +1004,13 @@ function render() {
     div.append('xhtml:div').attr('class', 'nc-id').text(n.id);
     div.append('xhtml:div').attr('class', 'nc-title').text(n.titol);
     div.append('xhtml:div').attr('class', 'nc-badge').text(n.es_fita && n.fita ? n.fita.icona + ' ' + n.fita.nom : '');
-    div.append('xhtml:div').attr('class', 'nc-status ' + (done ? 'completed' : unlocked ? 'unlocked' : 'locked'))
-      .text(done ? 'Completat' : unlocked ? 'Disponible' : 'Bloquejat');
+    const nomEstat = preparacio ? 'preparacio'
+                   : done       ? 'completed'
+                   : unlocked   ? 'unlocked' : 'locked';
+    const textEstat = preparacio ? 'En preparació'
+                    : done       ? 'Completat'
+                    : unlocked   ? 'Disponible' : 'Bloquejat';
+    div.append('xhtml:div').attr('class', 'nc-status ' + nomEstat).text(textEstat);
 
     if (unlocked) {
       div.on('click', () => openModal(n.id));
@@ -964,8 +1046,10 @@ function zoomReset() {
 function jumpToLastUnlocked() {
   const nodes = Object.values(nodeMap);
   // Find last unlocked but not completed node (frontier)
-  let frontier = nodes.filter(n => isUnlocked(n) && !completed.has(n.id));
-  if (!frontier.length) frontier = nodes.filter(n => isUnlocked(n));
+  // «▶ Últim node» mai ha de portar a un node en preparació: no s'hi pot fer res.
+  const obrible = n => n.publicat !== false && isUnlocked(n);
+  let frontier = nodes.filter(n => obrible(n) && !completed.has(n.id));
+  if (!frontier.length) frontier = nodes.filter(obrible);
   if (!frontier.length) return;
   // Pick the one with highest layer
   const target = frontier.reduce((a,b) => (a.layer > b.layer ? a : b));
@@ -1016,7 +1100,7 @@ function openModal(id) {
   // Material
   const matList = document.getElementById('modalMaterials');
   matList.innerHTML = '';
-  const icons = {pdf:'📄',mp3:'🎵',mp4:'🎬',link:'🔗'};
+  const icons = {pdf:'📄',mp3:'🎵',mp4:'🎬',link:'🔗',image:'🖼️'};
   node.material.forEach(m => {
     if (m.tipus === 'video') {
       const title = document.createElement('div');
@@ -1032,6 +1116,70 @@ function openModal(id) {
         wrapper.innerHTML = m.url; // iframe HTML directe (format antic)
       }
       matList.appendChild(wrapper);
+    } else if (m.tipus === 'image') {
+      const driveMatch = m.url.match(/\/d\/([a-zA-Z0-9_-]+)/) || m.url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+      const thumbUrl = driveMatch
+        ? `https://drive.google.com/thumbnail?id=${driveMatch[1]}&sz=w400`
+        : m.url;
+      const a = document.createElement('a');
+      a.href = m.url; a.className = 'material-item material-item-img'; a.target = '_blank';
+      a.innerHTML = `<div class="mat-item-row">
+          <span class="mat-icon">🖼️</span>
+          <span class="mat-name">${m.nom}</span>
+          <span class="mat-type">IMATGE</span>
+        </div>
+        <img class="mat-image-preview" src="${thumbUrl}" alt="${m.nom}" onerror="this.style.display='none'">`;
+      matList.appendChild(a);
+    } else if (m.tipus === 'mp3' || m.tipus === 'audio') {
+      // Reproductor incrustat de Google Drive.
+      //
+      // NO es pot fer amb un <audio> natiu: Drive rebutja les peticions de
+      // mitjà del navegador. Provat el 2026-09-11 amb les quatre variants
+      // d'URL (uc?export=download, uc?export=view, drive.usercontent/download
+      // i drive.usercontent/uc): totes donen MEDIA_ERR_SRC_NOT_SUPPORTED.
+      // Amb `curl` sí que es baixa, però això no vol dir res: el navegador
+      // envia capçaleres diferents i Drive el talla. L'iframe /preview és
+      // l'única via que funciona sense moure els fitxers de lloc.
+      const driveMatch = m.url.match(/\/d\/([a-zA-Z0-9_-]+)/) || m.url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+
+      const bloc = document.createElement('div');
+      bloc.className = 'audio-block';
+
+      const cap = document.createElement('div');
+      cap.className = 'audio-head';
+      cap.innerHTML = `<span class="mat-icon">🎵</span>
+        <span class="mat-name">${m.nom}</span>
+        <span class="mat-type">${m.tipus.toUpperCase()}</span>`;
+      bloc.appendChild(cap);
+
+      if (driveMatch) {
+        // Dins d'un embolcall propi perquè closeModal() el puga buidar: si no,
+        // la pista continua sonant amb la fitxa tancada.
+        const wrapper = document.createElement('div');
+        wrapper.className = 'audio-wrapper';
+        wrapper.innerHTML =
+          `<iframe src="https://drive.google.com/file/d/${driveMatch[1]}/preview"
+                   allow="autoplay" loading="lazy"></iframe>`;
+        bloc.appendChild(wrapper);
+      } else {
+        // Si no és de Drive, provem el reproductor natiu, que per a un fitxer
+        // servit normalment sí que funciona.
+        const audio = document.createElement('audio');
+        audio.className = 'audio-player';
+        audio.controls = true;
+        audio.preload = 'none';
+        audio.src = m.url;
+        bloc.appendChild(audio);
+      }
+
+      const fallback = document.createElement('a');
+      fallback.className = 'audio-fallback';
+      fallback.href = m.url;
+      fallback.target = '_blank';
+      fallback.textContent = "No sona? Obri'l en una pestanya nova →";
+      bloc.appendChild(fallback);
+
+      matList.appendChild(bloc);
     } else {
       const a = document.createElement('a');
       a.href = m.url; a.className = 'material-item'; a.target = '_blank';
@@ -1051,6 +1199,10 @@ function openModal(id) {
 function closeModal() {
   // Atura el vídeo buidant l'iframe abans de tancar
   document.querySelectorAll('.video-wrapper').forEach(w => { w.innerHTML = ''; });
+  // I atura l'àudio. Sense açò la pista continua sonant amb la fitxa tancada,
+  // i no hi ha manera de parar-la sense recarregar la pàgina.
+  document.querySelectorAll('.audio-wrapper').forEach(w => { w.innerHTML = ''; });
+  document.querySelectorAll('.audio-player').forEach(a => { a.pause(); a.currentTime = 0; });
   document.getElementById('modalOverlay').classList.remove('open');
   currentNode = null;
 }

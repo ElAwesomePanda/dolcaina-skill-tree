@@ -1,7 +1,27 @@
-.DS_Store 
-Thumbs.db 
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Credencials — MAI versionar
 config.gs
 config.json
+
+# Restes de la versió antiga en Google Apps Script
 .clasp.json
 .claspignore
 appsscript.json
+
+# Dades de treball: la font de veritat viu al disc de l'autor.
+# El que es versiona és GiT_nodes.exemple.csv i el nodes.json generat.
+GiT_nodes.csv
+GiT_Nodes.csv
+
+# Configuració personal de Claude Code (launch.json sí que es versiona)
+.claude/settings.local.json
+
+# Copies de seguretat del CSV i informes de validacio (locals)
+copies/
+
+# Ids nous per a enganxar al full (es regenera en cada publicacio)
+ids_nous.csv
+badges_nous.csv

@@ -1,15 +1,38 @@
 #!/usr/bin/env node
 // =============================================================================
 // crear_topics.js — Dolçaina i Tabalet · Skill Tree
-// Llegeix GiT_Nodes.csv, crea topics a Discourse per als nodes que no en
-// tinguin, actualitza el CSV amb els IDs nous i puja nodes.json a GitHub.
+// Llig el CSV de nodes, crea topics a Discourse per als que no en tinguen,
+// actualitza el CSV amb els IDs nous i puja nodes.json a GitHub.
 //
-// Ús: node crear_topics.js
+// Ús:
+//   node crear_topics.js                 publica de veritat (Discourse + GitHub)
+//   node crear_topics.js --dry-run       ensenya el pla, no toca res
+//   node crear_topics.js --only-nodes    només regenera nodes.json
+//   node crear_topics.js --validate      només valida el CSV i ix
+//   node crear_topics.js --force-all     reenvia tots els nodes ja publicats
+//   node crear_topics.js --skip-validation   ignora els errors de validació
 // =============================================================================
 
 import { readFileSync, writeFileSync } from 'fs';
 
-const CONFIG = JSON.parse(readFileSync('./config.json', 'utf8'));
+const CSV_PATH    = './GiT_nodes.csv';
+const NODES_PATH  = './nodes.json';
+const CONFIG_PATH = './config.json';
+const IDS_PATH    = './ids_nous.csv';
+
+// L'id del full viu a config.json, que NO es versiona. No és una credencial,
+// però el full està compartit en mode lectura per enllaç: qui en sàpiga l'id
+// el pot llegir. Deixar-lo al codi d'un repositori públic seria publicar-lo.
+// Només serveix per a BAIXAR; per a escriure-hi caldria l'API de Sheets amb un
+// compte de servei (vegeu docs/MILLORES.md M-13).
+
+// Node arrel de l'arbre: l'únic que pot no tindre prerequisits.
+const ARREL = 'GiT_INICI';
+
+// Tipus de material que index.html sap pintar (vegeu openModal()).
+const TIPUS_MATERIAL = ['video', 'image', 'pdf', 'mp3', 'mp4', 'link'];
+
+const CONFIG = JSON.parse(readFileSync(CONFIG_PATH, 'utf8'));
 
 // ─── CSV ─────────────────────────────────────────────────────────────────────
 
@@ -92,6 +115,12 @@ function generarCos(row) {
         lines.push('');
         lines.push(`**${m.nom}**`);
         if (ytUrl) lines.push(ytUrl); // Discourse fa l'embed automàticament
+      } else if (m.tipus === 'image') {
+        const driveMatch = m.url && (m.url.match(/\/d\/([a-zA-Z0-9_-]+)/) || m.url.match(/[?&]id=([a-zA-Z0-9_-]+)/));
+        const directUrl = driveMatch ? `https://drive.google.com/uc?export=view&id=${driveMatch[1]}` : m.url;
+        lines.push('');
+        lines.push(`**${m.nom}**`);
+        if (directUrl) lines.push(`![${m.nom}](${directUrl})`);
       } else {
         const etiqueta = m.url ? `[${m.nom}](${m.url})` : m.nom;
         lines.push(`- **${m.tipus.toUpperCase()}** · ${etiqueta}`);
@@ -181,6 +210,9 @@ function filelaANode(row) {
     };
   }
   node.discourse_topic_id = row.discourse_topic_id ? parseInt(row.discourse_topic_id) : null;
+  // Un node sense tema al fòrum es dibuixa «en preparació»: visible, però no
+  // es pot completar ni compta per al progrés. Vegeu esPublicat().
+  node.publicat = esPublicat(row);
   const materials = [
     { tipus: row.mat1_tipus, nom: row.mat1_nom, url: row.mat1_url },
     { tipus: row.mat2_tipus, nom: row.mat2_nom, url: row.mat2_url },
@@ -192,6 +224,236 @@ function filelaANode(row) {
 function splitComa(s) {
   if (!s || s.trim() === '') return [];
   return s.split(',').map(x => x.trim()).filter(Boolean);
+}
+
+// Un node està PUBLICAT si té tema al fòrum. Els que no ho estan es dibuixen
+// igualment a l'arbre, però en estat «en preparació»: no es poden completar i
+// no compten per al progrés.
+// El criteri NO pot ser valid=TRUE: GiT_INICI és l'arrel i té valid=FALSE.
+function esPublicat(row) {
+  return Boolean(row.id && row.discourse_topic_id);
+}
+
+// ─── VALIDACIÓ ───────────────────────────────────────────────────────────────
+//
+// Cada problema detectat porta un suggeriment concret d'arreglament, en termes
+// del CSV (quina cel·la tocar), no en termes del codi.
+//
+//   nivell 'error' → para l'execució (es pot forçar amb --skip-validation)
+//   nivell 'avis'  → informa i continua
+
+// Distància de Levenshtein, per a suggerir ids semblants quan n'hi ha un de mal
+// escrit. Prou ràpida per a 73 nodes.
+function distancia(a, b) {
+  const m = a.length, n = b.length;
+  let prev = Array.from({ length: n + 1 }, (_, j) => j);
+  for (let i = 1; i <= m; i++) {
+    const act = [i];
+    for (let j = 1; j <= n; j++) {
+      act[j] = Math.min(
+        prev[j] + 1,
+        act[j - 1] + 1,
+        prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    }
+    prev = act;
+  }
+  return prev[n];
+}
+
+// Torna l'id existent més paregut a `id`, o null si cap s'hi assembla prou.
+function idMesParegut(id, candidats) {
+  let millor = null, minim = Infinity;
+  for (const c of candidats) {
+    const d = distancia(id.toLowerCase(), c.toLowerCase());
+    if (d < minim) { minim = d; millor = c; }
+  }
+  // Acceptem fins a un terç de la longitud com a diferència.
+  return minim <= Math.max(2, Math.floor(id.length / 3)) ? millor : null;
+}
+
+// Busca cicles de prerequisits amb un DFS de tres colors.
+// Retorna un array de camins, cadascun acabant en el node que tanca el cicle.
+function detectarCicles(files, perId) {
+  const estat  = new Map(); // 1 = en curs, 2 = tancat
+  const cicles = [];
+  const cami   = [];
+
+  function visita(id) {
+    if (estat.get(id) === 2) return;
+    if (estat.get(id) === 1) {
+      cicles.push([...cami.slice(cami.indexOf(id)), id]);
+      return;
+    }
+    if (!perId.has(id)) return; // prerequisit inexistent: ja es reporta a banda
+    estat.set(id, 1);
+    cami.push(id);
+    splitComa(perId.get(id).prerequisits).forEach(visita);
+    cami.pop();
+    estat.set(id, 2);
+  }
+
+  files.forEach(r => visita(r.id));
+  return cicles;
+}
+
+// Reprodueix isUnlocked() d'index.html: un node es desbloqueja quan TOTS els
+// seus prerequisits estan completats, i només es pot completar si està publicat.
+// Retorna els nodes publicats que no s'arribaran a desbloquejar mai.
+function nodesInassolibles(files, perId) {
+  const publicats = new Set(files.filter(esPublicat).map(r => r.id));
+  const assolits  = new Set();
+  let canvi = true;
+  while (canvi) {
+    canvi = false;
+    for (const r of files) {
+      if (assolits.has(r.id) || !publicats.has(r.id)) continue;
+      const prereqs = splitComa(r.prerequisits).filter(p => perId.has(p));
+      if (prereqs.every(p => assolits.has(p))) { assolits.add(r.id); canvi = true; }
+    }
+  }
+  return {
+    assolibles:    assolits.size,
+    publicats:     publicats.size,
+    inassolibles:  [...publicats].filter(id => !assolits.has(id)),
+  };
+}
+
+// Retorna un array de { nivell, text, suggeriment }.
+function validar(rows) {
+  const problemes = [];
+  const error = (text, suggeriment) => problemes.push({ nivell: 'error', text, suggeriment });
+  const avis  = (text, suggeriment) => problemes.push({ nivell: 'avis',  text, suggeriment });
+
+  const files = rows.filter(r => r.id);
+
+  // ids duplicats
+  const perId = new Map();
+  files.forEach(r => {
+    if (perId.has(r.id)) {
+      error(`id duplicat: "${r.id}" apareix més d'una vegada`,
+            `Renombra'n una de les dues files. Ara mateix només es fa cas de la primera, ` +
+            `i la segona s'ignora sencera.`);
+    } else {
+      perId.set(r.id, r);
+    }
+  });
+
+  const publicats = new Set(files.filter(esPublicat).map(r => r.id));
+
+  files.forEach(r => {
+    const prereqs = splitComa(r.prerequisits);
+
+    // prerequisits que no existeixen enlloc del CSV
+    prereqs.filter(p => !perId.has(p)).forEach(p => {
+      const parescut = idMesParegut(p, [...perId.keys()]);
+      error(`${r.id}: el prerequisit "${p}" no existeix al CSV`,
+            parescut
+              ? `Volies dir "${parescut}"? Corregeix la cel·la prerequisits de ${r.id}.`
+              : `Crea el node "${p}", o lleva'l de la cel·la prerequisits de ${r.id}.`);
+    });
+
+    // un node publicat que depén d'un que no ho està
+    if (esPublicat(r)) {
+      prereqs.filter(p => perId.has(p) && !publicats.has(p)).forEach(p => {
+        avis(`${r.id} està publicat però depén de "${p}", que encara no ho està`,
+             `Mentre "${p}" estiga en preparació, ${r.id} no es podrà desbloquejar. ` +
+             `Publica "${p}" (valid=TRUE i torna a executar) o despublica ${r.id}.`);
+      });
+    }
+
+    // arrels inesperades
+    if (prereqs.length === 0 && r.id !== ARREL) {
+      avis(`${r.id}: no té prerequisits, serà una segona arrel de l'arbre`,
+           `Si havia de penjar d'algun node, ompli'n la cel·la prerequisits. ` +
+           `L'única arrel prevista és ${ARREL}.`);
+    }
+
+    // fites incompletes
+    if (r.es_fita === 'TRUE') {
+      if (!r.fita_nom) {
+        error(`${r.id}: es_fita=TRUE però fita_nom està buit`,
+              `Ompli fita_nom, o posa es_fita=FALSE si no havia de ser fita.`);
+      }
+      // Una fita sense insígnia només és greu si el node ja està publicat:
+      // buildBadgeMap() no la posarà al mapa i «Sincronitzar fites» no
+      // desbloquejarà res, encara que l'alumne tinga la insígnia concedida.
+      // Mentre és un esborrany, encara hi ha temps: només és un recordatori.
+      if (!r.discourse_badge_id) {
+        const com = `Crea-la a ${CONFIG.DISCOURSE_BASE_URL}/admin/badges i apunta'n ` +
+                    `l'id numèric a discourse_badge_id.`;
+        if (esPublicat(r)) {
+          error(`${r.id}: està publicat, és fita, i discourse_badge_id està buit`,
+                `${com} Fins llavors, «Sincronitzar fites» no desbloquejarà aquesta fita.`);
+        } else {
+          avis(`${r.id}: és fita i encara no té discourse_badge_id`,
+               `${com} No corre pressa, però ha d'estar-hi ABANS de publicar-lo.`);
+        }
+      }
+    }
+
+    // materials
+    for (const i of [1, 2]) {
+      const tipus = r[`mat${i}_tipus`];
+      if (!tipus) continue;
+      if (!TIPUS_MATERIAL.includes(tipus)) {
+        const parescut = idMesParegut(tipus, TIPUS_MATERIAL);
+        error(`${r.id}: mat${i}_tipus "${tipus}" no és un tipus conegut`,
+              parescut
+                ? `Volies dir "${parescut}"? Tipus admesos: ${TIPUS_MATERIAL.join(', ')}.`
+                : `Tipus admesos: ${TIPUS_MATERIAL.join(', ')}.`);
+      }
+      if (!r[`mat${i}_url`]) {
+        error(`${r.id}: mat${i} és de tipus "${tipus}" però no té URL`,
+              `Ompli mat${i}_url, o buida mat${i}_tipus per a llevar el material.`);
+      }
+    }
+  });
+
+  // cicles
+  detectarCicles(files, perId).forEach(c => {
+    const ultim = c[c.length - 2], primer = c[c.length - 1];
+    error(`cicle de prerequisits: ${c.join(' → ')}`,
+          `Trenca el cicle llevant "${primer}" de la cel·la prerequisits de ${ultim}. ` +
+          `Un cicle fa que aquests nodes no es puguen desbloquejar mai.`);
+  });
+
+  // nodes publicats que no s'arribaran a desbloquejar mai
+  const { assolibles, publicats: nPub, inassolibles } = nodesInassolibles(files, perId);
+  if (inassolibles.length > 0) {
+    const pct = Math.round((assolibles / nPub) * 100);
+    avis(`${inassolibles.length} nodes publicats no es podran desbloquejar mai: ` +
+         `${inassolibles.join(', ')}`,
+         `El progrés màxim assolible queda en ${pct} % (${assolibles} de ${nPub}). ` +
+         `La causa sol ser un prerequisit sense publicar o un cicle: mira els altres avisos.`);
+  }
+
+  return problemes;
+}
+
+// Imprimeix el resultat. Retorna true si es pot continuar.
+function informarValidacio(problemes, rows) {
+  const sep = '─'.repeat(64);
+  const errors = problemes.filter(p => p.nivell === 'error');
+  const avisos = problemes.filter(p => p.nivell === 'avis');
+
+  const mostra = (llista, titol, marca, log) => {
+    if (llista.length === 0) return;
+    log(`\n${sep}\n ${titol} (${llista.length})\n${sep}`);
+    llista.forEach(p => {
+      log(`  ${marca} ${p.text}`);
+      if (p.suggeriment) log(`      → ${p.suggeriment}`);
+    });
+  };
+
+  mostra(avisos, 'AVISOS', '!', console.warn);
+  mostra(errors, 'ERRORS', '✗', console.error);
+
+  const files = rows.filter(r => r.id);
+  const nPub  = files.filter(esPublicat).length;
+  console.log(`\nCSV: ${files.length} nodes (${nPub} publicats, ${files.length - nPub} en preparació).`);
+  if (errors.length === 0 && avisos.length === 0) console.log('Validació: cap problema.');
+
+  return errors.length === 0;
 }
 
 // ─── GITHUB ──────────────────────────────────────────────────────────────────
@@ -232,17 +494,30 @@ async function pushAGitHub(contingut) {
 async function main() {
   const soloNodes = process.argv.includes('--only-nodes');
   const dryRun    = process.argv.includes('--dry-run');
+  const soloValid = process.argv.includes('--validate');
+  const skipValid = process.argv.includes('--skip-validation');
 
-  const csvText = readFileSync('./GiT_Nodes.csv', 'utf8');
+  const csvText = readFileSync(CSV_PATH, 'utf8');
   const rows = parseCsv(csvText);
   const headers = Object.keys(rows[0]);
+
+  // Validació: sempre. Els errors paren l'execució abans de tocar res.
+  const validacioOk = informarValidacio(validar(rows), rows);
+  if (soloValid) process.exit(validacioOk ? 0 : 1);
+  if (!validacioOk && !skipValid) {
+    console.error('\nValidació fallida: no s\'ha modificat res.');
+    console.error('Arregla el CSV, o força l\'execució amb --skip-validation.');
+    process.exit(1);
+  }
 
   // Mode ràpid: només regenerar nodes.json sense tocar Discourse ni GitHub
   if (soloNodes) {
     const nodes = rows.filter(r => r.id).map(filelaANode);
     const json  = JSON.stringify(nodes, null, 2);
-    writeFileSync('./nodes.json', json, 'utf8');
-    console.log(`nodes.json generat (${nodes.length} nodes). [--only-nodes, sense Discourse ni GitHub]`);
+    writeFileSync(NODES_PATH, json, 'utf8');
+    const nPub = nodes.filter(n => n.publicat).length;
+    console.log(`nodes.json generat (${nodes.length} nodes: ${nPub} publicats, ` +
+                `${nodes.length - nPub} en preparació). [--only-nodes]`);
     return;
   }
 
@@ -333,7 +608,7 @@ async function main() {
 
   // Actualitzar CSV si hi ha IDs nous
   if (creats > 0) {
-    writeFileSync('./GiT_Nodes.csv', serializeCsv(rows, headers), 'utf8');
+    writeFileSync(CSV_PATH, serializeCsv(rows, headers), 'utf8');
     console.log(`\nCSV actualitzat (${creats} IDs nous).`);
   }
 
@@ -342,22 +617,36 @@ async function main() {
   if (creatsOk.length > 0) {
     const sep = '═'.repeat(44);
     console.log(`\n${sep}`);
-    console.log(' TOPICS CREATS — copia al CSV si cal');
+    console.log(' TOPICS CREATS');
     console.log(sep);
     creatsOk.forEach(r => {
       console.log(` ${r.id.padEnd(22)} →  ${r.discourse_topic_id}`);
     });
     console.log(sep);
+
+    // El CSV local ja porta els ids nous, però el FULL DE CÀLCUL no: d'ell
+    // només sabem llegir. Deixem les dues columnes en un fitxer a banda per a
+    // poder-les enganxar en bloc al full, en lloc d'anar id per id.
+    const csvIds = ['id,discourse_topic_id']
+      .concat(creatsOk.map(r => `${r.id},${r.discourse_topic_id}`))
+      .join('\n') + '\n';
+    writeFileSync(IDS_PATH, csvIds, 'utf8');
+    console.log(`\nIds nous guardats a ${IDS_PATH} — enganxa'ls al full de càlcul.`);
+    console.log("Mentre no ho faces, la pròxima importació del full els portarà");
+    console.log("buits, i l'script tornaria a crear els temes DUPLICATS.");
   }
 
   console.log(`\nResum: ${actualitzats} actualitzats, ${creats} creats, ${saltats.length} saltats.`);
   const errors = [...errorsCreacio, ...errorsActualitza];
 
-  // Generar nodes.json
+  // Generar nodes.json — tots els nodes; el camp `publicat` distingeix els que
+  // es poden completar dels que es dibuixen «en preparació».
   const nodes = rows.filter(r => r.id).map(filelaANode);
   const json  = JSON.stringify(nodes, null, 2);
-  writeFileSync('./nodes.json', json, 'utf8');
-  console.log(`nodes.json generat (${nodes.length} nodes).`);
+  writeFileSync(NODES_PATH, json, 'utf8');
+  const nPub = nodes.filter(n => n.publicat).length;
+  console.log(`nodes.json generat (${nodes.length} nodes: ${nPub} publicats, ` +
+              `${nodes.length - nPub} en preparació).`);
 
   // Pujar a GitHub
   console.log('Pujant nodes.json a GitHub...');
