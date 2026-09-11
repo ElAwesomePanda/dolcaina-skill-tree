@@ -34,9 +34,13 @@ if (!SHEET_ID || !SHEET_GID) {
 
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID}`;
 
-// Primera columna que ha de portar el CSV. Serveix de comprovació barata que
-// el que ens ha arribat és el full correcte i no una pàgina d'error.
-const PRIMERA_COLUMNA = 'id,valid,force_update,';
+// Columnes que ha de portar el CSV perquè ens el creguem. Serveix per a
+// distingir el full de veritat d'una pàgina d'error de Google.
+//
+// NO es comprova l'ordre ni la llista sencera: el full guanya columnes de tant
+// en tant (p. ex. `actiu`, 2026-09-11) i una comprovació per prefix literal
+// bloquejava la descàrrega cada vegada que passava.
+const COLUMNES_ESSENCIALS = ['id', 'titol', 'prerequisits', 'discourse_topic_id'];
 
 const desti = process.argv[2];
 if (!desti) {
@@ -70,13 +74,24 @@ if (!res.ok) {
 const text = await res.text();
 const tipus = res.headers.get('content-type') || '';
 
-if (!tipus.includes('csv') || !text.startsWith(PRIMERA_COLUMNA)) {
+// La capçalera, sense BOM i sense el retorn de carro de Windows.
+const capcalera = text.replace(/^﻿/, '').split('\n')[0].replace(/\r$/, '');
+const columnes = capcalera.split(',').map(c => c.trim().replace(/^"|"$/g, ''));
+const falten = COLUMNES_ESSENCIALS.filter(c => !columnes.includes(c));
+
+if (!tipus.includes('csv') || falten.length > 0) {
   console.error('  El que ha arribat no és el CSV que esperàvem.');
   console.error(`  Content-Type: ${tipus || '(cap)'}`);
-  console.error(`  Comença per:  ${text.slice(0, 60).replace(/\n/g, ' ')}`);
-  console.error('');
-  console.error('  Causes habituals: el full no és públic, o el gid apunta a una');
-  console.error('  pestanya que no és la dels nodes.');
+  if (falten.length > 0 && tipus.includes('csv')) {
+    console.error(`  Hi falten les columnes: ${falten.join(', ')}`);
+    console.error(`  Columnes rebudes: ${columnes.join(', ')}`);
+    console.error('');
+    console.error('  Segurament el gid apunta a una pestanya que no és la dels nodes.');
+  } else {
+    console.error(`  Comença per:  ${text.slice(0, 60).replace(/\n/g, ' ')}`);
+    console.error('');
+    console.error('  Causa habitual: el full ha deixat de ser públic.');
+  }
   process.exit(1);
 }
 

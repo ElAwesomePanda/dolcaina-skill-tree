@@ -19,7 +19,18 @@
    `PERC_PL_2` tenen `valid=FALSE` i **estan publicats** — es van bloquejar
    perquè l'script no els tornara a tocar. El que decideix tot a l'arbre és
    `discourse_topic_id`, via `esPublicat()`.
-3b. **`nodes.json` porta TOTS els nodes, amb un camp `publicat`.** Els que el
+3b. **Tres columnes independents decideixen coses diferents.** No confondre-les:
+
+   | Columna | Decideix |
+   | --- | --- |
+   | `actiu` | Si el node **s'exporta a `nodes.json`**, és a dir, si es dibuixa |
+   | `valid` | Si l'script el **publica o actualitza al fòrum** |
+   | `discourse_topic_id` | Si **ja està publicat**; si no, ix «en preparació» |
+
+   `actiu` buit o absent = actiu. Així un CSV sense la columna es comporta com
+   abans, i afegir-la no amaga res per accident.
+
+3c. **`nodes.json` porta els nodes ACTIUS, amb un camp `publicat`.** Els que el
    tenen a `false` es dibuixen «en preparació»: visibles, no clicables, i fora
    del càlcul del progrés.
 4. **`prerequisits` és l'única font de les arestes.** No hi ha camp invers.
@@ -41,7 +52,7 @@
 | Fitxer | Versionat | Paper |
 | --- | --- | --- |
 | `index.html` | sí | Aplicació sencera: HTML + CSS + JS en un fitxer (1352 línies) |
-| `nodes.json` | sí | Dades generades (73 nodes) que carrega `index.html` |
+| `nodes.json` | sí | Dades generades (els nodes actius) que carrega `index.html` |
 | `GiT_nodes.csv` | **no** | Font de veritat de les dades. Viu al disc de l'autor |
 | `GiT_nodes.exemple.csv` | sí | 4 files de mostra, per a entendre l'esquema |
 | `crear_topics.js` | sí | Pipeline CSV → Discourse → `nodes.json` → GitHub |
@@ -71,15 +82,19 @@ Tipografies: `Cinzel` (400/600/700) i `Crimson Pro` via Google Fonts (`@import`)
 
 ## 2. Forma de les dades
 
-### 2.1 Capçalera del CSV (21 columnes, ordre exacte)
+### 2.1 Capçalera del CSV (22 columnes)
 
 ```
-id,valid,force_update,familia,tags,titol,descripcio,prerequisits,es_fita,
+id,actiu,valid,force_update,familia,tags,titol,descripcio,prerequisits,es_fita,
 fita_nom,fita_descripcio,fita_icona,discourse_badge_name,discourse_badge_id,
 discourse_topic_id,mat1_tipus,mat1_nom,mat1_url,mat2_tipus,mat2_nom,mat2_url
 ```
 
-- `valid` i `force_update` són les cadenes literals `TRUE` / `FALSE`.
+**L'ordre no importa**: tot es llig pel nom de la columna. `actiu` es va afegir
+el 2026-09-11 en segona posició, i res es va trencar tret de la comprovació de
+`baixar_full.mjs` (§7.10).
+
+- `actiu`, `valid` i `force_update` són les cadenes literals `TRUE` / `FALSE`.
   Qualsevol altra cosa (inclòs buit) es tracta com a fals.
 - `tags` i `prerequisits` són llistes separades per comes **dins d'un camp
   entrecometat** (`"A,B"`), perquè el separador del CSV també és la coma.
@@ -122,20 +137,21 @@ discourse_topic_id,mat1_tipus,mat1_nom,mat1_url,mat2_tipus,mat2_nom,mat2_url
 
 ### 2.3 Estat de les dades (2026-09-11)
 
-- **87 nodes**: 86 de família `Percussió`, 1 de `General`.
-  **40 publicats**, 47 «en preparació».
-- Arrel única: `GiT_INICI`. 8 nodes amb `es_fita=true`.
-- La columna `valid` ja no explica res de l'arbre: `GiT_INICI`, `PERC_PL_1` i
-  `PERC_PL_2` tenen `valid=FALSE` i estan publicats.
-- Branques: `PERC_PL`, `PERC_DE`, `PERC_DDEE`, `PERC_DEDx`, `PERC_PLD`,
+- **87 nodes al CSV**, dels quals **15 actius** (els que es dibuixen) i
+  **72 amagats** amb `actiu=FALSE`.
+- Els 15 actius són `GiT_INICI` i els 14 de `PERC_ERM`. **Tots publicats**, cap
+  «en preparació». És una configuració **temporal** del 2026-09-11: s'han
+  amagat les branques de tocs bàsics i lateralitat per a centrar una sessió del
+  taller en la peça de Sant Antoni. Es desfà posant `actiu` a `TRUE`.
+- Arrel única: `GiT_INICI`. 8 nodes amb `es_fita=true` a tot el CSV.
+- Branques al CSV: `PERC_PL`, `PERC_DE`, `PERC_DDEE`, `PERC_DEDx`, `PERC_PLD`,
   `PERC_PLE`, `PERC_LAT` (Lat. 001-011) i `PERC_ERM` (St. Antoni L'ermità).
 - `PERC_ERM` té forma d'espina dorsal: els nodes `_01` fan la cadena principal i
-  cada `_02` («Tota») penja del seu `_01` sense bloquejar el pas següent.
+  cada `_02` («Tota») penja del seu `_01` sense bloquejar el pas següent. Penja
+  directament de `GiT_INICI`, per això amagar la resta no trenca el graf.
 - **Cap node inassolible.** Lat. 009 es va arreglar el 2026-09-11 penjant
   `PERC_LAT_11_21_41_1` de `PERC_LAT_11_12_11_21_4`.
-- Avís obert: `PERC_ERM_REDOBLE_02` és fita i encara no té `discourse_badge_id`.
-  Com que no està publicat, és avís i no error.
-- Tipus de material presents: només `video` i `image`. Cap `pdf` ni `mp3`.
+- Tipus de material presents: `video`, `image` i `mp3` (14 nodes d'ERM).
 - Cap prerequisit penjant. Cap node sense descripció. Només `GiT_INICI` sense material.
 - Etiquetes en ús: `Taller, Benvinguda, Tabal, Beat, Mètronom, Resistència, D-E,
   DD-EE, DEDx, PL-D, Combinació, PL-E, Lateralitat, 1/2, 1/4`.
@@ -366,7 +382,10 @@ Scripts d'npm: `validate`, `dry`, `nodes`, `publish`, `serve`.
   *(El nom té una errada: hauria de ser `filaANode`.)*
 - `splitComa(s)` → `Array<string>`. Buit si la cadena és buida.
 - `esPublicat(row)` → `boolean`. `Boolean(row.id && row.discourse_topic_id)`.
-  **És el criteri de tot.** No confondre amb `valid` (§0, invariant 3).
+  Decideix si el node ix «en preparació». No confondre amb `valid`.
+- `esActiu(row)` → `boolean`. `row.actiu !== 'FALSE'`, o siga que **buit o
+  absent = actiu**. Decideix si el node arriba a `nodes.json`. Vegeu §0,
+  invariant 3b per a la diferència entre les tres columnes.
 - `pushAGitHub(contingut)` → `Promise<void>`. `GET` per obtindre el `sha` actual
   i `PUT /repos/{owner}/{repo}/contents/nodes.json` amb el contingut en base64.
   Missatge de commit: `[auto] Actualitzar nodes.json — {ISO}`.
@@ -482,6 +501,9 @@ porta un suggeriment concret en termes del CSV**, no del codi.
 | `es_fita=TRUE` sense `discourse_badge_id` | error | Crear la insígnia a `/admin/badges` |
 | `matN_tipus` desconegut | error | El tipus més paregut, i la llista d'admesos |
 | `matN_tipus` sense URL | error | Omplir la URL o buidar el tipus |
+| `matN` sense nom | avís | Omplir el nom: al fòrum, buit ix com a «****» |
+| node actiu que depén d'un d'amagat | error | Activar el prerequisit o amagar també el node |
+| `ARREL` amagat | error | L'arbre es quedaria sense punt de partida |
 | cicle de prerequisits | error | Quina aresta exacta llevar per a trencar-lo |
 | nodes publicats inassolibles | avís | El progrés màxim assolible, en % |
 
@@ -696,6 +718,25 @@ l'entorn: un `.ogg` de Wikimedia carrega sense problema al mateix element
 La solució és l'`<iframe>` de `/preview`, que és el reproductor de Google
 mateix. Si algun dia es volen controls propis, els fitxers han de canviar de
 lloc (vegeu `BACKLOG.md`).
+
+---
+
+### 7.10 La comprovació de `baixar_full.mjs` no pot mirar l'ordre
+
+La primera versió exigia que el CSV començara literalment per
+`id,valid,force_update,`. En afegir la columna `actiu` en segona posició
+(2026-09-11), la descàrrega es va bloquejar:
+
+```
+El que ha arribat no és el CSV que esperàvem.
+Content-Type: text/csv
+Comença per:  id,actiu,valid,force_update,familia,tags,titol,...
+```
+
+El guardià feia la seua faena (no va tocar el CSV bo), però per un motiu fals.
+Ara comprova que **hi siguen** les columnes de `COLUMNES_ESSENCIALS`
+(`id`, `titol`, `prerequisits`, `discourse_topic_id`), sense mirar l'ordre ni
+exigir la llista sencera. El full pot guanyar columnes sense trencar res.
 
 ---
 

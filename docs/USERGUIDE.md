@@ -303,13 +303,34 @@ programa tornarà a crear els temes: acabaries amb temes duplicats al fòrum.**
 3. Quan estiga bé: **5** (assaig) i **6** (publicar).
 4. Enganxa `ids_nous.csv` al full.
 
-### Dues coses sobre les columnes que no són evidents
+### Amagar una branca temporalment
 
-- **`valid` no decideix si el node es veu a l'arbre.** Només decideix si el
-  programa el publica al fòrum. El que fa que un node es veja com a publicat és
-  que tinga `discourse_topic_id`.
-- Un node **sense** `discourse_topic_id` es dibuixa igualment, en estat «en
-  preparació». No s'amaga.
+La columna **`actiu`** decideix si el node ix a l'arbre. Posa-li `FALSE` a les
+files que vulgues amagar, importa (opció 1) i regenera (opció 3).
+
+Serveix per a centrar una sessió del taller en una branca concreta. **No toca
+res del fòrum**: els temes continuen existint i els identificadors es conserven.
+Per a tornar-ho arrere, `TRUE` una altra vegada.
+
+Els alumnes **no perden el progrés**: el que tenien fet es guarda per
+identificador al seu navegador, i quan tornes a activar la branca hi torna a
+aparéixer marcat.
+
+### Tres columnes que es confonen fàcilment
+
+| Columna | Què decideix |
+| --- | --- |
+| `actiu` | Si el node **es veu a l'arbre** |
+| `valid` | Si el programa el **publica o actualitza al fòrum** |
+| `discourse_topic_id` | Si **ja està publicat**; si està buit, ix «en preparació» |
+
+Són independents. Els dos errors típics:
+
+- Posar **`valid=FALSE` per a amagar** un node de l'arbre: no fa res a l'arbre,
+  només deixa d'actualitzar-lo al fòrum. El node es continua veient.
+- **Buidar el `discourse_topic_id`** per a amagar-lo: el node desapareix de la
+  vista, però el programa deixa de saber que ja estava publicat i **tornaria a
+  crear el tema, duplicat**. No ho faces mai: per a amagar, `actiu`.
 
 ## El camí manual, sense menú
 

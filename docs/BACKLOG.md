@@ -105,6 +105,13 @@ operatiu i tot el que és massa menut per a tindre fitxa pròpia.
 
 ## Eines
 
+- [x] Columna `actiu` per a amagar branques de l'arbre sense tocar el fòrum —
+      2026-09-11
+- [x] El validador avisa si un material té tipus i URL però no nom, i
+      `generarCos()` ja no escriu «****» — 2026-09-11
+- [ ] Quan es reprenguen les branques amagades: `actiu=TRUE` als 72 nodes de
+      tocs bàsics i lateralitat
+
 - [x] Connexió directa amb el full de càlcul en lectura (`eines/baixar_full.mjs`,
       opció 1 del menú) — 2026-09-11
 - [x] Rotació de còpies de seguretat: se'n guarden les 3 últimes — 2026-09-11

@@ -110,17 +110,20 @@ function generarCos(row) {
     lines.push('');
     lines.push('## Material didàctic');
     materials.forEach(m => {
+      // El títol només si n'hi ha: `**${m.nom}**` amb el nom buit escriu
+      // quatre asteriscs pelats al post. El validador ara ho avisa, però
+      // aquesta guarda evita que arribe al fòrum si algú se'l salta.
       if (m.tipus === 'video') {
         const ytUrl = extractYouTubeUrl(m.url);
         lines.push('');
-        lines.push(`**${m.nom}**`);
+        if (m.nom) lines.push(`**${m.nom}**`);
         if (ytUrl) lines.push(ytUrl); // Discourse fa l'embed automàticament
       } else if (m.tipus === 'image') {
         const driveMatch = m.url && (m.url.match(/\/d\/([a-zA-Z0-9_-]+)/) || m.url.match(/[?&]id=([a-zA-Z0-9_-]+)/));
         const directUrl = driveMatch ? `https://drive.google.com/uc?export=view&id=${driveMatch[1]}` : m.url;
         lines.push('');
-        lines.push(`**${m.nom}**`);
-        if (directUrl) lines.push(`![${m.nom}](${directUrl})`);
+        if (m.nom) lines.push(`**${m.nom}**`);
+        if (directUrl) lines.push(`![${m.nom || 'material'}](${directUrl})`);
       } else {
         const etiqueta = m.url ? `[${m.nom}](${m.url})` : m.nom;
         lines.push(`- **${m.tipus.toUpperCase()}** · ${etiqueta}`);
@@ -234,6 +237,20 @@ function esPublicat(row) {
   return Boolean(row.id && row.discourse_topic_id);
 }
 
+// Un node ACTIU és el que s'exporta a nodes.json, és a dir, el que es dibuixa.
+// Serveix per a amagar branques senceres temporalment sense tocar res del fòrum.
+//
+// Buit o absent = actiu. Així, afegir la columna al full no amaga res per
+// accident, i un CSV antic sense la columna es continua comportant igual.
+//
+// Les tres columnes són independents:
+//   actiu               → es veu a l'arbre
+//   valid               → l'script el publica/actualitza al fòrum
+//   discourse_topic_id  → ja està publicat (si no, ix «en preparació»)
+function esActiu(row) {
+  return row.actiu !== 'FALSE';
+}
+
 // ─── VALIDACIÓ ───────────────────────────────────────────────────────────────
 //
 // Cada problema detectat porta un suggeriment concret d'arreglament, en termes
@@ -299,15 +316,18 @@ function detectarCicles(files, perId) {
 // Reprodueix isUnlocked() d'index.html: un node es desbloqueja quan TOTS els
 // seus prerequisits estan completats, i només es pot completar si està publicat.
 // Retorna els nodes publicats que no s'arribaran a desbloquejar mai.
+// Compta només sobre els nodes que es dibuixen: un node amagat no el pot
+// completar ningú, i incloure'l donaria un màxim assolible fals.
 function nodesInassolibles(files, perId) {
-  const publicats = new Set(files.filter(esPublicat).map(r => r.id));
+  const publicats = new Set(files.filter(r => esPublicat(r) && esActiu(r)).map(r => r.id));
   const assolits  = new Set();
   let canvi = true;
   while (canvi) {
     canvi = false;
     for (const r of files) {
       if (assolits.has(r.id) || !publicats.has(r.id)) continue;
-      const prereqs = splitComa(r.prerequisits).filter(p => perId.has(p));
+      const prereqs = splitComa(r.prerequisits)
+        .filter(p => perId.has(p) && esActiu(perId.get(p)));
       if (prereqs.every(p => assolits.has(p))) { assolits.add(r.id); canvi = true; }
     }
   }
@@ -352,8 +372,19 @@ function validar(rows) {
               : `Crea el node "${p}", o lleva'l de la cel·la prerequisits de ${r.id}.`);
     });
 
-    // un node publicat que depén d'un que no ho està
-    if (esPublicat(r)) {
+    // Un node ACTIU que depén d'un d'AMAGAT no arriba mai a desbloquejar-se:
+    // el prerequisit ni tan sols és a nodes.json. Mateix problema que el de
+    // sota, però causat per la columna `actiu`.
+    if (esActiu(r)) {
+      prereqs.filter(p => perId.has(p) && !esActiu(perId.get(p))).forEach(p => {
+        error(`${r.id} està actiu però depén de "${p}", que està amagat (actiu=FALSE)`,
+              `Ni ${r.id} ni els seus descendents es podran desbloquejar mai. ` +
+              `Activa "${p}", o amaga també ${r.id}.`);
+      });
+    }
+
+    // un node publicat que depén d'un que no ho està (només si es dibuixa)
+    if (esPublicat(r) && esActiu(r)) {
       prereqs.filter(p => perId.has(p) && !publicats.has(p)).forEach(p => {
         avis(`${r.id} està publicat però depén de "${p}", que encara no ho està`,
              `Mentre "${p}" estiga en preparació, ${r.id} no es podrà desbloquejar. ` +
@@ -361,8 +392,8 @@ function validar(rows) {
       });
     }
 
-    // arrels inesperades
-    if (prereqs.length === 0 && r.id !== ARREL) {
+    // arrels inesperades (només compten les que es dibuixen)
+    if (prereqs.length === 0 && r.id !== ARREL && esActiu(r)) {
       avis(`${r.id}: no té prerequisits, serà una segona arrel de l'arbre`,
            `Si havia de penjar d'algun node, ompli'n la cel·la prerequisits. ` +
            `L'única arrel prevista és ${ARREL}.`);
@@ -405,9 +436,22 @@ function validar(rows) {
       if (!r[`mat${i}_url`]) {
         error(`${r.id}: mat${i} és de tipus "${tipus}" però no té URL`,
               `Ompli mat${i}_url, o buida mat${i}_tipus per a llevar el material.`);
+      } else if (!r[`mat${i}_nom`]) {
+        // Al fòrum el nom es pinta en negreta. Amb el nom buit ixen quatre
+        // asteriscs pelats (`****`), que és el que va passar als 14 nodes
+        // d'ERM el 2026-09-11 i no es va veure fins a mirar el post.
+        avis(`${r.id}: mat${i} ("${tipus}") no té nom`,
+             `Ompli mat${i}_nom. Amb el nom buit, al fòrum ix «****».`);
       }
     }
   });
+
+  // Amagar l'arrel deixaria l'arbre sense cap punt de partida.
+  const arrel = perId.get(ARREL);
+  if (arrel && !esActiu(arrel)) {
+    error(`${ARREL} està amagat (actiu=FALSE), i és l'arrel de l'arbre`,
+          `Sense arrel no hi ha res per on començar: posa-li actiu=TRUE.`);
+  }
 
   // cicles
   detectarCicles(files, perId).forEach(c => {
@@ -448,9 +492,13 @@ function informarValidacio(problemes, rows) {
   mostra(avisos, 'AVISOS', '!', console.warn);
   mostra(errors, 'ERRORS', '✗', console.error);
 
-  const files = rows.filter(r => r.id);
-  const nPub  = files.filter(esPublicat).length;
-  console.log(`\nCSV: ${files.length} nodes (${nPub} publicats, ${files.length - nPub} en preparació).`);
+  const files   = rows.filter(r => r.id);
+  const actius  = files.filter(esActiu);
+  const nPub    = actius.filter(esPublicat).length;
+  const amagats = files.length - actius.length;
+  const cua = amagats > 0 ? `  ${amagats} amagats (actiu=FALSE).` : '';
+  console.log(`\nCSV: ${files.length} nodes · a l'arbre ${actius.length} ` +
+              `(${nPub} publicats, ${actius.length - nPub} en preparació).${cua}`);
   if (errors.length === 0 && avisos.length === 0) console.log('Validació: cap problema.');
 
   return errors.length === 0;
@@ -489,6 +537,14 @@ async function pushAGitHub(contingut) {
   }
 }
 
+function informarGeneracio(nodes, rows, sufix = '') {
+  const nPub    = nodes.filter(n => n.publicat).length;
+  const amagats = rows.filter(r => r.id).length - nodes.length;
+  const cua = amagats > 0 ? ` ${amagats} amagats (actiu=FALSE) fora de l'arbre.` : '';
+  console.log(`nodes.json generat (${nodes.length} nodes: ${nPub} publicats, ` +
+              `${nodes.length - nPub} en preparació).${cua} ${sufix}`.trimEnd());
+}
+
 // ─── MAIN ─────────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -512,12 +568,10 @@ async function main() {
 
   // Mode ràpid: només regenerar nodes.json sense tocar Discourse ni GitHub
   if (soloNodes) {
-    const nodes = rows.filter(r => r.id).map(filelaANode);
+    const nodes = rows.filter(r => r.id && esActiu(r)).map(filelaANode);
     const json  = JSON.stringify(nodes, null, 2);
     writeFileSync(NODES_PATH, json, 'utf8');
-    const nPub = nodes.filter(n => n.publicat).length;
-    console.log(`nodes.json generat (${nodes.length} nodes: ${nPub} publicats, ` +
-                `${nodes.length - nPub} en preparació). [--only-nodes]`);
+    informarGeneracio(nodes, rows, '[--only-nodes]');
     return;
   }
 
@@ -639,14 +693,12 @@ async function main() {
   console.log(`\nResum: ${actualitzats} actualitzats, ${creats} creats, ${saltats.length} saltats.`);
   const errors = [...errorsCreacio, ...errorsActualitza];
 
-  // Generar nodes.json — tots els nodes; el camp `publicat` distingeix els que
-  // es poden completar dels que es dibuixen «en preparació».
-  const nodes = rows.filter(r => r.id).map(filelaANode);
+  // Generar nodes.json — només els nodes ACTIUS. El camp `publicat` distingeix
+  // els que es poden completar dels que es dibuixen «en preparació».
+  const nodes = rows.filter(r => r.id && esActiu(r)).map(filelaANode);
   const json  = JSON.stringify(nodes, null, 2);
   writeFileSync(NODES_PATH, json, 'utf8');
-  const nPub = nodes.filter(n => n.publicat).length;
-  console.log(`nodes.json generat (${nodes.length} nodes: ${nPub} publicats, ` +
-              `${nodes.length - nPub} en preparació).`);
+  informarGeneracio(nodes, rows);
 
   // Pujar a GitHub
   console.log('Pujant nodes.json a GitHub...');
