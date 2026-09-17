@@ -2,7 +2,7 @@
 
 > Document escrit **per a l'agent**. El lector previst és una sessió futura de
 > Claude Code. Si la resposta és ací, no cal obrir el codi.
-> Signatures i literals extrets amb `grep` el **2026-09-11**.
+> Signatures i literals extrets amb `grep` el **2026-09-17**.
 
 ---
 
@@ -51,7 +51,7 @@
 
 | Fitxer | Versionat | Paper |
 | --- | --- | --- |
-| `index.html` | sí | Aplicació sencera: HTML + CSS + JS en un fitxer (1352 línies) |
+| `index.html` | sí | Aplicació sencera: HTML + CSS + JS en un fitxer (1583 línies) |
 | `nodes.json` | sí | Dades generades (els nodes actius) que carrega `index.html` |
 | `GiT_nodes.csv` | **no** | Font de veritat de les dades. Viu al disc de l'autor |
 | `GiT_nodes.exemple.csv` | sí | 4 files de mostra, per a entendre l'esquema |
@@ -135,14 +135,22 @@ el 2026-09-11 en segona posició, i res es va trencar tret de la comprovació de
   camp es continua comportant com abans (tots completables).
 - `material` sempre és un array (pot ser buit).
 
-### 2.3 Estat de les dades (2026-09-11)
+### 2.3 Estat de les dades (2026-09-17)
 
-- **87 nodes al CSV**, dels quals **15 actius** (els que es dibuixen) i
-  **72 amagats** amb `actiu=FALSE`.
-- Els 15 actius són `GiT_INICI` i els 14 de `PERC_ERM`. **Tots publicats**, cap
-  «en preparació». És una configuració **temporal** del 2026-09-11: s'han
-  amagat les branques de tocs bàsics i lateralitat per a centrar una sessió del
-  taller en la peça de Sant Antoni. Es desfà posant `actiu` a `TRUE`.
+- **87 nodes al CSV**, dels quals **39 actius** (els que es dibuixen) i
+  **48 amagats** amb `actiu=FALSE`.
+
+  | Branca | Al CSV | Actius |
+  | --- | --- | --- |
+  | `GiT_INICI` (arrel) | 1 | 1 |
+  | Tocs bàsics (`PERC_PL`, `PERC_DE`, `PERC_DDEE`, `PERC_DEDx`, `PERC_PLD`, `PERC_PLE`) | 24 | 24 |
+  | Lateralitat (`PERC_LAT`) | 48 | **0** |
+  | Sant Antoni (`PERC_ERM`) | 14 | 14 |
+
+- Els 39 actius estan **tots publicats**; cap «en preparació».
+- La lateralitat està amagada des del 2026-09-11 per a centrar les sessions del
+  taller. Es desfà posant `actiu` a `TRUE`. **És una configuració temporal**:
+  no la prengues com l'estat definitiu del projecte.
 - Arrel única: `GiT_INICI`. 8 nodes amb `es_fita=true` a tot el CSV.
 - Branques al CSV: `PERC_PL`, `PERC_DE`, `PERC_DDEE`, `PERC_DEDx`, `PERC_PLD`,
   `PERC_PLE`, `PERC_LAT` (Lat. 001-011) i `PERC_ERM` (St. Antoni L'ermità).
@@ -317,8 +325,46 @@ de parar-los sense recarregar la pàgina.
 
 `metroSchedule()` és el bucle *look-ahead* clàssic: programa els clics amb
 `AudioContext.currentTime` (precís) i el flaix amb `setTimeout` (imprecís, però
-només visual). **Canviar els BPM amb el metrònom en marxa té efecte al següent
-temps**, perquè `beatInterval` es recalcula dins del bucle.
+només visual).
+
+**L'interval es calcula per temps, dins del bucle `while`, no una vegada per
+passada del planificador.** Abans era fora; amb la rampa ha d'estar dins, perquè
+cada temps ha de saber a quin compàs pertany. Si algú el torna a traure fora, la
+rampa deixarà de funcionar i el símptoma serà que el tempo canvia a salts
+estranys, no que peta.
+
+#### Rampa de tempo (pujada progressiva)
+
+| Nom | Valor |
+| --- | --- |
+| `BPM_MIN`, `BPM_MAX` | 40, 240 |
+| `BEATS_PER_COMPAS` | 4 |
+| `metroPassos` | 8 (per defecte), 16 o 32 |
+| `metroBpmBase` | es congela a `startMetronom()` |
+| `metroRampaActiva` | es congela a `startMetronom()`, es posa a `false` a `stopMetronom()` |
+
+- `bpmDelCompas(compas)` → `number`. `base + (base / passos) * min(compas, passos)`,
+  arrodonit i limitat a `BPM_MAX`. Del tempo base al **doble** en `passos`
+  increments iguals, un per compàs, i es queda al final.
+- **La rampa NO escriu mai a la casella de BPM.** Si ho fera, en parar i tornar
+  a començar arrancaries des del tempo final i doblaries una altra vegada, i
+  cada volta seria pitjor. La casella és el tempo base; el tempo actual es
+  mostra a banda, a `#metroBpmActual`.
+- `metroBpmBase` es congela en arrancar: tocar la casella amb el metrònom en
+  marxa no desquadra la rampa en curs.
+- Si `base * 2 > BPM_MAX`, es queda a 240 i el marcador ho diu («· sostre»).
+
+Verificat el 2026-09-17 mesurant els intervals **reals** programats, no el
+número de pantalla. Base 80, 8 passos:
+
+```
+compàs 1: 750,0 ms  (80 BPM)      compàs 4: 545,5 ms  (110 BPM)
+compàs 2: 666,7 ms  (90 BPM)      compàs 5: 500,0 ms  (120 BPM)
+compàs 3: 600,0 ms  (100 BPM)
+```
+
+Quatre temps a cada tempo i el canvi exactament a la línia de compàs. Amb la
+casella desmarcada, tempo constant: cap regressió.
 
 ### 3.10 Arrancada i listeners
 

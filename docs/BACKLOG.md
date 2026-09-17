@@ -90,8 +90,12 @@ operatiu i tot el que és massa menut per a tindre fitxa pròpia.
 ## Metrònom
 
 - [ ] Botó «Practicar» al modal amb el temporitzador posat als minuts del node — `M-10`
-- [ ] Compàs configurable (ara `% 4` fix)
-- [ ] Mode de pujada progressiva de BPM
+- [x] Pujada progressiva de BPM: del tempo base al doble en 8/16/32 increments,
+      un per compàs — 2026-09-17
+- [ ] Compàs configurable (ara `% 4` fix). La rampa ja gasta
+      `BEATS_PER_COMPAS`, així que el canvi seria xicotet
+- [ ] Que el control de velocitat de l'mp3 baixe també el metrònom (pendent de
+      moure els mp3 fora de Drive)
 - [ ] Comprovar que l'`AudioContext` es reprén bé en iOS després de bloquejar la pantalla
 
 ## Contingut

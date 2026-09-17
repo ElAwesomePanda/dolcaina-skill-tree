@@ -609,6 +609,47 @@ h1 {
   align-items: center;
   justify-content: space-between;
 }
+.metronom-rampa-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.metronom-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+.metronom-check input { cursor: pointer; accent-color: var(--gold); }
+.metronom-passos { display: flex; gap: 3px; }
+.pas-btn {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  padding: 2px 7px;
+  border: 1px solid #3a3428;
+  background: transparent;
+  color: var(--cream-dim);
+  cursor: pointer;
+  border-radius: 2px;
+}
+.pas-btn.actiu { border-color: var(--gold-dim); color: var(--gold); }
+.metronom-passos.inactiu { opacity: 0.35; pointer-events: none; }
+.metronom-rampa-info {
+  font-size: 0.68rem;
+  font-style: italic;
+  color: var(--cream-dim);
+  min-height: 1em;
+}
+.metronom-bpm-actual {
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  color: var(--gold);
+  flex: 1;
+}
+.metronom-bpm-actual.sostre { color: #c47a7a; }
 .metronom-select {
   background: var(--bg);
   border: 1px solid #3a3428;
@@ -764,8 +805,20 @@ h1 {
         <option value="300">5 min</option>
       </select>
     </div>
+    <div class="metronom-rampa-row">
+      <label class="metronom-label metronom-check">
+        <input type="checkbox" id="metroRampa"> Pujada progressiva
+      </label>
+      <div class="metronom-passos" id="metroPassos">
+        <button class="pas-btn actiu" data-passos="8">8</button>
+        <button class="pas-btn" data-passos="16">16</button>
+        <button class="pas-btn" data-passos="32">32</button>
+      </div>
+    </div>
+    <div class="metronom-rampa-info" id="metroRampaInfo"></div>
     <div class="metronom-beat-row">
       <div class="metronom-beat" id="metroBeat"></div>
+      <span class="metronom-bpm-actual" id="metroBpmActual"></span>
       <span class="metronom-countdown" id="metroCountdown"></span>
     </div>
     <button class="metronom-start-btn" id="metroStartBtn" onclick="startStopMetronom()">▶ Iniciar</button>
@@ -1319,8 +1372,54 @@ function toggleMetronom() {
   document.getElementById('metronomPanel').classList.toggle('open');
 }
 
+const BPM_MIN = 40, BPM_MAX = 240;
+const BEATS_PER_COMPAS = 4;
+
+// Tempo base: el que hi ha escrit a la casella. La rampa NO l'escriu mai.
+// Si l'escriguera, en parar i tornar a començar arrancaries des del tempo
+// final i doblaries una altra vegada, i cada volta seria pitjor.
 function getMetroBpm() {
-  return Math.max(40, Math.min(240, parseInt(document.getElementById('metroBpmNum').value) || 80));
+  return Math.max(BPM_MIN, Math.min(BPM_MAX, parseInt(document.getElementById('metroBpmNum').value) || 80));
+}
+
+// Estat de la rampa. `metroBpmBase` es congela en iniciar: si l'alumne toca la
+// casella amb el metrònom en marxa, la rampa no es desquadra.
+let metroBpmBase = 80;
+let metroRampaActiva = false;
+let metroPassos = 8;
+
+function rampaActivada() { return document.getElementById('metroRampa').checked; }
+
+// Tempo del compàs N: del base al doble en `metroPassos` increments iguals,
+// un per compàs. Es queda al sostre quan hi arriba.
+function bpmDelCompas(compas) {
+  if (!metroRampaActiva) return getMetroBpm();
+  const increment = metroBpmBase / metroPassos;
+  const passosFets = Math.min(compas, metroPassos);
+  return Math.min(BPM_MAX, Math.round(metroBpmBase + increment * passosFets));
+}
+
+function mostrarBpmActual(bpm) {
+  const el = document.getElementById('metroBpmActual');
+  if (!metroRampaActiva) { el.textContent = ''; el.className = 'metronom-bpm-actual'; return; }
+  const sostre = bpm >= BPM_MAX && metroBpmBase * 2 > BPM_MAX;
+  el.textContent = bpm + ' BPM' + (sostre ? ' · sostre' : '');
+  el.className = 'metronom-bpm-actual' + (sostre ? ' sostre' : '');
+}
+
+// Text d'ajuda sota la casella: quant puja cada compàs i on acabarà.
+function actualitzarInfoRampa() {
+  const info   = document.getElementById('metroRampaInfo');
+  const passos = document.getElementById('metroPassos');
+  const activa = rampaActivada();
+  passos.className = 'metronom-passos' + (activa ? '' : ' inactiu');
+  if (!activa) { info.textContent = ''; return; }
+  const base      = getMetroBpm();
+  const increment = base / metroPassos;
+  const final     = Math.min(BPM_MAX, base * 2);
+  const retallat  = base * 2 > BPM_MAX;
+  info.textContent = `${base} → ${final} BPM · +${increment.toFixed(1)} cada compàs`
+                   + (retallat ? ` (es queda a ${BPM_MAX})` : '');
 }
 
 function playClick(time, isDownbeat) {
@@ -1345,16 +1444,26 @@ function flashBeat(isDownbeat) {
 
 function metroSchedule() {
   if (!metroRunning) return;
-  const beatInterval = 60 / getMetroBpm();
   const scheduleAhead = 0.15;
   while (metroNextBeatTime < metroAudioCtx.currentTime + scheduleAhead) {
-    const isDownbeat = metroBeatCount % 4 === 0;
+    const isDownbeat = metroBeatCount % BEATS_PER_COMPAS === 0;
     playClick(metroNextBeatTime, isDownbeat);
     const delay = Math.max(0, (metroNextBeatTime - metroAudioCtx.currentTime) * 1000);
     const captured = isDownbeat;
     setTimeout(() => { if (metroRunning) flashBeat(captured); }, delay);
-    metroNextBeatTime += beatInterval;
+
+    // L'interval es calcula PER TEMPS, no una vegada per passada del
+    // planificador: amb la rampa, cada compàs va a un tempo diferent.
+    const compas = Math.floor(metroBeatCount / BEATS_PER_COMPAS);
+    const bpm = bpmDelCompas(compas);
+    metroNextBeatTime += 60 / bpm;
     metroBeatCount++;
+
+    // Refresquem el marcador just al canvi de compàs, no a cada temps.
+    if (isDownbeat) {
+      const delayInfo = delay;
+      setTimeout(() => { if (metroRunning) mostrarBpmActual(bpm); }, delayInfo);
+    }
   }
   metroSchedulerTimeout = setTimeout(metroSchedule, 50);
 }
@@ -1369,6 +1478,10 @@ function startMetronom() {
   metroRunning = true;
   metroBeatCount = 0;
   metroNextBeatTime = metroAudioCtx.currentTime + 0.05;
+  // Congelem la rampa i el tempo base en arrancar.
+  metroRampaActiva = rampaActivada();
+  metroBpmBase = getMetroBpm();
+  mostrarBpmActual(metroBpmBase);
   const btn = document.getElementById('metroStartBtn');
   btn.textContent = '■ Parar';
   btn.classList.add('running');
@@ -1395,6 +1508,12 @@ function stopMetronom() {
   btn.classList.remove('running');
   document.getElementById('metroCountdown').textContent = '';
   document.getElementById('metroBeat').classList.remove('on', 'on-down');
+  // En parar es torna al tempo base. La casella no s'ha tocat mai, així que
+  // només cal netejar el marcador: el pròxim inici arrancarà d'on toca.
+  metroRampaActiva = false;
+  document.getElementById('metroBpmActual').textContent = '';
+  document.getElementById('metroBpmActual').className = 'metronom-bpm-actual';
+  actualitzarInfoRampa();
 }
 
 function updateMetroCountdown() {
@@ -1406,11 +1525,27 @@ function updateMetroCountdown() {
 
 document.getElementById('metroBpmRange').addEventListener('input', function() {
   document.getElementById('metroBpmNum').value = this.value;
+  actualitzarInfoRampa();
 });
 document.getElementById('metroBpmNum').addEventListener('input', function() {
-  const v = Math.max(40, Math.min(240, parseInt(this.value) || 80));
+  const v = Math.max(BPM_MIN, Math.min(BPM_MAX, parseInt(this.value) || 80));
   document.getElementById('metroBpmRange').value = v;
+  actualitzarInfoRampa();
 });
+
+// ─── RAMPA DE TEMPO ──────────────────────────────────────────────────────────
+document.getElementById('metroRampa').addEventListener('change', actualitzarInfoRampa);
+
+document.getElementById('metroPassos').addEventListener('click', e => {
+  const btn = e.target.closest('.pas-btn');
+  if (!btn) return;
+  metroPassos = parseInt(btn.dataset.passos);
+  document.querySelectorAll('#metroPassos .pas-btn')
+          .forEach(b => b.classList.toggle('actiu', b === btn));
+  actualitzarInfoRampa();
+});
+
+actualitzarInfoRampa();
 
 // ─── INIT ────────────────────────────────────────────────────────────────────
 if (discourseUser) document.getElementById('discourseUser').value = discourseUser;

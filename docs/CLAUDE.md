@@ -26,9 +26,8 @@ npm run validate
 Reporta cada problema amb un suggeriment concret d'arreglament. Els errors paren
 qualsevol execució; els avisos no. S'executa sempre, en tots els modes.
 
-**Avís obert ara mateix:** `PERC_LAT_11_21_41_1` depén d'un node sense publicar,
-la qual cosa deixa 6 nodes inassolibles i el progrés màxim en 85 %. No és un
-error teu: està al `BACKLOG.md` esperant que l'autor decidisca.
+Els avisos que isquen són informació de l'estat de les dades, no errors teus.
+Llig-los abans de donar res per trencat.
 
 ### 1. `nodes.json` no s'edita mai a mà
 
