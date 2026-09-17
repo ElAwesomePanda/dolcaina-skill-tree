@@ -22,6 +22,624 @@
     "material": []
   },
   {
+    "id": "PERC_PL_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Beat",
+      "Mètronom"
+    ],
+    "titol": "PL al beat · 1 min",
+    "descripcio": "Tocar PL al beat amb mètronom fix durant 1 minut seguit. La base de tot ritme naix d'ací: consistència i puls constant. 70 BPM Recomanat.",
+    "prerequisits": [
+      "GiT_INICI"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 388,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT PL Beat",
+        "url": "https://www.youtube.com/watch?v=aCL3gunnUFo"
+      }
+    ]
+  },
+  {
+    "id": "PERC_PL_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Beat",
+      "Mètronom"
+    ],
+    "titol": "PL al beat · 2 min",
+    "descripcio": "Tocar PL al beat amb mètronom fix durant 2 minuts seguits. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_PL_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 389,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT PL Beat",
+        "url": "https://www.youtube.com/watch?v=aCL3gunnUFo"
+      }
+    ]
+  },
+  {
+    "id": "PERC_PL_3",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Beat",
+      "Resistència"
+    ],
+    "titol": "PL al beat · 3 min",
+    "descripcio": "Tres minuts de beat constant. La resistència musical és tan important com la tècnica. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_PL_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 390,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT PL Beat",
+        "url": "https://www.youtube.com/watch?v=aCL3gunnUFo"
+      }
+    ]
+  },
+  {
+    "id": "PERC_PL_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Beat",
+      "Resistència"
+    ],
+    "titol": "PL al beat · 4 min",
+    "descripcio": "Quatre minuts complets. Arribar ací vol dir que el pols ja és part del teu cos. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_PL_3"
+    ],
+    "es_fita": true,
+    "fita": {
+      "nom": "Plau i fa sol!",
+      "descripcio": "Plau i fa sol!",
+      "icona": "🌧️",
+      "discourse_badge_id": 108,
+      "discourse_badge_name": "GiT_PL_al_beat"
+    },
+    "discourse_topic_id": 391,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT PL Beat",
+        "url": "https://www.youtube.com/watch?v=aCL3gunnUFo"
+      }
+    ]
+  },
+  {
+    "id": "PERC_DE_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "D-E",
+      "Beat"
+    ],
+    "titol": "D-E al beat · 1 min",
+    "descripcio": "Alternar D i E al beat durant 1 minut. La coordinació bilateral comença ací. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_PL_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 392,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT DE Beat",
+        "url": "https://www.youtube.com/watch?v=lntQSf4-sEM"
+      }
+    ]
+  },
+  {
+    "id": "PERC_DE_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "D-E",
+      "Beat"
+    ],
+    "titol": "D-E al beat · 2 min",
+    "descripcio": "Dos minuts d'alternança D-E. Desbloqueja les branques PL-D i PL-E. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DE_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 393,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT DE Beat",
+        "url": "https://www.youtube.com/watch?v=lntQSf4-sEM"
+      }
+    ]
+  },
+  {
+    "id": "PERC_DE_3",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "D-E",
+      "Resistència"
+    ],
+    "titol": "D-E al beat · 3 min",
+    "descripcio": "Tres minuts. La fluïdesa de l'alternança ha de ser automàtica. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DE_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 394,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT DE Beat",
+        "url": "https://www.youtube.com/watch?v=lntQSf4-sEM"
+      }
+    ]
+  },
+  {
+    "id": "PERC_DE_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "D-E",
+      "Resistència"
+    ],
+    "titol": "D-E al beat · 4 min",
+    "descripcio": "Quatre minuts. Arribar ací és tenir una base sòlida per a qualsevol patró. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DE_3"
+    ],
+    "es_fita": true,
+    "fita": {
+      "nom": "Domini de l'escala de 1",
+      "descripcio": "Domini de l'escala de 1",
+      "icona": "1️⃣",
+      "discourse_badge_id": 109,
+      "discourse_badge_name": "GiT_DE_al_beat"
+    },
+    "discourse_topic_id": 395,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT DE Beat",
+        "url": "https://www.youtube.com/watch?v=lntQSf4-sEM"
+      }
+    ]
+  },
+  {
+    "id": "PERC_DDEE_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "DD-EE",
+      "Beat"
+    ],
+    "titol": "DD-EE al beat · 1 min",
+    "descripcio": "Alternar DD i EE al beat durant 1 minut. Comencem a fraccionar els temps. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DE_3"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 637,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT DDEE Beat",
+        "url": "https://www.youtube.com/watch?v=GwAx7YioMhk"
+      }
+    ]
+  },
+  {
+    "id": "PERC_DDEE_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "DD-EE",
+      "Beat"
+    ],
+    "titol": "DD-EE al beat · 2 min",
+    "descripcio": "Dos minuts d'alternança DD-EE. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DDEE_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 638,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT DDEE Beat",
+        "url": "https://www.youtube.com/watch?v=GwAx7YioMhk"
+      }
+    ]
+  },
+  {
+    "id": "PERC_DDEE_3",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "DD-EE",
+      "Resistència"
+    ],
+    "titol": "DD-EE al beat · 3 min",
+    "descripcio": "Tres minuts de DD-EE. Fiquem a prova la resistència. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DDEE_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 639,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT DDEE Beat",
+        "url": "https://www.youtube.com/watch?v=GwAx7YioMhk"
+      }
+    ]
+  },
+  {
+    "id": "PERC_DDEE_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "DD-EE",
+      "Resistència"
+    ],
+    "titol": "DD-EE al beat · 4 min",
+    "descripcio": "Aguantar Quatre minuts de DD-EE ja costa una mica més. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DDEE_3"
+    ],
+    "es_fita": true,
+    "fita": {
+      "nom": "Domini de l'escala de 2",
+      "descripcio": "Domini de l'escala de 2",
+      "icona": "2️⃣",
+      "discourse_badge_id": 113,
+      "discourse_badge_name": "GiT_DDEE_al_beat"
+    },
+    "discourse_topic_id": 640,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT DDEE Beat",
+        "url": "https://www.youtube.com/watch?v=GwAx7YioMhk"
+      }
+    ]
+  },
+  {
+    "id": "PERC_DEDx_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "DEDx",
+      "Beat"
+    ],
+    "titol": "DED al beat · 1 min",
+    "descripcio": "Tocar DED al beat amb mètronom fix durant 1 minut seguit. Pots fer EDE si eres surdo/a. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DE_3"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 641,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT DEDx Beat",
+        "url": "https://www.youtube.com/watch?v=f3JjoxyOcB8"
+      }
+    ]
+  },
+  {
+    "id": "PERC_DEDx_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "DEDx",
+      "Beat"
+    ],
+    "titol": "DED al beat · 2 min",
+    "descripcio": "Tocar DED al beat amb mètronom fix durant 2 minut seguits. Pots fer EDE si eres surdo/a. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DEDx_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 642,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT DEDx Beat",
+        "url": "https://www.youtube.com/watch?v=f3JjoxyOcB8"
+      }
+    ]
+  },
+  {
+    "id": "PERC_DEDx_3",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "DEDx",
+      "Resistència"
+    ],
+    "titol": "DED al beat · 3 min",
+    "descripcio": "Tocar DED al beat amb mètronom fix durant 3 minut seguit. Pots fer EDE si eres surdo/a. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DEDx_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 643,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT DEDx Beat",
+        "url": "https://www.youtube.com/watch?v=f3JjoxyOcB8"
+      }
+    ]
+  },
+  {
+    "id": "PERC_DEDx_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "DEDx",
+      "Resistència"
+    ],
+    "titol": "DED al beat · 4 min",
+    "descripcio": "Tocar DED al beat amb mètronom fix durant 4 minut seguit. Pots fer EDE si eres surdo/a. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DEDx_3"
+    ],
+    "es_fita": true,
+    "fita": {
+      "nom": "Domini de l'escala de 3",
+      "descripcio": "Domini de l'escala de 3",
+      "icona": "3️⃣",
+      "discourse_badge_id": 114,
+      "discourse_badge_name": "GiT_DEDx_al_beat"
+    },
+    "discourse_topic_id": 644,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT DEDx Beat",
+        "url": "https://www.youtube.com/watch?v=f3JjoxyOcB8"
+      }
+    ]
+  },
+  {
+    "id": "PERC_PLD_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "PL-D",
+      "Combinació"
+    ],
+    "titol": "PL-D al beat · 1 min",
+    "descripcio": "Combinar PL i D alternats al beat. Primer pas cap als patrons compostos. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DE_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 396,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT PLD Beat",
+        "url": "https://www.youtube.com/watch?v=0z0r_n_VOH4"
+      }
+    ]
+  },
+  {
+    "id": "PERC_PLD_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "PL-D",
+      "Combinació"
+    ],
+    "titol": "PL-D al beat · 2 min",
+    "descripcio": "Dos minuts de PL-D sostingut. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_PLD_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 397,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT PLD Beat",
+        "url": "https://www.youtube.com/watch?v=0z0r_n_VOH4"
+      }
+    ]
+  },
+  {
+    "id": "PERC_PLD_3",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "PL-D",
+      "Resistència"
+    ],
+    "titol": "PL-D al beat · 3 min",
+    "descripcio": "Tres minuts de PL-D. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_PLD_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 398,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT PLD Beat",
+        "url": "https://www.youtube.com/watch?v=0z0r_n_VOH4"
+      }
+    ]
+  },
+  {
+    "id": "PERC_PLD_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "PL-D",
+      "Resistència"
+    ],
+    "titol": "PL-D al beat · 4 min",
+    "descripcio": "Quatre minuts. PL-D assentat i fluid. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_PLD_3"
+    ],
+    "es_fita": true,
+    "fita": {
+      "nom": "Domini del patró PL-D.",
+      "descripcio": "Domini del patró PL-D.",
+      "icona": "🫱",
+      "discourse_badge_id": 110,
+      "discourse_badge_name": "GiT_PLD_al_beat"
+    },
+    "discourse_topic_id": 399,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT PLD Beat",
+        "url": "https://www.youtube.com/watch?v=0z0r_n_VOH4"
+      }
+    ]
+  },
+  {
+    "id": "PERC_PLE_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "PL-E",
+      "Combinació"
+    ],
+    "titol": "PL-E al beat · 1 min",
+    "descripcio": "Combinar PL i E al beat. Simetria respecte a la branca PL-D. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_DE_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 400,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT PLE Beat",
+        "url": "https://www.youtube.com/watch?v=lD7J6GG6ZaE"
+      }
+    ]
+  },
+  {
+    "id": "PERC_PLE_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "PL-E",
+      "Combinació"
+    ],
+    "titol": "PL-E al beat · 2 min",
+    "descripcio": "Dos minuts de PL-E sostingut. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_PLE_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 401,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT PLE Beat",
+        "url": "https://www.youtube.com/watch?v=lD7J6GG6ZaE"
+      }
+    ]
+  },
+  {
+    "id": "PERC_PLE_3",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "PL-E",
+      "Resistència"
+    ],
+    "titol": "PL-E al beat · 3 min",
+    "descripcio": "Tres minuts de PL-E. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_PLE_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 402,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT PLE Beat",
+        "url": "https://www.youtube.com/watch?v=lD7J6GG6ZaE"
+      }
+    ]
+  },
+  {
+    "id": "PERC_PLE_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "PL-E",
+      "Resistència"
+    ],
+    "titol": "PL-E al beat · 4 min",
+    "descripcio": "Quatre minuts. PL-E assentat i fluid. 70 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_PLE_3"
+    ],
+    "es_fita": true,
+    "fita": {
+      "nom": "Domini del patró PL-E.",
+      "descripcio": "Domini del patró PL-E.",
+      "icona": "🫲",
+      "discourse_badge_id": 111,
+      "discourse_badge_name": "GiT_PLE_al_beat"
+    },
+    "discourse_topic_id": 403,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT PLE Beat",
+        "url": "https://www.youtube.com/watch?v=lD7J6GG6ZaE"
+      }
+    ]
+  },
+  {
     "id": "PERC_ERM_BEAT_01",
     "familia": "Percussió",
     "tags": [
