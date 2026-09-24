@@ -137,6 +137,8 @@ operatiu i tot el que és massa menut per a tindre fitxa pròpia.
 - [x] Informe d'incidències guardat a `copies/informes/` — 2026-09-11
 - [x] La insígnia que falta és avís si el node és esborrany, error si està
       publicat — 2026-09-11
+- [x] L'avís de pèrdua de temes dona un consell diferent segons si véns del
+      full o de Baixades, i ensenya `ids_nous.csv` — 2026-09-24
 - [x] Guardes contra importar un CSV vell: alerta si es perdrien
       `discourse_topic_id`, confirmació escrita, avís d'antiguitat i de canvi de
       columnes — 2026-09-24. Vegeu `DESIGN.md` §7.11

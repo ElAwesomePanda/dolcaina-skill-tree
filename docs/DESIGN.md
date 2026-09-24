@@ -825,6 +825,19 @@ Guardes afegides el mateix dia:
 Provat reproduint l'escenari exacte: buidant els 14 `discourse_topic_id` d'ERM,
 la comparació els llista tots amb el número de tema que perdria cadascun.
 
+**El consell de l'avís depén d'on vinga el CSV** (`$font` a `Aplicar-Import`),
+perquè la causa probable és molt diferent:
+
+| Origen | Causa habitual | Què diu |
+| --- | --- | --- |
+| Opció 1 (full) | Un `discourse_topic_id` no es va enganxar al full en publicar | Que mire `ids_nous.csv`, i li n'ensenya el contingut |
+| Opció 8 (Baixades) | El fitxer és més vell que les dades | Que gaste l'opció 1 |
+
+La primera versió deia sempre «importa del full (opció 1)», que no té cap
+sentit quan ja véns del full. Va passar el 2026-09-24 amb
+`PERC_DIM_SENCERA_01`: el tema 1387 estava al CSV local i a `ids_nous.csv`,
+però mai es va arribar a enganxar al full.
+
 ---
 
 ## 8. «Sembla un bug, però és deliberat»

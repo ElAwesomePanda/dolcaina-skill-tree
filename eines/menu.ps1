@@ -94,7 +94,9 @@ function Fer-Copia {
 
 # Tronc comú de les dues importacions: ensenya els canvis, demana confirmació,
 # fa còpia de seguretat i valida. $origen és un fitxer ja a punt al disc.
-function Aplicar-Import($origen, $descripcio) {
+# $font: 'full' o 'baixades'. Canvia el consell de l'avís de perill, perquè la
+# causa probable és molt diferent segons d'on vinga el CSV.
+function Aplicar-Import($origen, $descripcio, $font = 'baixades') {
   $perill = $false
   if (Test-Path $Csv) {
     Write-Host '  Canvis respecte del CSV actual:' -ForegroundColor Cyan
@@ -109,7 +111,26 @@ function Aplicar-Import($origen, $descripcio) {
     # Perdre un discourse_topic_id fa que la pròxima publicació torne a crear
     # el tema. Ací no val el s/N de sempre: cal escriure-ho sencer.
     Write-Host '  Aquesta importació perdria temes ja publicats (mira l''avís de dalt).' -ForegroundColor Red
-    Write-Host '  Si no saps segur per què, digues que no i importa del full (opció 1).' -ForegroundColor Red
+    Write-Host ''
+    if ($font -eq 'full') {
+      # El full és la font de veritat: si a ell li falta un id que tu sí que
+      # tens, és que no es va enganxar després de publicar.
+      Write-Host '  Véns del FULL, que és la font de veritat. Si li falta un id que' -ForegroundColor Yellow
+      Write-Host '  tu sí que tens, és que no el vas enganxar al full en publicar.' -ForegroundColor Yellow
+      Write-Host ''
+      Write-Host '  Digues que NO, mira ids_nous.csv, enganxa els números que falten' -ForegroundColor Yellow
+      Write-Host '  a la columna discourse_topic_id del full, i torna a importar.' -ForegroundColor Yellow
+      if (Test-Path (Join-Path $Arrel 'ids_nous.csv')) {
+        Write-Host ''
+        Write-Host '  Contingut actual d''ids_nous.csv:' -ForegroundColor DarkGray
+        Get-Content (Join-Path $Arrel 'ids_nous.csv') |
+          ForEach-Object { Write-Host ('    ' + $_) -ForegroundColor DarkGray }
+      }
+    } else {
+      # De Baixades: el sospitós habitual és un fitxer vell.
+      Write-Host '  Véns de BAIXADES. La causa habitual és que el fitxer siga més' -ForegroundColor Yellow
+      Write-Host '  vell que les teues dades. Digues que NO i gasta l''opció 1.' -ForegroundColor Yellow
+    }
     Write-Host ''
     Write-Host '  Per a continuar igualment, escriu: PERDRE TEMES'
     $resposta = Read-Host '  Confirmació'
@@ -147,7 +168,7 @@ function Importar-Full {
 
   Write-Host ''
   try {
-    Aplicar-Import $temporal 'el full de càlcul'
+    Aplicar-Import $temporal 'el full de càlcul' 'full'
   } finally {
     if (Test-Path $temporal) { Remove-Item $temporal -Force }
   }
@@ -188,7 +209,7 @@ function Importar-Csv {
   }
   Write-Host ''
 
-  Aplicar-Import $candidat.FullName $candidat.Name
+  Aplicar-Import $candidat.FullName $candidat.Name 'baixades'
 }
 
 # ─── 2 i 3. Validar i regenerar ──────────────────────────────────────────────
