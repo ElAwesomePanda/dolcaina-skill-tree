@@ -913,7 +913,14 @@
     "prerequisits": [
       "PERC_ERM_PATAPAM_01"
     ],
-    "es_fita": false,
+    "es_fita": true,
+    "fita": {
+      "nom": "Oh! Antoni, Desgraciat!",
+      "descripcio": "Oh! Antoni, Desgraciat!",
+      "icona": "🧔🏻",
+      "discourse_badge_id": 120,
+      "discourse_badge_name": "GiT_ERM_PATAPAM"
+    },
     "discourse_topic_id": 1322,
     "publicat": true,
     "material": [
@@ -1053,6 +1060,90 @@
         "tipus": "mp3",
         "nom": "Sant Antoni a l'ermità.mp3",
         "url": "https://drive.google.com/file/d/1tDRDE6OJMHKfv_Xu1C1uMCZfhjG4p6Be/view?usp=drive_link"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LLAM_SARDANA_01",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Peça",
+      "Llampecs"
+    ],
+    "titol": "Nit de Llampecs · Sardana",
+    "descripcio": "Toca la part de sardana picant les baquetes",
+    "prerequisits": [
+      "PERC_ERM_PATAPAM_02"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 1384,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "mp3",
+        "nom": "Nit de llampecs - sardana.mp3",
+        "url": "https://drive.google.com/file/d/1cQMHfBXqCvdAaXSwz8mKoYVmySRjvnvz/view?usp=drive_link"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LLAM_DIMONIS_01",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Peça",
+      "Llampecs"
+    ],
+    "titol": "Nit de Llampecs · Dimonis",
+    "descripcio": "Toca la part de dimonis",
+    "prerequisits": [
+      "PERC_LLAM_SARDANA_01"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 1385,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "mp3",
+        "nom": "Nit de llampecs - dimonis.mp3",
+        "url": "https://drive.google.com/file/d/1q1SCMbO_sVVkznK4nJ1segOypSZc6aCX/view?usp=drive_link"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LLAM_SENCERA_01",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Peça",
+      "Llampecs"
+    ],
+    "titol": "Nit de Llampecs · Sencera",
+    "descripcio": "Toca tota la peça, alternant la part de sardana amb la de dimonis",
+    "prerequisits": [
+      "PERC_LLAM_DIMONIS_01"
+    ],
+    "es_fita": true,
+    "fita": {
+      "nom": "Com un Llamp!",
+      "descripcio": "Com un Llamp!",
+      "icona": "⚡",
+      "discourse_badge_id": 121,
+      "discourse_badge_name": "GiT_PERC_LLAM_SENCERA_01"
+    },
+    "discourse_topic_id": 1386,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "Xiri concert 2018 Nit de llàmpecs (Los relámpagos)",
+        "url": "https://www.youtube.com/watch?v=Sz6IHNHV56M"
+      },
+      {
+        "tipus": "mp3",
+        "nom": "Nit de llampecs - tota.mp3",
+        "url": "https://drive.google.com/file/d/1t1XYqLQDGpFf3CNcgoDjJmo0doVPejgf/view?usp=drive_link"
       }
     ]
   }
