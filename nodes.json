@@ -1156,5 +1156,36 @@
         "url": "https://drive.google.com/file/d/1t1XYqLQDGpFf3CNcgoDjJmo0doVPejgf/view?usp=drive_link"
       }
     ]
+  },
+  {
+    "id": "PERC_DIM_SENCERA_01",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Peça",
+      "Dimonis"
+    ],
+    "titol": "Dimonis de Massalfassar · Sencera",
+    "descripcio": "Toca tota la peça amb patapatapampam",
+    "prerequisits": [
+      "PERC_ERM_PATAPAM_02"
+    ],
+    "es_fita": true,
+    "fita": {
+      "nom": "Dimonis",
+      "descripcio": "Se m'emporten els dimonis!",
+      "icona": "👹",
+      "discourse_badge_id": 122,
+      "discourse_badge_name": "GiT_DIM_SENCERA_01"
+    },
+    "discourse_topic_id": 1387,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "mp3",
+        "nom": "Dimonis De Massalfassar - Correfocs.mp3",
+        "url": "https://drive.google.com/file/d/1GsL_G9dMxZDTKgCuFZdsWeNFr88WZJf0/view?usp=drive_link"
+      }
+    ]
   }
 ]
