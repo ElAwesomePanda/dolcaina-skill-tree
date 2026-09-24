@@ -152,9 +152,39 @@ function discourseHeaders() {
   };
 }
 
+const dorm = ms => new Promise(r => setTimeout(r, ms));
+
+// Discourse limita les peticions i respon 429 quan es passa. No és un error de
+// dades: només cal esperar. La resposta diu quants segons a
+// `extras.wait_seconds`, així que fem cas al servidor en lloc d'endevinar-ho.
+//
+// Va passar el 2026-09-24 publicant 33 temes seguits: en va crear 28 i els
+// últims 5 van caure amb 429. Amb aquest reintent, el lot s'acaba sol.
+const MAX_REINTENTS = 4;
+const ESPERA_EXTRA  = 2;   // segons de marge damunt del que demana Discourse
+
+async function fetchDiscourse(url, opcions, etiqueta) {
+  for (let intent = 1; ; intent++) {
+    const res  = await fetch(url, opcions);
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); } catch { data = null; }
+
+    if (res.status !== 429) return { res, data, text };
+
+    if (intent > MAX_REINTENTS) {
+      throw new Error(`HTTP 429 després de ${MAX_REINTENTS} reintents: ${text.substring(0, 160)}`);
+    }
+    const segons = (data?.extras?.wait_seconds ?? 10) + ESPERA_EXTRA;
+    console.log(`    · ${etiqueta}: Discourse demana esperar ${segons}s ` +
+                `(reintent ${intent}/${MAX_REINTENTS})`);
+    await dorm(segons * 1000);
+  }
+}
+
 async function crearTopic(row) {
   const base = CONFIG.DISCOURSE_BASE_URL.replace(/\/$/, '');
-  const res = await fetch(`${base}/posts.json`, {
+  const { res, data, text } = await fetchDiscourse(`${base}/posts.json`, {
     method: 'POST',
     headers: discourseHeaders(),
     body: JSON.stringify({
@@ -162,10 +192,10 @@ async function crearTopic(row) {
       raw:      generarCos(row),
       category: CONFIG.DISCOURSE_CATEGORY_ID,
     }),
-  });
-  const data = await res.json();
-  if (!res.ok || !data.topic_id) {
-    throw new Error(`HTTP ${res.status}: ${JSON.stringify(data).substring(0, 200)}`);
+  }, row.id);
+
+  if (!res.ok || !data?.topic_id) {
+    throw new Error(`HTTP ${res.status}: ${(text || '').substring(0, 200)}`);
   }
   return data.topic_id;
 }
@@ -173,20 +203,19 @@ async function crearTopic(row) {
 async function actualitzarTopic(topicId, row) {
   const base = CONFIG.DISCOURSE_BASE_URL.replace(/\/$/, '');
   // Obtenim l'ID del primer post del topic
-  const topicRes = await fetch(`${base}/t/${topicId}.json`, { headers: discourseHeaders() });
-  if (!topicRes.ok) throw new Error(`HTTP ${topicRes.status} en llegir topic ${topicId}`);
-  const topicData = await topicRes.json();
-  const postId = topicData.post_stream.posts[0].id;
+  const lectura = await fetchDiscourse(`${base}/t/${topicId}.json`,
+                                       { headers: discourseHeaders() }, row.id);
+  if (!lectura.res.ok) throw new Error(`HTTP ${lectura.res.status} en llegir topic ${topicId}`);
+  const postId = lectura.data.post_stream.posts[0].id;
 
   // Actualitzem el contingut del post
-  const updateRes = await fetch(`${base}/posts/${postId}.json`, {
+  const escriptura = await fetchDiscourse(`${base}/posts/${postId}.json`, {
     method: 'PUT',
     headers: discourseHeaders(),
     body: JSON.stringify({ post: { raw: generarCos(row) } }),
-  });
-  if (!updateRes.ok) {
-    const err = await updateRes.text();
-    throw new Error(`HTTP ${updateRes.status}: ${err.substring(0, 200)}`);
+  }, row.id);
+  if (!escriptura.res.ok) {
+    throw new Error(`HTTP ${escriptura.res.status}: ${(escriptura.text || '').substring(0, 200)}`);
   }
 }
 

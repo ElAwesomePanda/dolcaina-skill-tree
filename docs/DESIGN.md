@@ -468,6 +468,19 @@ camp `publicat`) → `pushAGitHub()`.
 Pausa entre crides a Discourse: **700 ms**
 (`await new Promise(r => setTimeout(r, 700))`).
 
+**Aquesta pausa no basta per a lots grans.** Discourse també limita per ràfega:
+el 2026-09-24, publicant 33 temes seguits, en va crear 28 i els 5 últims van
+caure amb `HTTP 429`. Per això totes les crides passen per `fetchDiscourse()`:
+
+- Si la resposta és **429**, llig `extras.wait_seconds` de la resposta, espera
+  eixe temps **més `ESPERA_EXTRA` (2 s)** de marge, i reintenta.
+- Fins a `MAX_REINTENTS` (4). Passat això, llança amb el text del servidor.
+- **Qualsevol altre codi torna immediatament**: un 422 per títol duplicat no
+  s'ha de reintentar mai, perquè no s'arreglarà esperant.
+
+Es fa cas al servidor en lloc d'endevinar el temps d'espera: la xifra ve de
+Discourse, que és qui sap quant li queda al comptador.
+
 ### 4.6 El full de càlcul
 
 `SHEET_ID` i `SHEET_GID` viuen a **`config.json`**, que no es versiona, i només
@@ -609,6 +622,8 @@ manualment a la columna `discourse_badge_id` del CSV.
 | Un node surt «en preparació» | No té `discourse_topic_id`: encara no s'ha publicat al fòrum | §0, invariant 3b |
 | El progrés no arriba mai al 100 % | Hi ha nodes publicats inassolibles | `npm run validate` t'ho diu i et dona el màxim |
 | `ENOENT ./GiT_nodes.csv` | El CSV real no es versiona: en una clonació nova no hi és | Copia'l del disc de l'autor, o parteix de `GiT_nodes.exemple.csv` |
+| `HTTP 429` en publicar | Límit de ràfega de Discourse | Es reintenta sol. Si es rendeix, torna a executar: els creats ja tenen id i se salten |
+| `HTTP 422: This title has already been used` | El node ja té tema però el CSV no en sap l'id | §7.11. Enganxa l'id al full; NO el crees una altra vegada |
 | `npm run publish` es nega a executar-se | La validació ha trobat errors | Llig els suggeriments; força'l amb `--skip-validation` si cal |
 | El vídeo continua sonant en tancar el modal | `closeModal()` no ha buidat el `.video-wrapper` | línia 1069 |
 | La imatge de Drive no es veu | Fitxer no compartit públicament, o la regex de l'id no ha casat | línia 1039 |

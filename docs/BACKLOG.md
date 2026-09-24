@@ -75,6 +75,9 @@ operatiu i tot el que és massa menut per a tindre fitxa pròpia.
 
 ## Codi — `crear_topics.js`
 
+- [x] Reintent automàtic davant del 429 de Discourse, fent cas del
+      `wait_seconds` que dona el servidor — 2026-09-24
+
 - [x] Flag `--validate` — 2026-09-10 — `M-14`
 - [x] La ruta del CSV extreta a la constant `CSV_PATH` — 2026-09-10
 - [x] `nodes.json` porta tots els nodes amb el camp `publicat` — 2026-09-11

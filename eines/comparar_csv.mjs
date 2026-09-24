@@ -93,11 +93,29 @@ for (const r of nou.rows) {
   }
 }
 
-const pubVell = vell.rows.filter(r => r.discourse_topic_id).length;
-const pubNou  = nou.rows.filter(r => r.discourse_topic_id).length;
+// Un node és actiu si `actiu` no diu FALSE (buit o columna absent = actiu).
+const esActiu = r => r.actiu !== 'FALSE';
 
-console.log(`    Nodes:      ${vell.rows.length}  →  ${nou.rows.length}`);
-console.log(`    Publicats:  ${pubVell}  →  ${pubNou}`);
+const actiusVell = vell.rows.filter(esActiu);
+const actiusNou  = nou.rows.filter(esActiu);
+const pubVell    = vell.rows.filter(r => r.discourse_topic_id).length;
+const pubNou     = nou.rows.filter(r => r.discourse_topic_id).length;
+
+// Les tres xifres que canvien per motius diferents. Sense la d'«a l'arbre»,
+// activar o amagar branques no es veia enlloc del resum i semblava que la
+// importació no feia res.
+const n = (a, b) => `${String(a).padStart(3)}  →  ${String(b).toString().padEnd(3)}`;
+
+console.log(`    Nodes al CSV:  ${n(vell.rows.length, nou.rows.length)}`);
+console.log(`    A l'arbre:     ${n(actiusVell.length, actiusNou.length)}   (actiu ≠ FALSE)`);
+console.log(`    Amb tema:      ${n(pubVell, pubNou)}   (publicats al fòrum)`);
+
+// Els actius sense tema es dibuixen «en preparació»: convé saber quants seran.
+const prepVell = actiusVell.filter(r => !r.discourse_topic_id).length;
+const prepNou  = actiusNou.filter(r => !r.discourse_topic_id).length;
+if (prepVell || prepNou) {
+  console.log(`    En preparació: ${n(prepVell, prepNou)}   (a l'arbre, però sense tema)`);
+}
 console.log('');
 
 // ─── PERILL: pèrdua de discourse_topic_id ────────────────────────────────────
