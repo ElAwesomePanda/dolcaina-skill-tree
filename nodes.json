@@ -640,6 +640,1257 @@
     ]
   },
   {
+    "id": "PERC_LAT_11_12_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 001 · El Pas · 11_12 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "GiT_INICI"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 645,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 12",
+        "url": "https://www.youtube.com/watch?v=3y1xJ0smDMU"
+      },
+      {
+        "tipus": "image",
+        "nom": "001_elpas_11_12.png",
+        "url": "https://drive.google.com/file/d/18PxhmeiJQdWTbpQyzfT-ZhdIaDkiIzT3"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_12_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 001 · El Pas · 11_12 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 646,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 12",
+        "url": "https://www.youtube.com/watch?v=3y1xJ0smDMU"
+      },
+      {
+        "tipus": "image",
+        "nom": "001_elpas_11_12.png",
+        "url": "https://drive.google.com/file/d/18PxhmeiJQdWTbpQyzfT-ZhdIaDkiIzT3"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_12_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 001 · El Pas · 11_12 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 647,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 12",
+        "url": "https://www.youtube.com/watch?v=3y1xJ0smDMU"
+      },
+      {
+        "tipus": "image",
+        "nom": "001_elpas_11_12.png",
+        "url": "https://drive.google.com/file/d/18PxhmeiJQdWTbpQyzfT-ZhdIaDkiIzT3"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 002 · L'Espill · 11_21 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 648,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 21",
+        "url": "https://www.youtube.com/watch?v=-Mn92eL39Qo"
+      },
+      {
+        "tipus": "image",
+        "nom": "002_lespill_11_21.png",
+        "url": "https://drive.google.com/file/d/1Dzs4Mn34F84xarx6bnOHwsPNkR9bMJuh"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 002 · L'Espill · 11_21 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 649,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 21",
+        "url": "https://www.youtube.com/watch?v=-Mn92eL39Qo"
+      },
+      {
+        "tipus": "image",
+        "nom": "002_lespill_11_21.png",
+        "url": "https://drive.google.com/file/d/1Dzs4Mn34F84xarx6bnOHwsPNkR9bMJuh"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 002 · L'Espill · 11_21 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 650,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 21",
+        "url": "https://www.youtube.com/watch?v=-Mn92eL39Qo"
+      },
+      {
+        "tipus": "image",
+        "nom": "002_lespill_11_21.png",
+        "url": "https://drive.google.com/file/d/1Dzs4Mn34F84xarx6bnOHwsPNkR9bMJuh"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_12_11_21_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 003 · La Porta · 11_12_11_21 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 651,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 12 11 21",
+        "url": "https://www.youtube.com/watch?v=vD0bwn4XtvU"
+      },
+      {
+        "tipus": "image",
+        "nom": "003_laporta_11_12_11_21.png",
+        "url": "https://drive.google.com/file/d/11srnFdexFanwcJQeIj0kG7c45yXAbEmK"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_12_11_21_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 003 · La Porta · 11_12_11_21 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_11_21_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 652,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 12 11 21",
+        "url": "https://www.youtube.com/watch?v=vD0bwn4XtvU"
+      },
+      {
+        "tipus": "image",
+        "nom": "003_laporta_11_12_11_21.png",
+        "url": "https://drive.google.com/file/d/11srnFdexFanwcJQeIj0kG7c45yXAbEmK"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_12_11_21_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 003 · La Porta · 11_12_11_21 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_11_21_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 653,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 12 11 21",
+        "url": "https://www.youtube.com/watch?v=vD0bwn4XtvU"
+      },
+      {
+        "tipus": "image",
+        "nom": "003_laporta_11_12_11_21.png",
+        "url": "https://drive.google.com/file/d/11srnFdexFanwcJQeIj0kG7c45yXAbEmK"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_11_12_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 004 · La Porta Inversa · 11_21_11_12 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_11_21_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "004_laportainv_11_21_11_12.png",
+        "url": "https://drive.google.com/file/d/1Ab0OhAI_ffIkv8ok0chi8boJlpWg83_D"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_11_12_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 004 · La Porta Inversa · 11_21_11_12 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_11_12_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "004_laportainv_11_21_11_12.png",
+        "url": "https://drive.google.com/file/d/1Ab0OhAI_ffIkv8ok0chi8boJlpWg83_D"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_11_12_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 004 · La Porta Inversa · 11_21_11_12 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_11_12_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "004_laportainv_11_21_11_12.png",
+        "url": "https://drive.google.com/file/d/1Ab0OhAI_ffIkv8ok0chi8boJlpWg83_D"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_12_22_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 005 · La Rampa · 11_21_12_22 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_11_12_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "005_larampa_11_21_12_22.png",
+        "url": "https://drive.google.com/file/d/19MZgRadW40KgY3Om3xW4zXl3ycgQYjWw"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_12_22_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 005 · La Rampa · 11_21_12_22 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_12_22_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "005_larampa_11_21_12_22.png",
+        "url": "https://drive.google.com/file/d/19MZgRadW40KgY3Om3xW4zXl3ycgQYjWw"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_12_22_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 005 · La Rampa · 11_21_12_22 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_12_22_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "005_larampa_11_21_12_22.png",
+        "url": "https://drive.google.com/file/d/19MZgRadW40KgY3Om3xW4zXl3ycgQYjWw"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_12_21_22_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 006 · La Rampa Inversa · 11_12_21_22 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_12_22_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "006_larampainv_11_12_21_22.png",
+        "url": "https://drive.google.com/file/d/1BnWAsxkjZfSQ0T6pTRpUu4y5tn609gav"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_12_21_22_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 006 · La Rampa Inversa · 11_12_21_22 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_21_22_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "006_larampainv_11_12_21_22.png",
+        "url": "https://drive.google.com/file/d/1BnWAsxkjZfSQ0T6pTRpUu4y5tn609gav"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_12_21_22_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2"
+    ],
+    "titol": "Lat. 006 · La Rampa Inversa · 11_12_21_22 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_21_22_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "006_larampainv_11_12_21_22.png",
+        "url": "https://drive.google.com/file/d/1BnWAsxkjZfSQ0T6pTRpUu4y5tn609gav"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_14_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/4"
+    ],
+    "titol": "Lat. 007 · El Salt · 11_14 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_21_22_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "007_elsalt_11_14.png",
+        "url": "https://drive.google.com/file/d/1Ts6hlM1X51hagH_V4-2NmJ8jpx6ukc42"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_14_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/4"
+    ],
+    "titol": "Lat. 007 · El Salt · 11_14 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_14_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "007_elsalt_11_14.png",
+        "url": "https://drive.google.com/file/d/1Ts6hlM1X51hagH_V4-2NmJ8jpx6ukc42"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_14_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/4"
+    ],
+    "titol": "Lat. 007 · El Salt · 11_14 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_14_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "007_elsalt_11_14.png",
+        "url": "https://drive.google.com/file/d/1Ts6hlM1X51hagH_V4-2NmJ8jpx6ukc42"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_41_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/4"
+    ],
+    "titol": "Lat. 008 · El Salt Surdo · 11_41 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_14_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "008_elsaltsurdo_11_41.png",
+        "url": "https://drive.google.com/file/d/1X-WnkNYlrPFcUgg002pCeZGb6maAsryX"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_41_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/4"
+    ],
+    "titol": "Lat. 008 · El Salt Surdo · 11_41 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_41_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "008_elsaltsurdo_11_41.png",
+        "url": "https://drive.google.com/file/d/1X-WnkNYlrPFcUgg002pCeZGb6maAsryX"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_41_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/4"
+    ],
+    "titol": "Lat. 008 · El Salt Surdo · 11_41 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_41_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "008_elsaltsurdo_11_41.png",
+        "url": "https://drive.google.com/file/d/1X-WnkNYlrPFcUgg002pCeZGb6maAsryX"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_12_14_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 009 · L'Escala Dreta · 11_12_14 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_41_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "009_lescaladreta_11_12_14.png",
+        "url": "https://drive.google.com/file/d/1ZGPkAFB47oSQVvthgWgpn3ZFS9ovF1H7"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_12_14_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 009 · L'Escala Dreta · 11_12_14 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_14_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "009_lescaladreta_11_12_14.png",
+        "url": "https://drive.google.com/file/d/1ZGPkAFB47oSQVvthgWgpn3ZFS9ovF1H7"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_12_14_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 009 · L'Escala Dreta · 11_12_14 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_14_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "009_lescaladreta_11_12_14.png",
+        "url": "https://drive.google.com/file/d/1ZGPkAFB47oSQVvthgWgpn3ZFS9ovF1H7"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_41_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 010 · L'Escala Esquerra · 11_21_41 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_11_21_4"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 654,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 21 41",
+        "url": "https://www.youtube.com/watch?v=Moo6zVC4cPw"
+      },
+      {
+        "tipus": "image",
+        "nom": "010_lescalainv_11_21_41.png",
+        "url": "https://drive.google.com/file/d/1MZVohaVDlp3DKTJdOgN6wFjUGu60l7PF"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_41_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 010 · L'Escala Esquerra · 11_21_41 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_41_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 655,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 21 41",
+        "url": "https://www.youtube.com/watch?v=Moo6zVC4cPw"
+      },
+      {
+        "tipus": "image",
+        "nom": "010_lescalainv_11_21_41.png",
+        "url": "https://drive.google.com/file/d/1MZVohaVDlp3DKTJdOgN6wFjUGu60l7PF"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_41_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 010 · L'Escala Esquerra · 11_21_41 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_41_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 656,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 21 41",
+        "url": "https://www.youtube.com/watch?v=Moo6zVC4cPw"
+      },
+      {
+        "tipus": "image",
+        "nom": "010_lescalainv_11_21_41.png",
+        "url": "https://drive.google.com/file/d/1MZVohaVDlp3DKTJdOgN6wFjUGu60l7PF"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_12_11_14_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 011 · El Tobogan · 11_12_11_14 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_41_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 657,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 12 11 14",
+        "url": "https://www.youtube.com/watch?v=d-UqI3hjs-s"
+      },
+      {
+        "tipus": "image",
+        "nom": "011_eltobogan_11_12_11_14.png",
+        "url": "https://drive.google.com/file/d/1cRlB2il_Sa8RXvVgJsjUAgU3FPtUBooP"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_12_11_14_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 011 · El Tobogan · 11_12_11_14 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_11_14_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 658,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 12 11 14",
+        "url": "https://www.youtube.com/watch?v=d-UqI3hjs-s"
+      },
+      {
+        "tipus": "image",
+        "nom": "011_eltobogan_11_12_11_14.png",
+        "url": "https://drive.google.com/file/d/1cRlB2il_Sa8RXvVgJsjUAgU3FPtUBooP"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_12_11_14_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 011 · El Tobogan · 11_12_11_14 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_11_14_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 659,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT LAT 11 12 11 14",
+        "url": "https://www.youtube.com/watch?v=d-UqI3hjs-s"
+      },
+      {
+        "tipus": "image",
+        "nom": "011_eltobogan_11_12_11_14.png",
+        "url": "https://drive.google.com/file/d/1cRlB2il_Sa8RXvVgJsjUAgU3FPtUBooP"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_11_41_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 012 · El Tobogan Invers · 11_21_11_41 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_11_14_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "012_eltoboganinv_11_21_11_41.png",
+        "url": "https://drive.google.com/file/d/1atWWbLWBVWMeOThPpIe1ns7hpbrkUhbP"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_11_41_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 012 · El Tobogan Invers · 11_21_11_41 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_11_41_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "012_eltoboganinv_11_21_11_41.png",
+        "url": "https://drive.google.com/file/d/1atWWbLWBVWMeOThPpIe1ns7hpbrkUhbP"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_11_41_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 012 · El Tobogan Invers · 11_21_11_41 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_11_41_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "012_eltoboganinv_11_21_11_41.png",
+        "url": "https://drive.google.com/file/d/1atWWbLWBVWMeOThPpIe1ns7hpbrkUhbP"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_12_22_24_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 013 · El Ventall · 11_12_22_24 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_11_41_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "013_elventall_11_12_22_24.png",
+        "url": "https://drive.google.com/file/d/1ZVf9GlBfWCTTOHIhlRGhxq_khxkmnhoD"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_12_22_24_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 013 · El Ventall · 11_12_22_24 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_22_24_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "013_elventall_11_12_22_24.png",
+        "url": "https://drive.google.com/file/d/1ZVf9GlBfWCTTOHIhlRGhxq_khxkmnhoD"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_12_22_24_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 013 · El Ventall · 11_12_22_24 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_22_24_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "013_elventall_11_12_22_24.png",
+        "url": "https://drive.google.com/file/d/1ZVf9GlBfWCTTOHIhlRGhxq_khxkmnhoD"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_22_42_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 014 · El Ventall Invers · 11_21_22_42 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_22_24_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "014_elventallinv_11_21_22_42.png",
+        "url": "https://drive.google.com/file/d/1jb1t0sWdGZUiasyxMzdKLj2Wj6bg-Wcr"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_22_42_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 014 · El Ventall Invers · 11_21_22_42 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_22_42_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "014_elventallinv_11_21_22_42.png",
+        "url": "https://drive.google.com/file/d/1jb1t0sWdGZUiasyxMzdKLj2Wj6bg-Wcr"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_22_42_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 014 · El Ventall Invers · 11_21_22_42 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_22_42_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "014_elventallinv_11_21_22_42.png",
+        "url": "https://drive.google.com/file/d/1jb1t0sWdGZUiasyxMzdKLj2Wj6bg-Wcr"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_12_42_24_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 015 · El Cap de Serp · 11_21_12_42_24 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_22_42_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "015_elcapdeserp_11_21_12_42_24.png",
+        "url": "https://drive.google.com/file/d/1vvZIvaWulOI9lfs8nNSa4cU26Blp4eCh"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_12_42_24_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 015 · El Cap de Serp · 11_21_12_42_24 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_12_42_24_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "015_elcapdeserp_11_21_12_42_24.png",
+        "url": "https://drive.google.com/file/d/1vvZIvaWulOI9lfs8nNSa4cU26Blp4eCh"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_21_12_42_24_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 015 · El Cap de Serp · 11_21_12_42_24 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_12_42_24_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "015_elcapdeserp_11_21_12_42_24.png",
+        "url": "https://drive.google.com/file/d/1vvZIvaWulOI9lfs8nNSa4cU26Blp4eCh"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_12_21_24_42_1",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 016 · La Cua de Serp · 11_12_21_24_42 · 1 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 1 minut. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_21_12_42_24_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "016_lacuadeserp_11_12_21_24_42.png",
+        "url": "https://drive.google.com/file/d/1InJLTZWVmxSEE057gTjKficWen0SvWV2"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_12_21_24_42_2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 016 · La Cua de Serp · 11_12_21_24_42 · 2 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 2 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_21_24_42_1"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "016_lacuadeserp_11_12_21_24_42.png",
+        "url": "https://drive.google.com/file/d/1InJLTZWVmxSEE057gTjKficWen0SvWV2"
+      }
+    ]
+  },
+  {
+    "id": "PERC_LAT_11_12_21_24_42_4",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Lateralitat",
+      "1/2",
+      "1/4"
+    ],
+    "titol": "Lat. 016 · La Cua de Serp · 11_12_21_24_42 · 4 min",
+    "descripcio": "Toca el patro de baix a dalt i de dalt a baix durant 4 minuts. 65 BPM Recomanat.",
+    "prerequisits": [
+      "PERC_LAT_11_12_21_24_42_2"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "image",
+        "nom": "016_lacuadeserp_11_12_21_24_42.png",
+        "url": "https://drive.google.com/file/d/1InJLTZWVmxSEE057gTjKficWen0SvWV2"
+      }
+    ]
+  },
+  {
     "id": "PERC_ERM_BEAT_01",
     "familia": "Percussió",
     "tags": [
@@ -653,18 +1904,13 @@
       "GiT_INICI"
     ],
     "es_fita": false,
-    "discourse_topic_id": 1313,
-    "publicat": true,
+    "discourse_topic_id": null,
+    "publicat": false,
     "material": [
       {
         "tipus": "video",
-        "nom": "01 ermita beat",
+        "nom": "",
         "url": "https://youtu.be/QjUYqMU30-Y"
-      },
-      {
-        "tipus": "mp3",
-        "nom": "Sant Antoni a l'ermità.mp3",
-        "url": "https://drive.google.com/file/d/1tDRDE6OJMHKfv_Xu1C1uMCZfhjG4p6Be/view?usp=drive_link"
       }
     ]
   },
@@ -682,18 +1928,13 @@
       "PERC_ERM_BEAT_01"
     ],
     "es_fita": false,
-    "discourse_topic_id": 1314,
-    "publicat": true,
+    "discourse_topic_id": null,
+    "publicat": false,
     "material": [
       {
         "tipus": "video",
-        "nom": "01 ermita beat",
+        "nom": "",
         "url": "https://youtu.be/QjUYqMU30-Y"
-      },
-      {
-        "tipus": "mp3",
-        "nom": "Sant Antoni a l'ermità.mp3",
-        "url": "https://drive.google.com/file/d/1tDRDE6OJMHKfv_Xu1C1uMCZfhjG4p6Be/view?usp=drive_link"
       }
     ]
   },
@@ -711,18 +1952,13 @@
       "PERC_ERM_BEAT_01"
     ],
     "es_fita": false,
-    "discourse_topic_id": 1315,
-    "publicat": true,
+    "discourse_topic_id": null,
+    "publicat": false,
     "material": [
       {
         "tipus": "video",
-        "nom": "02 ermita beat contra",
+        "nom": "",
         "url": "https://youtu.be/LBmj9oP1IGw"
-      },
-      {
-        "tipus": "mp3",
-        "nom": "Sant Antoni a l'ermità.mp3",
-        "url": "https://drive.google.com/file/d/1tDRDE6OJMHKfv_Xu1C1uMCZfhjG4p6Be/view?usp=drive_link"
       }
     ]
   },
@@ -740,18 +1976,13 @@
       "PERC_ERM_CONTRA_01"
     ],
     "es_fita": false,
-    "discourse_topic_id": 1316,
-    "publicat": true,
+    "discourse_topic_id": null,
+    "publicat": false,
     "material": [
       {
         "tipus": "video",
-        "nom": "02 ermita beat contra",
+        "nom": "",
         "url": "https://youtu.be/LBmj9oP1IGw"
-      },
-      {
-        "tipus": "mp3",
-        "nom": "Sant Antoni a l'ermità.mp3",
-        "url": "https://drive.google.com/file/d/1tDRDE6OJMHKfv_Xu1C1uMCZfhjG4p6Be/view?usp=drive_link"
       }
     ]
   },
@@ -769,18 +2000,13 @@
       "PERC_ERM_CONTRA_01"
     ],
     "es_fita": false,
-    "discourse_topic_id": 1317,
-    "publicat": true,
+    "discourse_topic_id": null,
+    "publicat": false,
     "material": [
       {
         "tipus": "video",
-        "nom": "03 ermita dimonis1",
+        "nom": "",
         "url": "https://youtu.be/TSXzmCkbUqo"
-      },
-      {
-        "tipus": "mp3",
-        "nom": "Sant Antoni a l'ermità.mp3",
-        "url": "https://drive.google.com/file/d/1tDRDE6OJMHKfv_Xu1C1uMCZfhjG4p6Be/view?usp=drive_link"
       }
     ]
   },
@@ -798,18 +2024,13 @@
       "PERC_ERM_DIMONIS_01"
     ],
     "es_fita": false,
-    "discourse_topic_id": 1318,
-    "publicat": true,
+    "discourse_topic_id": null,
+    "publicat": false,
     "material": [
       {
         "tipus": "video",
-        "nom": "03 ermita dimonis1",
+        "nom": "",
         "url": "https://youtu.be/TSXzmCkbUqo"
-      },
-      {
-        "tipus": "mp3",
-        "nom": "Sant Antoni a l'ermità.mp3",
-        "url": "https://drive.google.com/file/d/1tDRDE6OJMHKfv_Xu1C1uMCZfhjG4p6Be/view?usp=drive_link"
       }
     ]
   },
@@ -827,18 +2048,13 @@
       "PERC_ERM_DIMONIS_01"
     ],
     "es_fita": false,
-    "discourse_topic_id": 1319,
-    "publicat": true,
+    "discourse_topic_id": null,
+    "publicat": false,
     "material": [
       {
         "tipus": "video",
-        "nom": "04 ermita beat dimonis1",
+        "nom": "",
         "url": "https://youtu.be/DOseihMPlzc"
-      },
-      {
-        "tipus": "mp3",
-        "nom": "Sant Antoni a l'ermità.mp3",
-        "url": "https://drive.google.com/file/d/1tDRDE6OJMHKfv_Xu1C1uMCZfhjG4p6Be/view?usp=drive_link"
       }
     ]
   },
@@ -856,18 +2072,13 @@
       "PERC_ERM_BEATDIMONIS_01"
     ],
     "es_fita": false,
-    "discourse_topic_id": 1320,
-    "publicat": true,
+    "discourse_topic_id": null,
+    "publicat": false,
     "material": [
       {
         "tipus": "video",
-        "nom": "04 ermita beat dimonis1",
+        "nom": "",
         "url": "https://youtu.be/DOseihMPlzc"
-      },
-      {
-        "tipus": "mp3",
-        "nom": "Sant Antoni a l'ermità.mp3",
-        "url": "https://drive.google.com/file/d/1tDRDE6OJMHKfv_Xu1C1uMCZfhjG4p6Be/view?usp=drive_link"
       }
     ]
   },
@@ -885,18 +2096,13 @@
       "PERC_ERM_BEATDIMONIS_01"
     ],
     "es_fita": false,
-    "discourse_topic_id": 1321,
-    "publicat": true,
+    "discourse_topic_id": null,
+    "publicat": false,
     "material": [
       {
         "tipus": "video",
-        "nom": "05 ermita patapatapampam",
+        "nom": "",
         "url": "https://youtu.be/2pq1uzhLw4M"
-      },
-      {
-        "tipus": "mp3",
-        "nom": "Sant Antoni a l'ermità.mp3",
-        "url": "https://drive.google.com/file/d/1tDRDE6OJMHKfv_Xu1C1uMCZfhjG4p6Be/view?usp=drive_link"
       }
     ]
   },
@@ -913,26 +2119,14 @@
     "prerequisits": [
       "PERC_ERM_PATAPAM_01"
     ],
-    "es_fita": true,
-    "fita": {
-      "nom": "Oh! Antoni, Desgraciat!",
-      "descripcio": "Oh! Antoni, Desgraciat!",
-      "icona": "🧔🏻",
-      "discourse_badge_id": 120,
-      "discourse_badge_name": "GiT_ERM_PATAPAM"
-    },
-    "discourse_topic_id": 1322,
-    "publicat": true,
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
     "material": [
       {
         "tipus": "video",
-        "nom": "05 ermita patapatapampam",
+        "nom": "",
         "url": "https://youtu.be/2pq1uzhLw4M"
-      },
-      {
-        "tipus": "mp3",
-        "nom": "Sant Antoni a l'ermità.mp3",
-        "url": "https://drive.google.com/file/d/1tDRDE6OJMHKfv_Xu1C1uMCZfhjG4p6Be/view?usp=drive_link"
       }
     ]
   },
@@ -951,18 +2145,13 @@
       "PERC_ERM_PATAPAM_01"
     ],
     "es_fita": false,
-    "discourse_topic_id": 1323,
-    "publicat": true,
+    "discourse_topic_id": null,
+    "publicat": false,
     "material": [
       {
         "tipus": "video",
-        "nom": "06 ermita redoble1",
+        "nom": "",
         "url": "https://youtu.be/gd247JuFA1Y"
-      },
-      {
-        "tipus": "mp3",
-        "nom": "Sant Antoni a l'ermità.mp3",
-        "url": "https://drive.google.com/file/d/1tDRDE6OJMHKfv_Xu1C1uMCZfhjG4p6Be/view?usp=drive_link"
       }
     ]
   },
@@ -988,18 +2177,13 @@
       "discourse_badge_id": 119,
       "discourse_badge_name": "GiT_ERM_REDOBLE"
     },
-    "discourse_topic_id": 1324,
-    "publicat": true,
+    "discourse_topic_id": null,
+    "publicat": false,
     "material": [
       {
         "tipus": "video",
-        "nom": "06 ermita redoble1",
+        "nom": "",
         "url": "https://youtu.be/gd247JuFA1Y"
-      },
-      {
-        "tipus": "mp3",
-        "nom": "Sant Antoni a l'ermità.mp3",
-        "url": "https://drive.google.com/file/d/1tDRDE6OJMHKfv_Xu1C1uMCZfhjG4p6Be/view?usp=drive_link"
       }
     ]
   },
@@ -1018,18 +2202,13 @@
       "PERC_ERM_REDOBLE_01"
     ],
     "es_fita": false,
-    "discourse_topic_id": 1325,
-    "publicat": true,
+    "discourse_topic_id": null,
+    "publicat": false,
     "material": [
       {
         "tipus": "video",
-        "nom": "07 ermita dinamica1",
+        "nom": "",
         "url": "https://youtu.be/liOiGDJ9-z8"
-      },
-      {
-        "tipus": "mp3",
-        "nom": "Sant Antoni a l'ermità.mp3",
-        "url": "https://drive.google.com/file/d/1tDRDE6OJMHKfv_Xu1C1uMCZfhjG4p6Be/view?usp=drive_link"
       }
     ]
   },
@@ -1048,102 +2227,13 @@
       "PERC_ERM_DINAMICA_A_01"
     ],
     "es_fita": false,
-    "discourse_topic_id": 1326,
-    "publicat": true,
+    "discourse_topic_id": null,
+    "publicat": false,
     "material": [
       {
         "tipus": "video",
-        "nom": "07 ermita dinamica1",
+        "nom": "",
         "url": "https://youtu.be/liOiGDJ9-z8"
-      },
-      {
-        "tipus": "mp3",
-        "nom": "Sant Antoni a l'ermità.mp3",
-        "url": "https://drive.google.com/file/d/1tDRDE6OJMHKfv_Xu1C1uMCZfhjG4p6Be/view?usp=drive_link"
-      }
-    ]
-  },
-  {
-    "id": "PERC_LLAM_SARDANA_01",
-    "familia": "Percussió",
-    "tags": [
-      "Tabal",
-      "Peça",
-      "Llampecs"
-    ],
-    "titol": "Nit de Llampecs · Sardana",
-    "descripcio": "Toca la part de sardana picant les baquetes",
-    "prerequisits": [
-      "PERC_ERM_PATAPAM_02"
-    ],
-    "es_fita": false,
-    "discourse_topic_id": 1384,
-    "publicat": true,
-    "material": [
-      {
-        "tipus": "mp3",
-        "nom": "Nit de llampecs - sardana.mp3",
-        "url": "https://drive.google.com/file/d/1cQMHfBXqCvdAaXSwz8mKoYVmySRjvnvz/view?usp=drive_link"
-      }
-    ]
-  },
-  {
-    "id": "PERC_LLAM_DIMONIS_01",
-    "familia": "Percussió",
-    "tags": [
-      "Tabal",
-      "Peça",
-      "Llampecs"
-    ],
-    "titol": "Nit de Llampecs · Dimonis",
-    "descripcio": "Toca la part de dimonis",
-    "prerequisits": [
-      "PERC_LLAM_SARDANA_01"
-    ],
-    "es_fita": false,
-    "discourse_topic_id": 1385,
-    "publicat": true,
-    "material": [
-      {
-        "tipus": "mp3",
-        "nom": "Nit de llampecs - dimonis.mp3",
-        "url": "https://drive.google.com/file/d/1q1SCMbO_sVVkznK4nJ1segOypSZc6aCX/view?usp=drive_link"
-      }
-    ]
-  },
-  {
-    "id": "PERC_LLAM_SENCERA_01",
-    "familia": "Percussió",
-    "tags": [
-      "Tabal",
-      "Peça",
-      "Llampecs"
-    ],
-    "titol": "Nit de Llampecs · Sencera",
-    "descripcio": "Toca tota la peça, alternant la part de sardana amb la de dimonis",
-    "prerequisits": [
-      "PERC_LLAM_DIMONIS_01"
-    ],
-    "es_fita": true,
-    "fita": {
-      "nom": "Com un Llamp!",
-      "descripcio": "Com un Llamp!",
-      "icona": "⚡",
-      "discourse_badge_id": 121,
-      "discourse_badge_name": "GiT_PERC_LLAM_SENCERA_01"
-    },
-    "discourse_topic_id": 1386,
-    "publicat": true,
-    "material": [
-      {
-        "tipus": "video",
-        "nom": "Xiri concert 2018 Nit de llàmpecs (Los relámpagos)",
-        "url": "https://www.youtube.com/watch?v=Sz6IHNHV56M"
-      },
-      {
-        "tipus": "mp3",
-        "nom": "Nit de llampecs - tota.mp3",
-        "url": "https://drive.google.com/file/d/1t1XYqLQDGpFf3CNcgoDjJmo0doVPejgf/view?usp=drive_link"
       }
     ]
   }
