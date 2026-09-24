@@ -2,7 +2,7 @@
 
 > Document escrit **per a l'agent**. El lector previst és una sessió futura de
 > Claude Code. Si la resposta és ací, no cal obrir el codi.
-> Signatures i literals extrets amb `grep` el **2026-09-17**.
+> Signatures i literals extrets amb `grep` el **2026-09-24**.
 
 ---
 
@@ -135,25 +135,27 @@ el 2026-09-11 en segona posició, i res es va trencar tret de la comprovació de
   camp es continua comportant com abans (tots completables).
 - `material` sempre és un array (pot ser buit).
 
-### 2.3 Estat de les dades (2026-09-17)
+### 2.3 Estat de les dades (2026-09-24)
 
-- **87 nodes al CSV**, dels quals **39 actius** (els que es dibuixen) i
+- **91 nodes al CSV**, dels quals **43 actius** (els que es dibuixen) i
   **48 amagats** amb `actiu=FALSE`.
 
-  | Branca | Al CSV | Actius |
-  | --- | --- | --- |
-  | `GiT_INICI` (arrel) | 1 | 1 |
-  | Tocs bàsics (`PERC_PL`, `PERC_DE`, `PERC_DDEE`, `PERC_DEDx`, `PERC_PLD`, `PERC_PLE`) | 24 | 24 |
-  | Lateralitat (`PERC_LAT`) | 48 | **0** |
-  | Sant Antoni (`PERC_ERM`) | 14 | 14 |
+  | Branca | Prefix | Al CSV | Actius |
+  | --- | --- | --- | --- |
+  | Arrel | `GiT_INICI` | 1 | 1 |
+  | Tocs bàsics | `PERC_PL`, `PERC_DE`, `PERC_DDEE`, `PERC_DEDx`, `PERC_PLD`, `PERC_PLE` | 24 | 24 |
+  | Lateralitat (Lat. 001-011) | `PERC_LAT` | 48 | **0** |
+  | St. Antoni L'ermità | `PERC_ERM` | 14 | 14 |
+  | Nit de Llampecs | `PERC_LLAM` | 3 | 3 |
+  | Dimonis de Massalfassar | `PERC_DIM` | 1 | 1 |
 
-- Els 39 actius estan **tots publicats**; cap «en preparació».
+- Els 43 actius estan **tots publicats**; cap «en preparació». 11 fites al CSV.
 - La lateralitat està amagada des del 2026-09-11 per a centrar les sessions del
   taller. Es desfà posant `actiu` a `TRUE`. **És una configuració temporal**:
   no la prengues com l'estat definitiu del projecte.
-- Arrel única: `GiT_INICI`. 8 nodes amb `es_fita=true` a tot el CSV.
-- Branques al CSV: `PERC_PL`, `PERC_DE`, `PERC_DDEE`, `PERC_DEDx`, `PERC_PLD`,
-  `PERC_PLE`, `PERC_LAT` (Lat. 001-011) i `PERC_ERM` (St. Antoni L'ermità).
+- El projecte ha passat d'exercicis solts a **peces del repertori**: ERM, LLAM i
+  DIM són obres, no patrons. Les peces pengen de `GiT_INICI` o d'una altra peça.
+- Arrel única: `GiT_INICI`.
 - `PERC_ERM` té forma d'espina dorsal: els nodes `_01` fan la cadena principal i
   cada `_02` («Tota») penja del seu `_01` sense bloquejar el pas següent. Penja
   directament de `GiT_INICI`, per això amagar la resta no trenca el graf.
@@ -783,6 +785,45 @@ El guardià feia la seua faena (no va tocar el CSV bo), però per un motiu fals.
 Ara comprova que **hi siguen** les columnes de `COLUMNES_ESSENCIALS`
 (`id`, `titol`, `prerequisits`, `discourse_topic_id`), sense mirar l'ordre ni
 exigir la llista sencera. El full pot guanyar columnes sense trencar res.
+
+---
+
+### 7.11 L'opció 8 va importar un CSV de fa 13 dies (2026-09-24)
+
+L'opció 8 del menú agafa el `GiT_nodes*.csv` **més recent de Baixades**. Com que
+feia setmanes que s'importava directament del full (opció 1), el més recent
+d'allí era `GiT_nodes_20260911_06.csv`: 21 columnes (sense `actiu`), 87 nodes i
+els 14 d'ERM encara sense `discourse_topic_id`.
+
+En publicar amb eixes dades, l'script va creure que els 14 nodes d'ERM no
+existien i **va intentar crear-los una segona vegada**:
+
+```
+✗ PERC_ERM_BEAT_01: HTTP 422: {"errors":["This title has already been used by
+  another topic."]}
+```
+
+**Els 14 van fallar i no es va crear cap duplicat, però el mèrit va ser de
+Discourse, no nostre**: rebutja títols repetits dins de la mateixa categoria.
+Si els títols hagueren sigut lleugerament diferents, hauria funcionat i el
+fòrum hauria acabat amb 14 temes bessons.
+
+La mateixa execució va regenerar `nodes.json` amb les dades velles i el va pujar
+a GitHub, deixant tota la branca d'ERM com a «en preparació» en producció fins
+que l'autor va reexecutar el procés correcte.
+
+Guardes afegides el mateix dia:
+
+1. `comparar_csv.mjs` reporta en un bloc propi qualsevol
+   `discourse_topic_id` que passe de tindre valor a estar buit, i qualsevol node
+   publicat que desaparega. **Ix amb codi 3.**
+2. Amb eixe codi 3, el menú no accepta el `s/N` de sempre: cal escriure
+   `PERDRE TEMES` sencer.
+3. L'opció 8 diu l'antiguitat del fitxer i recomana l'opció 1 si té més d'un dia.
+4. `comparar_csv.mjs` avisa si canvia el nombre de columnes.
+
+Provat reproduint l'escenari exacte: buidant els 14 `discourse_topic_id` d'ERM,
+la comparació els llista tots amb el número de tema que perdria cadascun.
 
 ---
 

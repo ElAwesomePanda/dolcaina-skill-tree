@@ -137,6 +137,9 @@ operatiu i tot el que és massa menut per a tindre fitxa pròpia.
 - [x] Informe d'incidències guardat a `copies/informes/` — 2026-09-11
 - [x] La insígnia que falta és avís si el node és esborrany, error si està
       publicat — 2026-09-11
+- [x] Guardes contra importar un CSV vell: alerta si es perdrien
+      `discourse_topic_id`, confirmació escrita, avís d'antiguitat i de canvi de
+      columnes — 2026-09-24. Vegeu `DESIGN.md` §7.11
 - [ ] El filtre `GiT_nodes*.csv` de Baixades també casa amb
       `GiT_Nodes - nodes_template_1.csv`. Ara no molesta perquè és vell, però si
       algun dia es toca passarà a ser el «més recent»

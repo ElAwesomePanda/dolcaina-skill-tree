@@ -63,10 +63,12 @@ function Comprovar-Entorn {
 
 # ─── 1. Importar el CSV més nou de Baixades ──────────────────────────────────
 
+# Torna $true si la comparació ha detectat pèrdua de temes publicats (codi 3).
 function Resum-Canvis($rutaNova) {
   # Deleguem la comparació a Node: ja sap parsejar aquest CSV bé.
   $script = Join-Path $PSScriptRoot 'comparar_csv.mjs'
-  & node $script $Csv $rutaNova
+  & node $script $Csv $rutaNova | Out-Host
+  return ($LASTEXITCODE -eq 3)
 }
 
 # Es guarden les $MaxCopies últimes còpies del CSV i s'esborren les més velles.
@@ -93,19 +95,34 @@ function Fer-Copia {
 # Tronc comú de les dues importacions: ensenya els canvis, demana confirmació,
 # fa còpia de seguretat i valida. $origen és un fitxer ja a punt al disc.
 function Aplicar-Import($origen, $descripcio) {
+  $perill = $false
   if (Test-Path $Csv) {
     Write-Host '  Canvis respecte del CSV actual:' -ForegroundColor Cyan
     Write-Host ''
-    Resum-Canvis $origen
+    $perill = Resum-Canvis $origen
   } else {
     Write-Host '  No hi ha cap CSV al projecte encara: aquest serà el primer.' -ForegroundColor Cyan
   }
 
   Write-Host ''
-  $resposta = Read-Host '  Vols substituir el CSV del projecte? (s/N)'
-  if ($resposta -ne 's' -and $resposta -ne 'S') {
-    Write-Host '  Cancel·lat. No s''ha tocat res.' -ForegroundColor DarkGray
-    return
+  if ($perill) {
+    # Perdre un discourse_topic_id fa que la pròxima publicació torne a crear
+    # el tema. Ací no val el s/N de sempre: cal escriure-ho sencer.
+    Write-Host '  Aquesta importació perdria temes ja publicats (mira l''avís de dalt).' -ForegroundColor Red
+    Write-Host '  Si no saps segur per què, digues que no i importa del full (opció 1).' -ForegroundColor Red
+    Write-Host ''
+    Write-Host '  Per a continuar igualment, escriu: PERDRE TEMES'
+    $resposta = Read-Host '  Confirmació'
+    if ($resposta -cne 'PERDRE TEMES') {
+      Write-Host '  Cancel·lat. No s''ha tocat res.' -ForegroundColor DarkGray
+      return
+    }
+  } else {
+    $resposta = Read-Host '  Vols substituir el CSV del projecte? (s/N)'
+    if ($resposta -ne 's' -and $resposta -ne 'S') {
+      Write-Host '  Cancel·lat. No s''ha tocat res.' -ForegroundColor DarkGray
+      return
+    }
   }
 
   Fer-Copia
@@ -153,9 +170,22 @@ function Importar-Csv {
     return
   }
 
+  $dies = [int]((Get-Date) - $candidat.LastWriteTime).TotalDays
+
   Write-Host ('  Fitxer:  ' + $candidat.Name)
   Write-Host ('  Data:    ' + $candidat.LastWriteTime.ToString('yyyy-MM-dd HH:mm'))
   Write-Host ('  Mida:    ' + [math]::Round($candidat.Length / 1KB, 1) + ' KB')
+
+  # Aquesta opció agafa el fitxer MÉS RECENT de Baixades, que pot ser molt
+  # vell si fa temps que s'importa directament del full. El 2026-09-24 va
+  # agafar-ne un de feia 13 dies i va estar a punt de duplicar 14 temes.
+  if ($dies -ge 1) {
+    Write-Host ''
+    $quan = if ($dies -eq 1) { "d'ahir" } else { "de fa $dies dies" }
+    Write-Host ("  ATENCIÓ: aquest fitxer és $quan.") -ForegroundColor Yellow
+    Write-Host '  Aquesta opció agafa el més recent de Baixades, no el més bo.' -ForegroundColor Yellow
+    Write-Host '  Si no l''acabes d''exportar, segurament vols l''opció 1 (del full).' -ForegroundColor Yellow
+  }
   Write-Host ''
 
   Aplicar-Import $candidat.FullName $candidat.Name
