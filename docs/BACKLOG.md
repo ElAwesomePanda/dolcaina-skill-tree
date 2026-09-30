@@ -92,6 +92,12 @@ operatiu i tot el que és massa menut per a tindre fitxa pròpia.
 
 ## Metrònom
 
+- [x] Clic més fort i sec: ràfega de soroll filtrada + transitori quadrat, amb
+      saturador tanh i control de volum. Passa de 0 % a ~48 % d'energia per
+      damunt de 2 kHz — 2026-09-30. Vegeu `DESIGN.md` §3.9
+- [ ] Provar el clic nou **al taller amb la dolçaina sonant**: les mesures diuen
+      que hauria de travessar, però això només es comprova a la sala
+
 - [ ] Botó «Practicar» al modal amb el temporitzador posat als minuts del node — `M-10`
 - [x] Pujada progressiva de BPM: del tempo base al doble en 8/16/32 increments,
       un per compàs — 2026-09-17
@@ -103,7 +109,11 @@ operatiu i tot el que és massa menut per a tindre fitxa pròpia.
 
 ## Contingut
 
-- [ ] Definir les fites de la branca de **dolçaina** — `M-11`
+- [ ] Definir les fites de la branca de **dolçaina** — `M-11`.
+      **Decisió pendent abans de crear cap node** (2026-09-24, l'autor pregunta
+      als alumnes qui va a gaita i qui a tabal): si els itineraris se separen,
+      cal decidir si l'arbre té dues branques grans des de `GiT_INICI` i, sobre
+      tot, **què compta la barra de progrés** per a qui només fa un instrument
 - [ ] Afegir material `pdf` (partitures) — `M-12`
 - [ ] Afegir material `mp3` (pistes d'acompanyament) amb reproductor incrustat — `M-12`
 - [ ] Publicar o eliminar els 36 nodes `valid=FALSE`
@@ -168,8 +178,14 @@ operatiu i tot el que és massa menut per a tindre fitxa pròpia.
 - [x] Comprovar que `PROXY_URL` respon — 2026-09-10, `HTTP 200`
 - [x] Comprovar que Discourse ja envia CORS directe (tiquet #825876) —
       2026-09-10: sí, `Access-Control-Allow-Origin: https://elawesomepanda.github.io`
+- [x] **Provat en mòbil real per l'autor** — 2026-09-24: funciona.
+      Comprovat també a 375×812: sense desbordament horitzontal, carrega els 91
+      nodes. La capçalera ocupa 264 px, un **33 %** de la pantalla; no impedeix
+      res però és el que més es guanyaria plegant-la — `M-04`
+- [x] **Prova de punta a punta amb un alumne real** — 2026-09-24: feta, i amb
+      gent poc tecnològica. Registre → completar branca → reclamar insígnia →
+      sincronitzar. **El nivell 2 de persistència ja no és teòric** — `M-20`
 - [ ] Provar en Firefox i en Safari (`foreignObject` sol donar sorpreses)
-- [ ] Prova de punta a punta amb un alumne real — `M-20`
 - [ ] Provar la publicació de veritat (branca ERM, 14 temes) — **en curs
       2026-09-11**
 

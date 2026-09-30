@@ -587,6 +587,11 @@ h1 {
   align-items: center;
   justify-content: space-between;
 }
+.metronom-volum-val {
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  color: var(--gold);
+}
 .metronom-bpm-input {
   background: var(--bg);
   border: 1px solid #3a3428;
@@ -805,6 +810,11 @@ h1 {
         <option value="300">5 min</option>
       </select>
     </div>
+    <div class="metronom-bpm-row">
+      <span class="metronom-label">Volum</span>
+      <span class="metronom-volum-val" id="metroVolumVal">50%</span>
+    </div>
+    <input class="metronom-slider" type="range" id="metroVolum" min="0" max="100" value="50">
     <div class="metronom-rampa-row">
       <label class="metronom-label metronom-check">
         <input type="checkbox" id="metroRampa"> Pujada progressiva
@@ -1422,16 +1432,161 @@ function actualitzarInfoRampa() {
                    + (retallat ? ` (es queda a ${BPM_MAX})` : '');
 }
 
+// ─── SÍNTESI DEL CLIC ────────────────────────────────────────────────────────
+//
+// La primera versió era una sinusoidal de 600/1000 Hz amb caiguda de 40-55 ms.
+// Als tallers es perdia: una sinusoidal té TOTA l'energia en una freqüència i
+// cap harmònic, i la dolçaina (xirimia, plena d'harmònics) la tapa per
+// emmascarament. Per molt que es pujara el volum no es podia: ja estava a 1.0,
+// el màxim abans de retallar.
+//
+// El que travessa soroll no és el volum, és el contingut espectral. Ara el clic
+// és una ràfega de SOROLL passada per un filtre de banda, més un transitori
+// d'ona quadrada. El soroll reparteix energia per tot l'espectre, així que no hi
+// ha cap freqüència concreta que la dolçaina puga emmascarar del tot.
+//
+// I molt més curt (14-20 ms): un clic curt es percep sec i definit, i es
+// confon menys amb el que estàs tocant.
+
+// Cadena: fonts → saturador → volum → eixida.
+//
+// EL VOLUM VA DESPRÉS DEL SATURADOR, i això no és caprici. Amb el volum
+// davant, el senyal entrava tan fort al saturador que quedava limitat igual:
+// mesurat, moure el control del 40 % al 100 % només canviava el pic de 0,875 a
+// 0,953. Posant-lo darrere, el saturador defineix el caràcter del clic i el
+// control fa el que diu.
+let metroAtac    = null;   // guany ABANS del saturador: quanta canya li pega
+let metroEntrada = null;   // saturador: ací s'hi connecten les fonts
+let metroVolum   = null;   // guany DESPRÉS del saturador
+let metroSoroll  = null;   // memòria intermèdia de soroll, reutilitzada
+
+// Valors trobats mesurant, no a ull. Vegeu DESIGN.md §3.9.
+const CLIC_GUANY_SOROLL = 26;    // el filtre de banda deixa passar molt poc
+const CLIC_SATURACIO    = 3;     // duresa de la corba tanh
+// El nivell d'eixida el fixa metroNivells(); vegeu NIVELL_NET i NIVELL_TOPE.
+
+function metroPrepararAudio() {
+  if (metroEntrada) return;
+
+  // Saturador suau com a limitador.
+  //
+  // Un DynamicsCompressor NO serveix ací: el seu atac més curt és 0,5 ms i
+  // arriba tard al transitori, així que els pics se n'eixien (mesurat: 1,63
+  // amb mostres saturades). Un WaveShaper amb corba tanh talla mostra a
+  // mostra, i de propina afig harmònics, que és justament el que fa que el
+  // clic travesse el soroll.
+  const forma = new Float32Array(1024);
+  for (let i = 0; i < 1024; i++) {
+    const x = i * 2 / 1023 - 1;
+    forma[i] = Math.tanh(CLIC_SATURACIO * x) / Math.tanh(CLIC_SATURACIO);
+  }
+  const sat = metroAudioCtx.createWaveShaper();
+  sat.curve = forma;
+  // SENSE sobremostreig, i a posta. Amb '2x' el filtre d'interpolació fa
+  // rebotar l'ona i el pic se n'anava a 1,4-1,5 encara que la tanh no passa
+  // d'1: obligava a baixar el sostre d'eixida a 0,65 i es perdien 3 dB.
+  // Amb 'none' la tanh talla exacte a 1,0 i el sostre pot pujar a 0,95.
+  // L'àlies que puga introduir és inaudible en un clic que ja és soroll.
+  sat.oversample = 'none';
+
+  // El nivell el posa aplicarVolumMetro(), que deixa marge perquè el
+  // sobremostreig del saturador no passe d'1,0.
+  metroVolum = metroAudioCtx.createGain();
+  sat.connect(metroVolum);
+  metroVolum.connect(metroAudioCtx.destination);
+
+  // Les fonts entren ací, i d'ací al saturador.
+  metroAtac = metroAudioCtx.createGain();
+  metroAtac.connect(sat);
+
+  metroEntrada = metroAtac;
+  aplicarVolumMetro();
+
+  // Mig segon de soroll blanc, generat una sola vegada i reaprofitat a cada
+  // clic. Crear-ne un per colp seria malgastar memòria a 240 BPM.
+  const n = Math.floor(metroAudioCtx.sampleRate * 0.5);
+  metroSoroll = metroAudioCtx.createBuffer(1, n, metroAudioCtx.sampleRate);
+  const dades = metroSoroll.getChannelData(0);
+  for (let i = 0; i < n; i++) dades[i] = Math.random() * 2 - 1;
+}
+
+// El control de volum té dos trams, i no és capritx.
+//
+//   0 → 50 %   només puja el guany de DARRERE del saturador. Net.
+//               El 50 % és el nivell que abans era el 90 %: el màxim sense
+//               distorsió, i el valor per defecte.
+//   50 → 100 % el de darrere ja no pot pujar molt més sense passar de 1,0 i
+//               retallar en sec contra l'eixida, que sona a espetec. A partir
+//               d'ací el que puja és el guany de DAVANT: ataca el saturador,
+//               que respon amb saturació suau. Distorsiona, però és una
+//               distorsió d'harmònics, i sona MÉS FORT sense passar de 1,0.
+//
+// `NIVELL_NET` és el que abans donava el 90 % del control vell (0,9 × 0,70).
+const NIVELL_NET   = 0.63;
+const NIVELL_TOPE  = 0.95;   // amb oversample 'none', la tanh no passa d'1,0
+const ATAC_MAXIM   = 6;      // com de fort ataca el saturador al 100 %
+
+function metroNivells(pct) {
+  const x = Math.max(0, Math.min(100, pct)) / 100;
+  if (x <= 0.5) {
+    return { atac: 1, volum: (x / 0.5) * NIVELL_NET };
+  }
+  const t = (x - 0.5) / 0.5;                       // 0 → 1 en el tram de dalt
+  return {
+    atac:  1 + t * (ATAC_MAXIM - 1),
+    volum: NIVELL_NET + t * (NIVELL_TOPE - NIVELL_NET),
+  };
+}
+
+function getMetroPct() {
+  const el = document.getElementById('metroVolum');
+  return el ? parseInt(el.value) : 50;
+}
+
+function aplicarVolumMetro() {
+  if (!metroVolum) return;
+  const n = metroNivells(getMetroPct());
+  metroAtac.gain.value  = n.atac;
+  metroVolum.gain.value = n.volum;
+}
+
 function playClick(time, isDownbeat) {
+  metroPrepararAudio();
+
+  const dur = isDownbeat ? 0.022 : 0.016;
+  const vol = isDownbeat ? 1.0 : 0.72;
+
+  // 1. Ràfega de soroll filtrada: el cos del clic, i el que li dona presència.
+  const soroll = metroAudioCtx.createBufferSource();
+  soroll.buffer = metroSoroll;
+  soroll.loop   = true;
+
+  const filtre = metroAudioCtx.createBiquadFilter();
+  filtre.type = 'bandpass';
+  // El temps fort, més greu; el feble, més agut. Tots dos per damunt de 1,5 kHz,
+  // que és on l'orella té més sensibilitat i on menys competeix la dolçaina.
+  filtre.frequency.value = isDownbeat ? 1900 : 3100;
+  filtre.Q.value = 1.1;
+
+  const gSoroll = metroAudioCtx.createGain();
+  gSoroll.gain.setValueAtTime(vol * CLIC_GUANY_SOROLL, time);
+  gSoroll.gain.exponentialRampToValueAtTime(0.0005, time + dur);
+
+  soroll.connect(filtre); filtre.connect(gSoroll); gSoroll.connect(metroEntrada);
+  soroll.start(time);
+  soroll.stop(time + dur);
+
+  // 2. Transitori d'ona quadrada: li dona una altura reconeixible perquè es
+  //    distingisca el temps fort del feble, sense tornar al «blup» sinusoidal.
   const osc = metroAudioCtx.createOscillator();
-  const gain = metroAudioCtx.createGain();
-  osc.connect(gain);
-  gain.connect(metroAudioCtx.destination);
-  osc.frequency.value = isDownbeat ? 600 : 1000;
-  const vol = isDownbeat ? 1.0 : 0.7;
-  const dur = isDownbeat ? 0.055 : 0.04;
-  gain.gain.setValueAtTime(vol, time);
-  gain.gain.exponentialRampToValueAtTime(0.001, time + dur);
+  osc.type = 'square';
+  osc.frequency.value = isDownbeat ? 950 : 1500;
+
+  const gOsc = metroAudioCtx.createGain();
+  gOsc.gain.setValueAtTime(vol * 0.8, time);
+  gOsc.gain.exponentialRampToValueAtTime(0.0005, time + dur * 0.6);
+
+  osc.connect(gOsc); gOsc.connect(metroEntrada);
   osc.start(time);
   osc.stop(time + dur);
 }
@@ -1531,6 +1686,12 @@ document.getElementById('metroBpmNum').addEventListener('input', function() {
   const v = Math.max(BPM_MIN, Math.min(BPM_MAX, parseInt(this.value) || 80));
   document.getElementById('metroBpmRange').value = v;
   actualitzarInfoRampa();
+});
+
+// El volum es pot moure amb el metrònom sonant: `metroVolum` és un node viu.
+document.getElementById('metroVolum').addEventListener('input', function() {
+  document.getElementById('metroVolumVal').textContent = this.value + '%';
+  aplicarVolumMetro();
 });
 
 // ─── RAMPA DE TEMPO ──────────────────────────────────────────────────────────

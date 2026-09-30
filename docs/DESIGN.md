@@ -316,9 +316,15 @@ de parar-los sense recarregar la pàgina.
 | --- | --- |
 | Rang BPM | 40–240, per defecte 80 |
 | Compàs | `metroBeatCount % 4 === 0` → temps fort (fix, no configurable) |
-| Freqüència | 600 Hz fort / 1000 Hz feble |
-| Volum | 1.0 fort / 0.7 feble |
-| Durada del clic | 0.055 s fort / 0.04 s feble |
+| Banda del soroll | 1900 Hz fort / 3100 Hz feble (passabanda, Q 1.1) |
+| Transitori quadrat | 950 Hz fort / 1500 Hz feble |
+| Volum relatiu | 1.0 fort / 0.72 feble |
+| Durada del clic | 0.022 s fort / 0.016 s feble |
+| `CLIC_GUANY_SOROLL` | 26 |
+| `CLIC_SATURACIO` | 3 (duresa de la tanh) |
+| `NIVELL_NET` / `NIVELL_TOPE` | 0.63 / 0.95 |
+| `ATAC_MAXIM` | 6 |
+| Volum d'usuari | 0-100 %, per defecte **50 %** |
 | Finestra de planificació | 0.15 s |
 | Període del planificador | `setTimeout(..., 50)` ms |
 | Primer temps | `currentTime + 0.05` |
@@ -334,6 +340,81 @@ passada del planificador.** Abans era fora; amb la rampa ha d'estar dins, perqu�
 cada temps ha de saber a quin compàs pertany. Si algú el torna a traure fora, la
 rampa deixarà de funcionar i el símptoma serà que el tempo canvia a salts
 estranys, no que peta.
+
+#### El clic: per què és soroll i no una sinusoidal
+
+La primera versió era **una sinusoidal** de 600/1000 Hz amb caiguda de 40-55 ms.
+Als tallers es perdia sota la dolçaina. L'autor ho va descriure com «un blup de
+bombolla», i tenia raó: a 600 Hz, en 40 ms hi caben unes 24 ondulacions i sense
+cap harmònic, així que l'orella ho llig com una **nota curta**, no com un colp.
+
+**No es podia arreglar pujant el volum**: el temps fort ja estava a `1.0`, el
+màxim abans de retallar. El problema no era de nivell, era d'espectre: una
+sinusoidal té tota l'energia en una freqüència, i la dolçaina (xirimia, plena
+d'harmònics) la tapa per emmascarament.
+
+Mesurat amb `OfflineAudioContext`, energia per bandes dins dels primers 30 ms:
+
+| | greu 200-1000 | mig 1000-2000 | **agut 2000-6000** |
+| --- | --- | --- | --- |
+| Sinusoidal, temps fort | 100 % | 0 % | **0 %** |
+| Sinusoidal, temps feble | 43 % | 57 % | **0 %** |
+| Actual (mitjana) | ~10 % | ~42 % | **~48 %** |
+
+El clic actual és una **ràfega de soroll blanc filtrada** més un transitori
+d'ona quadrada. El soroll reparteix energia per tot l'espectre, així que no hi
+ha cap freqüència concreta que la dolçaina puga emmascarar.
+
+#### Tres coses que es van haver de corregir mesurant
+
+1. **El filtre de banda deixa passar molt poca energia.** El primer intent
+   sonava **20 vegades més fluix** que l'original (pic 0,094 contra 0,949). Per
+   això `CLIC_GUANY_SOROLL` val 26: sense eixe guany, el soroll no s'escolta.
+2. **Un `DynamicsCompressor` no serveix de limitador ací.** El seu atac més curt
+   és 0,5 ms i arriba tard al transitori: mesurat, els pics arribaven a **1,63
+   amb mostres saturades**. Es gasta un `WaveShaper` amb corba `tanh`, que talla
+   mostra a mostra i de propina afig harmònics.
+3. **El volum d'usuari va DESPRÉS del saturador.** Amb el volum davant, el
+   senyal hi entrava tan fort que quedava limitat igual: moure el control del
+   40 % al 100 % només canviava el pic de 0,875 a 0,953. Ara la resposta és
+   lineal (0,202 → 0,478 → 0,809 → 0,933).
+
+#### El control de volum té dos trams
+
+L'autor volia que el nivell màxim sense distorsió fora el **punt mig** del
+control, i poder passar-se'n d'ahí cap amunt.
+
+| Tram | Què puja | Resultat |
+| --- | --- | --- |
+| 0 → 50 % | Només `metroVolum` (darrere del saturador) | Net, lineal |
+| 50 → 100 % | `metroAtac` (davant), d'1 a 6 | Satura la tanh: més densitat i més volum |
+
+El tram de dalt no puja el guany final perquè no pot: passaria d'1,0 i
+retallaria en sec contra l'eixida, que sona a espetec. El que puja és el
+**atac al saturador**, i la saturació és el que fa que el so siga més fort a
+igualtat de pic.
+
+Mesurat sobre el codi real, 8 renderitzacions per temps i nivell:
+
+| Volum | Pic | RMS | Mostres saturades | Energia > 2 kHz |
+| --- | --- | --- | --- | --- |
+| 25 % | 0,315 | 0,1147 | 0 | 47 % |
+| **50 %** | 0,630 | 0,2300 | 0 | 45 % |
+| 75 % | 0,790 | 0,3564 | 0 | 49 % |
+| 100 % | 0,950 | 0,4623 | 0 | 46 % |
+| *Sinusoidal vella* | *0,949* | *0,2574* | *0* | *0 %* |
+
+El 50 % dona pràcticament el nivell del clic vell, i el 100 % gasta **1,8
+vegades més energia**. **Cap mostra saturada en cap posició**: la distorsió del
+tram alt és la de la corba tanh, no retall digital.
+
+#### Per què el saturador va sense sobremostreig
+
+`sat.oversample = 'none'` és deliberat. Amb `'2x'`, el filtre d'interpolació fa
+rebotar l'ona i el pic cru se n'anava a **1,4-1,5** encara que la tanh no passa
+d'1. Això obligava a baixar el sostre d'eixida a 0,65 i es perdien més de 3 dB.
+Amb `'none'` la tanh talla exacte a 1,0 i el sostre puja a 0,95. L'àlies que
+puga introduir és inaudible en un clic que ja és soroll.
 
 #### Rampa de tempo (pujada progressiva)
 
