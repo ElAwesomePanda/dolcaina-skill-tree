@@ -534,7 +534,9 @@ h1 {
 .metronom-panel {
   position: fixed;
   bottom: 24px; right: 16px;
-  z-index: 200;
+  /* Per damunt del modal (500): el metrònom s'ha de poder tocar amb la fitxa
+     d'un exercici oberta, que és justament quan es practica. */
+  z-index: 600;
   background: var(--bg2);
   border: 1px solid var(--gold-dim);
   border-radius: 4px;
