@@ -101,8 +101,13 @@ operatiu i tot el que és massa menut per a tindre fitxa pròpia.
 - [ ] Botó «Practicar» al modal amb el temporitzador posat als minuts del node — `M-10`
 - [x] Pujada progressiva de BPM: del tempo base al doble en 8/16/32 increments,
       un per compàs — 2026-09-17
-- [ ] Compàs configurable (ara `% 4` fix). La rampa ja gasta
-      `BEATS_PER_COMPAS`, així que el canvi seria xicotet
+- [x] Compàs triable per agrupació: 4/4, 3/4, 2/4, 6/8, 7/8 i 11/16 — 2026-10-03
+- [ ] **Confirmar les agrupacions reals** de 7/8 i 11/16 provant-les al taller
+      amb el ball. Hi ha les dues variants de cada una per a poder triar per
+      oïda; quan se sàpiga, es pot llevar la que sobre
+- [ ] Si algun dia fan falta més compassos, afegir-los a `COMPASSOS` amb la seua
+      agrupació. Deliberat no fer-ho obert: el desplegable s'omple sol i amb vuit
+      entrades es cobreix el repertori
 - [ ] Que el control de velocitat de l'mp3 baixe també el metrònom (pendent de
       moure els mp3 fora de Drive)
 - [ ] Comprovar que l'`AudioContext` es reprén bé en iOS després de bloquejar la pantalla

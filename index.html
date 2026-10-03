@@ -681,6 +681,8 @@ h1 {
   transition: background 0.04s, border-color 0.04s;
 }
 .metronom-beat.on-down { background: var(--gold-light); border-color: var(--gold-light); }
+/* Accent secundari (el quart colp del 6/8): entre el fort i el feble. */
+.metronom-beat.on-mig { background: var(--gold); border-color: var(--gold); }
 .metronom-beat.on { background: var(--gold-dim); border-color: var(--gold-dim); }
 .metronom-countdown {
   font-family: 'Cinzel', serif;
@@ -801,6 +803,10 @@ h1 {
       <input class="metronom-bpm-input" type="number" id="metroBpmNum" value="80" min="40" max="240">
     </div>
     <input class="metronom-slider" type="range" id="metroBpmRange" min="40" max="240" value="80">
+    <div class="metronom-timer-row">
+      <span class="metronom-label">Compàs</span>
+      <select class="metronom-select" id="metroCompas"></select>
+    </div>
     <div class="metronom-timer-row">
       <span class="metronom-label">Timer</span>
       <select class="metronom-select" id="metroTimer">
@@ -1385,7 +1391,52 @@ function toggleMetronom() {
 }
 
 const BPM_MIN = 40, BPM_MAX = 240;
-const BEATS_PER_COMPAS = 4;
+// Compassos admesos, cadascun amb la seua AGRUPACIÓ.
+//
+// No es guarda «quants colps té» sinó com es reparteixen, perquè és això el que
+// decideix on cauen els accents. Un 11/16 no té un accent al mig: té cel·les de
+// 2 i de 3, i cada cel·la comença amb accent.
+//
+//   [4]          FORT feble feble feble
+//   [3,3]        FORT feble feble  MIG feble feble
+//   [2,2,3]      FORT feble  MIG feble  MIG feble feble
+//
+// Els compassos que admeten més d'una agrupació hi van una vegada per cada
+// una, amb l'agrupació al nom: així no cal cap control extra i es poden provar
+// al taller fins a trobar la que quadra amb el ball.
+//
+// El 3/8 i el 2/8 no hi són a posta: com que el dial marca el colp que sona,
+// cliquen igual que el 3/4 i el 2/4.
+const COMPASSOS = [
+  { nom: '4/4',               grups: [4] },
+  { nom: '3/4',               grups: [3] },
+  { nom: '2/4',               grups: [2] },
+  { nom: '6/8',               grups: [3, 3] },
+  { nom: '7/8 (2+2+3)',       grups: [2, 2, 3] },
+  { nom: '7/8 (3+2+2)',       grups: [3, 2, 2] },
+  { nom: '11/16 (2+2+3+2+2)', grups: [2, 2, 3, 2, 2] },
+  { nom: '11/16 (3+2+2+2+2)', grups: [3, 2, 2, 2, 2] },
+];
+
+function compasTriat() {
+  const el = document.getElementById('metroCompas');
+  return COMPASSOS[el ? parseInt(el.value) : 0] || COMPASSOS[0];
+}
+
+function beatsPerCompas() {
+  return compasTriat().grups.reduce((a, b) => a + b, 0);
+}
+
+// 2 = fort (primer colp del compàs) · 1 = mig (primer colp d'una cel·la) · 0
+function accentDelColp(n) {
+  const grups = compasTriat().grups;
+  const total = grups.reduce((a, b) => a + b, 0);
+  const dins  = ((n % total) + total) % total;
+  if (dins === 0) return 2;
+  let acc = 0;
+  for (const g of grups) { acc += g; if (dins === acc) return 1; }
+  return 0;
+}
 
 // Tempo base: el que hi ha escrit a la casella. La rampa NO l'escriu mai.
 // Si l'escriguera, en parar i tornar a començar arrancaries des del tempo
@@ -1552,11 +1603,22 @@ function aplicarVolumMetro() {
   metroVolum.gain.value = n.volum;
 }
 
-function playClick(time, isDownbeat) {
+// accent: 2 = fort · 1 = mig · 0 = feble
+//
+// El mig gasta la banda aguda del feble però amb més cos i durada: es nota que
+// és un accent sense semblar un tercer instrument.
+function playClick(time, accent) {
   metroPrepararAudio();
 
-  const dur = isDownbeat ? 0.022 : 0.016;
-  const vol = isDownbeat ? 1.0 : 0.72;
+  const fort = accent === 2;
+  const mig  = accent === 1;
+
+  const dur = fort ? 0.022 : mig ? 0.019 : 0.016;
+  // El saturador comprimeix molt, i això s'emporta per davant les diferències
+  // de volum: amb 1.0 / 0.88 / 0.72 els tres accents acabaven a 1,4 dB i no es
+  // distingien. Amb aquest repartiment queden a 3,1 dB, que sí que es nota,
+  // sense deixar el colp feble massa arrere per al soroll del taller.
+  const vol = fort ? 1.0   : mig ? 0.55  : 0.30;
 
   // 1. Ràfega de soroll filtrada: el cos del clic, i el que li dona presència.
   const soroll = metroAudioCtx.createBufferSource();
@@ -1567,7 +1629,7 @@ function playClick(time, isDownbeat) {
   filtre.type = 'bandpass';
   // El temps fort, més greu; el feble, més agut. Tots dos per damunt de 1,5 kHz,
   // que és on l'orella té més sensibilitat i on menys competeix la dolçaina.
-  filtre.frequency.value = isDownbeat ? 1900 : 3100;
+  filtre.frequency.value = fort ? 1900 : mig ? 2500 : 3100;
   filtre.Q.value = 1.1;
 
   const gSoroll = metroAudioCtx.createGain();
@@ -1582,7 +1644,7 @@ function playClick(time, isDownbeat) {
   //    distingisca el temps fort del feble, sense tornar al «blup» sinusoidal.
   const osc = metroAudioCtx.createOscillator();
   osc.type = 'square';
-  osc.frequency.value = isDownbeat ? 950 : 1500;
+  osc.frequency.value = fort ? 950 : mig ? 1200 : 1500;
 
   const gOsc = metroAudioCtx.createGain();
   gOsc.gain.setValueAtTime(vol * 0.8, time);
@@ -1593,25 +1655,26 @@ function playClick(time, isDownbeat) {
   osc.stop(time + dur);
 }
 
-function flashBeat(isDownbeat) {
+function flashBeat(accent) {
   const dot = document.getElementById('metroBeat');
-  dot.classList.add(isDownbeat ? 'on-down' : 'on');
-  setTimeout(() => dot.classList.remove('on-down', 'on'), 80);
+  dot.classList.add(accent === 2 ? 'on-down' : accent === 1 ? 'on-mig' : 'on');
+  setTimeout(() => dot.classList.remove('on-down', 'on-mig', 'on'), 80);
 }
 
 function metroSchedule() {
   if (!metroRunning) return;
   const scheduleAhead = 0.15;
   while (metroNextBeatTime < metroAudioCtx.currentTime + scheduleAhead) {
-    const isDownbeat = metroBeatCount % BEATS_PER_COMPAS === 0;
-    playClick(metroNextBeatTime, isDownbeat);
+    const accent = accentDelColp(metroBeatCount);
+    const isDownbeat = accent === 2;
+    playClick(metroNextBeatTime, accent);
     const delay = Math.max(0, (metroNextBeatTime - metroAudioCtx.currentTime) * 1000);
-    const captured = isDownbeat;
+    const captured = accent;
     setTimeout(() => { if (metroRunning) flashBeat(captured); }, delay);
 
     // L'interval es calcula PER TEMPS, no una vegada per passada del
     // planificador: amb la rampa, cada compàs va a un tempo diferent.
-    const compas = Math.floor(metroBeatCount / BEATS_PER_COMPAS);
+    const compas = Math.floor(metroBeatCount / beatsPerCompas());
     const bpm = bpmDelCompas(compas);
     metroNextBeatTime += 60 / bpm;
     metroBeatCount++;
@@ -1689,6 +1752,22 @@ document.getElementById('metroBpmNum').addEventListener('input', function() {
   document.getElementById('metroBpmRange').value = v;
   actualitzarInfoRampa();
 });
+
+// El desplegable de compàs s'omple des de COMPASSOS: així afegir-ne un és
+// tocar només la llista, no l'HTML.
+(function omplirCompassos() {
+  const sel = document.getElementById('metroCompas');
+  COMPASSOS.forEach((c, i) => {
+    const o = document.createElement('option');
+    o.value = i;
+    o.textContent = c.nom;
+    sel.appendChild(o);
+  });
+  // 4/4 per defecte, i explícit: els navegadors restauren el valor dels
+  // desplegables en recarregar, i si no es fixa pots acabar en 11/16 sense
+  // haver-ho triat.
+  sel.value = 0;
+})();
 
 // El volum es pot moure amb el metrònom sonant: `metroVolum` és un node viu.
 document.getElementById('metroVolum').addEventListener('input', function() {

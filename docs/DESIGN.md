@@ -315,7 +315,9 @@ de parar-los sense recarregar la pàgina.
 | Paràmetre | Valor |
 | --- | --- |
 | Rang BPM | 40–240, per defecte 80 |
-| Compàs | `metroBeatCount % 4 === 0` → temps fort (fix, no configurable) |
+| Compàs | Triable, per agrupació (`COMPASSOS`): 8 entrades |
+| Accents | 2 fort · 1 mig · 0 feble, via `accentDelColp(n)` |
+| Volum relatiu | 1.0 fort / 0.55 mig / 0.30 feble |
 | Banda del soroll | 1900 Hz fort / 3100 Hz feble (passabanda, Q 1.1) |
 | Transitori quadrat | 950 Hz fort / 1500 Hz feble |
 | Volum relatiu | 1.0 fort / 0.72 feble |
@@ -378,6 +380,64 @@ ha cap freqüència concreta que la dolçaina puga emmascarar.
    senyal hi entrava tan fort que quedava limitat igual: moure el control del
    40 % al 100 % només canviava el pic de 0,875 a 0,953. Ara la resposta és
    lineal (0,202 → 0,478 → 0,809 → 0,933).
+
+#### Compàs i accents
+
+`COMPASSOS` **no guarda quants colps té cada compàs, sinó com s'agrupen.** Això
+és el que decideix on cauen els accents, i és l'única manera de cobrir els
+compassos irregulars: un 11/16 no té un accent al mig, té cel·les de 2 i de 3,
+i cada cel·la comença amb accent.
+
+| Entrada | Agrupació | Patró |
+| --- | --- | --- |
+| `4/4` | `[4]` | `F . . .` |
+| `3/4` | `[3]` | `F . .` |
+| `2/4` | `[2]` | `F .` |
+| `6/8` | `[3,3]` | `F . . M . .` |
+| `7/8 (2+2+3)` | `[2,2,3]` | `F . M . M . .` |
+| `7/8 (3+2+2)` | `[3,2,2]` | `F . . M . M .` |
+| `11/16 (2+2+3+2+2)` | `[2,2,3,2,2]` | `F . M . M . . M . M .` |
+| `11/16 (3+2+2+2+2)` | `[3,2,2,2,2]` | `F . . M . M . M . M .` |
+
+Els compassos que admeten més d'una agrupació hi van **una vegada per cada
+una**, amb l'agrupació al nom. Això evita un segon control i, sobretot, permet
+provar-les al taller fins a trobar la que quadra amb el ball: el 2026-10-03
+l'autor no sabia quina gasten, i és la manera pràctica d'esbrinar-ho.
+
+El desplegable s'omple des de `COMPASSOS`, així que afegir-ne un és tocar només
+la llista.
+
+**El 3/8 i el 2/8 no hi són a posta.** Com que el dial marca el colp que sona,
+cliquen exactament igual que el 3/4 i el 2/4.
+
+**El 6/8 necessita l'accent del mig o no és 6/8.** Sense ell són sis colps
+iguals, que a l'orella és un 6/4 ràpid: l'alumne no sap on cau la segona part
+del compàs. Es toca «en dos», i això és el que marca el quart colp.
+
+`accentDelColp(n)` torna 2, 1 o 0, i tant `playClick()` com `flashBeat()`
+treballen amb eixe nivell en lloc d'un booleà. El puntet té tres colors:
+`--gold-light` (fort), `--gold` (mig) i `--gold-dim` (feble).
+
+**El BPM és sempre el colp que sona**, no la part. En 6/8 a 180 BPM tens 30
+compassos per minut, no 180. És menys «musical» que comptar la negra amb punt,
+però el número que llegeixes i el que sents coincideixen.
+
+**La pujada progressiva va més lenta en 6/8**: puja un graó per compàs, i un
+compàs passa de 4 a 6 colps.
+
+##### Els accents s'aplanen, i per què
+
+Amb el repartiment natural (1.0 / 0.88 / 0.72) els tres accents acabaven a
+**1,4 dB** de diferència i no es distingien: el saturador comprimeix tant que
+se'ls menja. Amb 1.0 / 0.55 / 0.30 queden a **3,0 dB** al volum per defecte.
+
+Repartiments més extrems (feble a 0.14) donaven 5,1 dB però deixaven el colp
+feble massa arrere per al soroll d'un taller, que és el problema que el clic
+havia de resoldre.
+
+**A volum 100 % l'accent baixa a 2,0 dB**, perquè el tram de força satura més i
+aplana encara més les diferències. És el preu del tram alt; el canvi de to
+(1900 / 2500 / 3100 Hz) continua distingint-los.
 
 #### El control de volum té dos trams
 
