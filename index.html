@@ -799,7 +799,7 @@ h1 {
   </div>
   <div class="metronom-body">
     <div class="metronom-bpm-row">
-      <span class="metronom-label">BPM</span>
+      <span class="metronom-label" title="El tempo és sempre la negra, siga quin siga el compàs">BPM ♩</span>
       <input class="metronom-bpm-input" type="number" id="metroBpmNum" value="80" min="40" max="240">
     </div>
     <input class="metronom-slider" type="range" id="metroBpmRange" min="40" max="240" value="80">
@@ -1408,15 +1408,26 @@ const BPM_MIN = 40, BPM_MAX = 240;
 // El 3/8 i el 2/8 no hi són a posta: com que el dial marca el colp que sona,
 // cliquen igual que el 3/4 i el 2/4.
 const COMPASSOS = [
-  { nom: '4/4',               grups: [4] },
-  { nom: '3/4',               grups: [3] },
-  { nom: '2/4',               grups: [2] },
-  { nom: '6/8',               grups: [3, 3] },
-  { nom: '7/8 (2+2+3)',       grups: [2, 2, 3] },
-  { nom: '7/8 (3+2+2)',       grups: [3, 2, 2] },
-  { nom: '11/16 (2+2+3+2+2)', grups: [2, 2, 3, 2, 2] },
-  { nom: '11/16 (3+2+2+2+2)', grups: [3, 2, 2, 2, 2] },
+  { nom: '4/4',               grups: [4],             denom: 4 },
+  { nom: '3/4',               grups: [3],             denom: 4 },
+  { nom: '2/4',               grups: [2],             denom: 4 },
+  { nom: '6/8',               grups: [3, 3],          denom: 8 },
+  { nom: '7/8 (2+2+3)',       grups: [2, 2, 3],       denom: 8 },
+  { nom: '7/8 (3+2+2)',       grups: [3, 2, 2],       denom: 8 },
+  { nom: '11/16 (2+2+3+2+2)', grups: [2, 2, 3, 2, 2], denom: 16 },
+  { nom: '11/16 (3+2+2+2+2)', grups: [3, 2, 2, 2, 2], denom: 16 },
 ];
+
+// Quants colps sonen per cada negra. El dial marca SEMPRE la negra, de manera
+// que el mateix número vol dir el mateix tempo en qualsevol compàs.
+//
+// Sense açò, el dial marcava «el colp que sona» i el número significava coses
+// distintes segons el denominador: en 6/8 els compassos passaven a la meitat
+// de velocitat que en 3/4, quan un compàs de 3/4 i un de 6/8 duren exactament
+// el mateix (tres negres = sis corxeres). Calia doblar el BPM a mà.
+function colpsPerNegra() {
+  return compasTriat().denom / 4;
+}
 
 function compasTriat() {
   const el = document.getElementById('metroCompas');
@@ -1676,7 +1687,9 @@ function metroSchedule() {
     // planificador: amb la rampa, cada compàs va a un tempo diferent.
     const compas = Math.floor(metroBeatCount / beatsPerCompas());
     const bpm = bpmDelCompas(compas);
-    metroNextBeatTime += 60 / bpm;
+    // El dial és la negra: en 6/8 sonen dues corxeres per negra, i en 11/16
+    // quatre semicorxeres.
+    metroNextBeatTime += 60 / (bpm * colpsPerNegra());
     metroBeatCount++;
 
     // Refresquem el marcador just al canvi de compàs, no a cada temps.

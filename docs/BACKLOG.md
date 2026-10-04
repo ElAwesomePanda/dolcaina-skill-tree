@@ -102,6 +102,9 @@ operatiu i tot el que és massa menut per a tindre fitxa pròpia.
 - [x] Pujada progressiva de BPM: del tempo base al doble en 8/16/32 increments,
       un per compàs — 2026-09-17
 - [x] Compàs triable per agrupació: 4/4, 3/4, 2/4, 6/8, 7/8 i 11/16 — 2026-10-03
+- [x] **El BPM és la negra en tots els compassos** — 2026-10-04. Abans marcava
+      el colp que sona i calia doblar el número en 6/8 per a anar al mateix
+      tempo que en 3/4
 - [ ] **Confirmar les agrupacions reals** de 7/8 i 11/16 provant-les al taller
       amb el ball. Hi ha les dues variants de cada una per a poder triar per
       oïda; quan se sàpiga, es pot llevar la que sobre

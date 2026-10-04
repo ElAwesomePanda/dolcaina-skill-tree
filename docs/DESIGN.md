@@ -418,9 +418,32 @@ del compàs. Es toca «en dos», i això és el que marca el quart colp.
 treballen amb eixe nivell en lloc d'un booleà. El puntet té tres colors:
 `--gold-light` (fort), `--gold` (mig) i `--gold-dim` (feble).
 
-**El BPM és sempre el colp que sona**, no la part. En 6/8 a 180 BPM tens 30
-compassos per minut, no 180. És menys «musical» que comptar la negra amb punt,
-però el número que llegeixes i el que sents coincideixen.
+**El BPM és sempre la NEGRA**, siga quin siga el compàs. `colpsPerNegra()`
+torna `denom / 4`, i l'interval entre colps és `60 / (bpm * colpsPerNegra())`.
+
+Això vol dir que en 6/8 sonen dues corxeres per negra i en 11/16 quatre
+semicorxeres, de manera que **el mateix número del dial dona el mateix tempo en
+qualsevol compàs**.
+
+Hi havia un error ací fins al 2026-10-04: el dial marcava «el colp que sona», i
+el número significava coses distintes segons el denominador. Un compàs de 3/4 i
+un de 6/8 **duren exactament el mateix** (tres negres = sis corxeres), però amb
+aquell càlcul el de 6/8 passava a la meitat de velocitat i calia doblar el BPM
+a mà. Ho va detectar l'autor tocant.
+
+Durada d'un compàs a 120 BPM, verificada amb el metrònom sonant:
+
+| Compàs | Interval | Durada | Negres |
+| --- | --- | --- | --- |
+| 4/4 | 500 ms | 2,000 s | 4 |
+| 3/4 | 500 ms | **1,500 s** | 3 |
+| 2/4 | 500 ms | 1,000 s | 2 |
+| 6/8 | 250 ms | **1,500 s** | 3 |
+| 7/8 | 250 ms | 1,750 s | 3,5 |
+| 11/16 | 125 ms | 1,375 s | 2,75 |
+
+Les dues files en negreta són la comprovació que importa: 3/4 i 6/8 han de
+coincidir, i coincideixen.
 
 **La pujada progressiva va més lenta en 6/8**: puja un graó per compàs, i un
 compàs passa de 4 a 6 colps.
