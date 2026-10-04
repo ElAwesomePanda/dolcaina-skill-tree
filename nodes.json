@@ -2450,11 +2450,11 @@
     "titol": "La Volta dels Matxos · Forcall · Bàsics",
     "descripcio": "Toca el primer tros de la peça (31 segons)",
     "prerequisits": [
-      "GiT_INICI"
+      "PERC_LLAM_SENCERA_01"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
-    "publicat": false,
+    "discourse_topic_id": 1488,
+    "publicat": true,
     "material": [
       {
         "tipus": "video",
@@ -2922,8 +2922,8 @@
       "PERC_6x8_CAMINET_05"
     ],
     "es_fita": false,
-    "discourse_topic_id": null,
-    "publicat": false,
+    "discourse_topic_id": 1489,
+    "publicat": true,
     "material": [
       {
         "tipus": "video",
