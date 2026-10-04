@@ -2438,5 +2438,498 @@
         "url": "https://drive.google.com/file/d/1GsL_G9dMxZDTKgCuFZdsWeNFr88WZJf0/view?usp=drive_link"
       }
     ]
+  },
+  {
+    "id": "PERC_MATX_BASIC_01",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Peça",
+      "Volta"
+    ],
+    "titol": "La Volta dels Matxos · Forcall · Bàsics",
+    "descripcio": "Toca el primer tros de la peça (31 segons)",
+    "prerequisits": [
+      "GiT_INICI"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "PENDENT",
+        "url": "PENDENT"
+      },
+      {
+        "tipus": "mp3",
+        "nom": "Forcall. La volta dels matxos. Part.mp3",
+        "url": "https://drive.google.com/file/d/1GWg770ZWzboxg3RLPnLE8ozPlk3KRxED/view?usp=drive_link"
+      }
+    ]
+  },
+  {
+    "id": "PERC_MATX_SENCERA_01",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "Peça",
+      "Volta"
+    ],
+    "titol": "La Volta dels Matxos · Forcall · Sencera",
+    "descripcio": "Toca la peça sencera",
+    "prerequisits": [
+      "PERC_MATX_BASIC_01"
+    ],
+    "es_fita": true,
+    "fita": {
+      "nom": "Matxo Alfals",
+      "descripcio": "Els teux matxos peguen moltes voltes",
+      "icona": "🫏",
+      "discourse_badge_id": 123,
+      "discourse_badge_name": "GiT_MATX_01"
+    },
+    "discourse_topic_id": 1471,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "mp3",
+        "nom": "Forcall. La volta dels matxos. Repertori de Leoncio Piquer i Felipe Edo.mp3",
+        "url": "https://drive.google.com/file/d/1tVxR3QDoEAH_rVGeWn9d17eF5RICjWHf/view?usp=drive_link"
+      }
+    ]
+  },
+  {
+    "id": "PERC_6x8_BASICS_01",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "6x8",
+      "3x4"
+    ],
+    "titol": "3x4 a metrònom · 1min",
+    "descripcio": "Toca el compàs de 3 per 4 durant 1 minut",
+    "prerequisits": [
+      "PERC_MATX_SENCERA_01"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 1472,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT 3x4 circle",
+        "url": "https://youtu.be/h5zdrpPs_Jg"
+      },
+      {
+        "tipus": "image",
+        "nom": "GiT_ex_3per4.png",
+        "url": "https://drive.google.com/file/d/1IefPCWue2IL8BXnZopKCxjAQO2Ar8XWP/view?usp=drive_link"
+      }
+    ]
+  },
+  {
+    "id": "PERC_6x8_BASICS_02",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "6x8",
+      "3x4"
+    ],
+    "titol": "Dividim 3x4 a 6x8, a metrònom · 1min",
+    "descripcio": "Clavem el doble de notes a 3x4 obtenint 6x8 durant 1 minut",
+    "prerequisits": [
+      "PERC_6x8_BASICS_01"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 1473,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT 6x8 circle",
+        "url": "https://youtu.be/WKsFdIgHQmk"
+      },
+      {
+        "tipus": "image",
+        "nom": "GiT_ex_3per4.png",
+        "url": "https://drive.google.com/file/d/1IefPCWue2IL8BXnZopKCxjAQO2Ar8XWP/view?usp=drive_link"
+      }
+    ]
+  },
+  {
+    "id": "PERC_6x8_BASICS_03",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "6x8",
+      "3x4"
+    ],
+    "titol": "Alternem 3x4 i 6x8 a metrònom · 1min",
+    "descripcio": "Alternem entre 3x4 i 6x8 tocant a 6x8 al metrònom",
+    "prerequisits": [
+      "PERC_6x8_BASICS_02"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 1474,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT 6x8a3x4 circle",
+        "url": "https://youtu.be/SyBQ7N2PBMs"
+      },
+      {
+        "tipus": "image",
+        "nom": "GiT_ex_3per4.png",
+        "url": "https://drive.google.com/file/d/1IefPCWue2IL8BXnZopKCxjAQO2Ar8XWP/view?usp=drive_link"
+      }
+    ]
+  },
+  {
+    "id": "PERC_6x8_BASICS_04a",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "6x8"
+    ],
+    "titol": "6x8 simple DEDEDE · 1min",
+    "descripcio": "Toca alternant DEDEDE a metrònim durant 1 minut",
+    "prerequisits": [
+      "PERC_6x8_BASICS_03"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 1475,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT 6x8 DEDEDE simple",
+        "url": "https://youtu.be/l-5j_LQb59E"
+      }
+    ]
+  },
+  {
+    "id": "PERC_6x8_BASICS_04a2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "6x8"
+    ],
+    "titol": "6x8 simple DEDEDE · 2mins",
+    "descripcio": "Toca alternant DEDEDE a metrònim durant 2 minuts",
+    "prerequisits": [
+      "PERC_6x8_BASICS_04a"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 1476,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT 6x8 DEDEDE simple",
+        "url": "https://youtu.be/l-5j_LQb59E"
+      }
+    ]
+  },
+  {
+    "id": "PERC_6x8_BASICS_04b",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "6x8"
+    ],
+    "titol": "6x8 simple DEDDED · 1min",
+    "descripcio": "Toca alternant DEDDED a metrònim durant 1 minut",
+    "prerequisits": [
+      "PERC_6x8_BASICS_03"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 1477,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT 6x8 DEDDED simple",
+        "url": "https://youtu.be/ObkY_mqI3J0"
+      }
+    ]
+  },
+  {
+    "id": "PERC_6x8_BASICS_04b2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "6x8"
+    ],
+    "titol": "6x8 simple DEDDED · 2mins",
+    "descripcio": "Toca alternant DEDDED a metrònim durant 2 minuts",
+    "prerequisits": [
+      "PERC_6x8_BASICS_04b"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 1478,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT 6x8 DEDDED simple",
+        "url": "https://youtu.be/ObkY_mqI3J0"
+      }
+    ]
+  },
+  {
+    "id": "PERC_6x8_BASICS_04c",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "6x8"
+    ],
+    "titol": "6x8 simple DEEDEE · 1min",
+    "descripcio": "Toca alternant DEEDEE a metrònim durant 1 minut",
+    "prerequisits": [
+      "PERC_6x8_BASICS_03"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 1479,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT 6x8 DEEDEE simple",
+        "url": "https://youtu.be/LZsYiXwc_4E"
+      }
+    ]
+  },
+  {
+    "id": "PERC_6x8_BASICS_04c2",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "6x8"
+    ],
+    "titol": "6x8 simple DEEDEE · 2mins",
+    "descripcio": "Toca alternant DEEDEE a metrònim durant 2 minuts",
+    "prerequisits": [
+      "PERC_6x8_BASICS_04c"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 1480,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT 6x8 DEEDEE simple",
+        "url": "https://youtu.be/LZsYiXwc_4E"
+      }
+    ]
+  },
+  {
+    "id": "PERC_6x8_CAMINET_01",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "6x8",
+      "3x4",
+      "Dinàmiques"
+    ],
+    "titol": "3x4 i 6x8 a metrònom · DEDEDE · caminet · 1min",
+    "descripcio": "Alternem entre 3x4 i 6x8 seguint el caminet DEDEDE amb 3x4 al metrònom durant 1 minut",
+    "prerequisits": [
+      "PERC_MATX_SENCERA_01"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 1481,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT 3x4partit DEDEDE",
+        "url": "https://youtu.be/lqszbO0QcqY"
+      },
+      {
+        "tipus": "image",
+        "nom": "GiT_ex_3per4__6per8b.png",
+        "url": "https://drive.google.com/file/d/19_YGmGTJeSxEBRTh3J7UguMdrlRnS-cj/view?usp=drive_link"
+      }
+    ]
+  },
+  {
+    "id": "PERC_6x8_CAMINET_02",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "6x8",
+      "Dinàmiques"
+    ],
+    "titol": "6x8 a mentrònom · DEDDED · caminet · 1min",
+    "descripcio": "Toquem el compàs de 6x8 seguint el caminet DEDDED amb metrònom durant 1 minut",
+    "prerequisits": [
+      "PERC_6x8_CAMINET_01"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 1482,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT 6x8 DEDDED",
+        "url": "https://youtu.be/ZyPtadHRpm4"
+      },
+      {
+        "tipus": "image",
+        "nom": "GiT_ex_6per8_2formes_B.png",
+        "url": "https://drive.google.com/file/d/1T7cDutOrdQ-bWvNc7569hlzA4p6T8uUb/view?usp=sharing"
+      }
+    ]
+  },
+  {
+    "id": "PERC_6x8_CAMINET_03",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "6x8",
+      "Dinàmiques"
+    ],
+    "titol": "6x8 a mentrònom · DEEDEE· caminet · 1min",
+    "descripcio": "Toquem el compàs de 6x8 seguint el caminet DEEDEE amb metrònom durant 1 minut",
+    "prerequisits": [
+      "PERC_6x8_CAMINET_02"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 1483,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT 6x8 DEEDEE",
+        "url": "https://youtu.be/zpQ6quLp0_Q"
+      },
+      {
+        "tipus": "image",
+        "nom": "GiT_ex_6per8_2formes_A.png",
+        "url": "https://drive.google.com/file/d/1tDO6fe_LQZF2p1oXtw4RS2g1Igum4kHA/view?usp=drive_link"
+      }
+    ]
+  },
+  {
+    "id": "PERC_6x8_CAMINET_04",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "6x8",
+      "Dinàmiques"
+    ],
+    "titol": "6x8 a metrònom · alternant · caminet · 1 min",
+    "descripcio": "Toquem el compàs de 6x8 alternant entre els caminets DEDEDE, DEEDEE i DEDDED amb metrònom durant 1 minut",
+    "prerequisits": [
+      "PERC_6x8_CAMINET_03"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 1484,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT 6x8 3maneres",
+        "url": "https://youtu.be/e8BFf4lb9_s"
+      }
+    ]
+  },
+  {
+    "id": "PERC_6x8_CAMINET_05",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "6x8",
+      "Dinàmiques"
+    ],
+    "titol": "6x8 a metrònom · alternant · caminet · 2 min",
+    "descripcio": "Toquem el compàs de 6x8 alternant entre els caminets DEDEDE, DEEDEE i DEDDED amb metrònom durant 2 minut",
+    "prerequisits": [
+      "PERC_6x8_CAMINET_04"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 1485,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT 6x8 3maneres",
+        "url": "https://youtu.be/e8BFf4lb9_s"
+      }
+    ]
+  },
+  {
+    "id": "PERC_6x8_CAMINET_06",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "6x8",
+      "Dinàmiques"
+    ],
+    "titol": "6x8 a metrònom · alternant · caminet · 3 min",
+    "descripcio": "Toquem el compàs de 6x8 alternant entre els caminets DEDEDE, DEEDEE i DEDDED amb metrònom durant 3 minuts",
+    "prerequisits": [
+      "PERC_6x8_CAMINET_05"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 1486,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT 6x8 3maneres",
+        "url": "https://youtu.be/e8BFf4lb9_s"
+      }
+    ]
+  },
+  {
+    "id": "PERC_6x8_CAMINET_07",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "6x8",
+      "Dinàmiques"
+    ],
+    "titol": "6x8 a metrònom · alternant · caminet · 4 min",
+    "descripcio": "Toquem el compàs de 6x8 alternant entre els caminets DEDEDE, DEEDEE i DEDDED amb metrònom durant 4 minuts",
+    "prerequisits": [
+      "PERC_6x8_CAMINET_06"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 1487,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT 6x8 3maneres",
+        "url": "https://youtu.be/e8BFf4lb9_s"
+      }
+    ]
+  },
+  {
+    "id": "PERC_6x8_CAMINET_08",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "6x8",
+      "Dinàmiques"
+    ],
+    "titol": "Dinàmiques 6x8 · D̂EDÉDE · 1min",
+    "descripcio": "Toquem el compàs 6x8 seguint el caminet D̂EDÉDE. La primera nota (D̂) ha de ser forta i la quarta (É) ha de ser forteta, però no tant. Tal que quede més o menys com: PAM!-pam-pam-PAM-pam-pam",
+    "prerequisits": [
+      "PERC_6x8_CAMINET_05"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": null,
+    "publicat": false,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "PENDENT",
+        "url": "PENDENT"
+      }
+    ]
   }
 ]
