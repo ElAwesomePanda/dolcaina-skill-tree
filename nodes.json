@@ -2458,8 +2458,8 @@
     "material": [
       {
         "tipus": "video",
-        "nom": "PENDENT",
-        "url": "PENDENT"
+        "nom": "GiT VoltaMatxos 1",
+        "url": "https://youtu.be/mIVfuzLfuB0"
       },
       {
         "tipus": "mp3",
@@ -2496,6 +2496,11 @@
         "tipus": "mp3",
         "nom": "Forcall. La volta dels matxos. Repertori de Leoncio Piquer i Felipe Edo.mp3",
         "url": "https://drive.google.com/file/d/1tVxR3QDoEAH_rVGeWn9d17eF5RICjWHf/view?usp=drive_link"
+      },
+      {
+        "tipus": "image",
+        "nom": "GiT_ex_volta1.png",
+        "url": "https://drive.google.com/file/d/1WBDKL3FOOlIWCLQDlkjrU1jJx5ASskrq/view?usp=drive_link"
       }
     ]
   },
@@ -2927,8 +2932,32 @@
     "material": [
       {
         "tipus": "video",
-        "nom": "PENDENT",
-        "url": "PENDENT"
+        "nom": "GiT 6x8 dinamica",
+        "url": "https://youtu.be/NlZIPwkFsF4"
+      }
+    ]
+  },
+  {
+    "id": "PERC_6x8_CAMINET_09",
+    "familia": "Percussió",
+    "tags": [
+      "Tabal",
+      "6x8",
+      "Dinàmiques"
+    ],
+    "titol": "Dinàmiques 6x8 · D̂EDÉDE · Accelerant",
+    "descripcio": "Toquem el compàs 6x8 seguint el caminet D̂EDÉDE i amb dinàmiques. La primera nota (D̂) ha de ser forta i la quarta (É) ha de ser forteta, però no tant. Començarem a 50BPM i activarem \"pujada progressiva\" a 32 (suau) al metrònom. Parem quan toquem un poquet a 100BPM. A les velocitats altes notareu que s'asembla a la Volta dels Matxos.",
+    "prerequisits": [
+      "PERC_6x8_CAMINET_05"
+    ],
+    "es_fita": false,
+    "discourse_topic_id": 1495,
+    "publicat": true,
+    "material": [
+      {
+        "tipus": "video",
+        "nom": "GiT 6x8 dinamica accel",
+        "url": "https://youtu.be/gcmIvwMDhzE"
       }
     ]
   }
