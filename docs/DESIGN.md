@@ -62,6 +62,7 @@
 | `eines/comparar_csv.mjs` | sí | Compara dos CSV abans d'importar-ne un |
 | `eines/baixar_full.mjs` | sí | Descarrega el full de càlcul com a CSV |
 | `eines/insignies.mjs` | sí | Creua les fites del CSV amb les insígnies del fòrum |
+| `eines/midi_a_mp3.ps1` | sí | Converteix MIDI a MP3 en lot, amb MuseScore |
 | `badges_nous.csv` | **no** | Generat per l'opció 9: badge_id per a enganxar al full |
 | `ids_nous.csv` | **no** | Generat en publicar: ids per a enganxar al full |
 | `copies/` | **no** | Còpies del CSV i informes de validació |

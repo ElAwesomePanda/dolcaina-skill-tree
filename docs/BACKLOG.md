@@ -117,6 +117,12 @@ operatiu i tot el que és massa menut per a tindre fitxa pròpia.
 
 ## Contingut
 
+- [x] `eines/midi_a_mp3.ps1`: conversió de MIDI a MP3 en lot — 2026-10-08.
+      Gastat per a convertir els 29 exercicis de dolçaina d'`odst/tracks`
+- [ ] **Material de dolçaina ja convertit i a punt** (29 mp3). Els noms deixen
+      veure l'itinerari: `RN` notes · `RL` lligat · `RC` respiració ·
+      `RV` vibrato · `DC` veus · `DV` el mateix a 5 velocitats
+
 - [ ] Definir les fites de la branca de **dolçaina** — `M-11`.
       **Decisió pendent abans de crear cap node** (2026-09-24, l'autor pregunta
       als alumnes qui va a gaita i qui a tabal): si els itineraris se separen,
