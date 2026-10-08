@@ -213,10 +213,23 @@ h1 {
 
 /* Node foreign objects */
 .node-card {
+  /* Hue per família. El valor per defecte és el daurat de tot l'arbre; una
+     família que en vulga un de propi només redefinix estes quatre variables
+     (vegeu .node-card.fam-gaita). Van ACÍ DINS i no a :root a propòsit:
+     --gold-dim es gasta en unes 25 regles de fora de l'arbre (panells, modal,
+     camps, barra de progrés) i tocar-la repintaria mitja interfície.
+     --nc-glow va en components separats per comes perquè s'injecta dins d'un
+     rgba(): rgba(var(--nc-glow), 0.15). Si li poses un #hex, el box-shadow
+     deixa de funcionar sense cap error de consola. */
+  --nc-line: var(--gold-dim);
+  --nc-line-hi: var(--gold);
+  --nc-glow: 201, 168, 76;
+  --nc-prep: var(--locked-border);
+
   width: 100%;
   height: 100%;
   background: var(--bg2);
-  border: 1px solid var(--gold-dim);
+  border: 1px solid var(--nc-line);
   border-radius: 4px;
   padding: 10px;
   cursor: pointer;
@@ -228,8 +241,22 @@ h1 {
   overflow: hidden;
 }
 .node-card:hover {
-  border-color: var(--gold);
-  box-shadow: 0 4px 20px rgba(201,168,76,0.15);
+  border-color: var(--nc-line-hi);
+  box-shadow: 0 4px 20px rgba(var(--nc-glow), 0.15);
+}
+/* Gaita i flabiol comparteixen hue: la partícula FLAB_ de l'id ja els
+   distingix. La classe ix de la columna `familia` del CSV, slugificada al
+   dibuix dels nodes («Percussió» → fam-percussio), així que donar color a una
+   família nova és afegir una regla ací i res més. */
+.node-card.fam-gaita {
+  --nc-line: #5e7a93;
+  --nc-line-hi: #8fb4cf;
+  --nc-glow: 143, 180, 207;
+  /* El mateix to que --nc-line, i no un de més apagat, perquè .preparacio
+     porta opacity: 0.45 damunt d'un fons quasi negre i això ja l'apaga tot.
+     Un blau fosc ací es composita a la mateixa lluminància que el gris de
+     «blocat» i el hue desapareix sense que es note que hi és. */
+  --nc-prep: #5e7a93;
 }
 .node-card.locked {
   background: var(--locked);
@@ -244,11 +271,11 @@ h1 {
    L'opacity ho baixa tot de colp i garanteix que cap element intern se n'isca. */
 .node-card.preparacio {
   background: transparent;
-  border: 1px dashed var(--locked-border);
+  border: 1px dashed var(--nc-prep);
   cursor: default;
   opacity: 0.45;
 }
-.node-card.preparacio:hover { border-color: var(--locked-border); box-shadow: none; }
+.node-card.preparacio:hover { border-color: var(--nc-prep); box-shadow: none; }
 .node-card.completed { background: #0d1710; border-color: var(--green-dim); }
 .node-card.completed:hover { border-color: var(--green); box-shadow: 0 4px 20px rgba(74,140,92,0.12); }
 
@@ -257,8 +284,8 @@ h1 {
   position: absolute;
   top: 3px; left: 3px;
   width: 7px; height: 7px;
-  border-top: 1px solid var(--gold-dim);
-  border-left: 1px solid var(--gold-dim);
+  border-top: 1px solid var(--nc-line);
+  border-left: 1px solid var(--nc-line);
 }
 .node-card.locked::before { border-color: var(--locked-border); }
 .node-card.preparacio::before { display: none; }
@@ -268,7 +295,7 @@ h1 {
   font-family: 'Cinzel', serif;
   font-size: 0.52rem;
   letter-spacing: 0.1em;
-  color: var(--gold-dim);
+  color: var(--nc-line);
 }
 .node-card.locked .nc-id { color: var(--locked-text); }
 .node-card.preparacio .nc-id { color: var(--locked-text); }
@@ -289,7 +316,7 @@ h1 {
 
 .nc-badge {
   font-size: 0.58rem;
-  color: var(--gold-dim);
+  color: var(--nc-line);
   font-style: italic;
   white-space: nowrap;
   overflow: hidden;
@@ -304,7 +331,7 @@ h1 {
   text-transform: uppercase;
   margin-top: 2px;
 }
-.nc-status.unlocked { color: var(--gold-dim); }
+.nc-status.unlocked { color: var(--nc-line); }
 .nc-status.locked { color: var(--locked-text); }
 .nc-status.completed { color: var(--green); }
 .nc-status.preparacio { color: var(--locked-text); font-style: italic; }
@@ -866,6 +893,19 @@ let currentNode = null;
 
 function saveState() { localStorage.setItem(STATE_KEY, JSON.stringify([...completed])); }
 function isUnlocked(node) { return node.prerequisits.every(p => completed.has(p)); }
+
+// La columna `familia` del CSV es convertix en classe CSS per a donar-li un
+// hue propi a la targeta: 'Percussió' → ' fam-percussio'. El NFD separa
+// l'accent de la lletra i \p{Diacritic} els lleva, que és el que permet
+// que el valor del CSV vaja en valencià sense haver de mantindre una taula de
+// traducció. Torna '' si la família està buida, i aleshores la targeta es
+// queda amb el daurat per defecte de .node-card.
+function famClass(familia) {
+  const slug = String(familia || '')
+    .normalize('NFD').replace(/\p{Diacritic}/gu, '')
+    .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  return slug ? ' fam-' + slug : '';
+}
 // El progrés compta només sobre els nodes PUBLICATS: els que estan «en
 // preparació» no es poden completar, així que ni sumen ni resten. El numerador
 // també es filtra, perquè `completed` pot arrossegar ids que ja no compten
@@ -1060,8 +1100,13 @@ function render() {
                 : done       ? ' completed'
                 : !unlocked  ? ' locked' : '';
 
+    // El hue de la targeta ix de la columna `familia` del CSV. Cal slugificar:
+    // «Percussió» porta accent i no val com a classe CSS. Una família sense
+    // regla pròpia al CSS es queda amb el daurat per defecte, no peta.
+    const fam = famClass(n.familia);
+
     const div = fo.append('xhtml:div')
-      .attr('class', 'node-card' + estat)
+      .attr('class', 'node-card' + estat + fam)
       .attr('xmlns', 'http://www.w3.org/1999/xhtml');
 
     // El cadenat només té sentit si el node es podrà obrir algun dia.
