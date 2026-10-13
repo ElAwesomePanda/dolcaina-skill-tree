@@ -87,7 +87,10 @@ operatiu i tot el que és massa menut per a tindre fitxa pròpia.
       màxim — 2026-09-11
 - [ ] Corregir l'errada del nom `filelaANode` → `filaANode`
 - [ ] `parseCsvRow()` no admet salts de línia dins d'un camp entrecometat
-- [ ] Suportar més de 2 materials per node (ara l'esquema del CSV en fixa 2)
+- [x] Suportar més de 2 materials per node — 2026-10-13. `materialsDeFila()`
+      detecta `mat1_`, `mat2_`, `mat3_`… des de la capçalera. Ampliar-ho és
+      afegir tres columnes al full; no es torna a tocar codi. Comprovat que
+      amb el CSV real de 22 columnes el `nodes.json` ix idèntic
 - [ ] Que `--only-nodes` també valide, no només genere
 
 ## Metrònom
@@ -119,18 +122,44 @@ operatiu i tot el que és massa menut per a tindre fitxa pròpia.
 
 - [x] `eines/midi_a_mp3.ps1`: conversió de MIDI a MP3 en lot — 2026-10-08.
       Gastat per a convertir els 29 exercicis de dolçaina d'`odst/tracks`
-- [ ] **Material de dolçaina ja convertit i a punt** (29 mp3). Els noms deixen
-      veure l'itinerari: `RN` notes · `RL` lligat · `RC` respiració ·
-      `RV` vibrato · `DC` veus · `DV` el mateix a 5 velocitats
+- [x] **Material de flabiol convertit** (29 mp3) — 2026-10-08. **No és de
+      dolçaina**: el document de progressió diu «exercicis per a flabiol».
+      `RL` longitud · `RN` notes · `RC` control de respiració · `RV` vibrato ·
+      `DC` complexitat de veus · `DV` velocitat
+- [x] **Els 27 graons de flabiol escrits i validats** — 2026-10-08, a
+      `flabiol_nodes.csv` i `.tsv`. 0 errors, 6 avisos (les insígnies)
+- [ ] **Importar els 27 nodes de flabiol al full de càlcul.** El `.tsv` és per
+      a això: en TAB, perquè les comes de les descripcions no partixquen les
+      columnes en pegar
+- [ ] **Decidir què fer amb `flabiol_nodes.csv` una vegada importat.** Esborrar-lo
+      o renombrar-lo amb data. És un CSV de nodes congelat, sense
+      `discourse_topic_id`, i amb el mateix format que el bo: exactament la
+      situació que va provocar els 14 errors 422 de DESIGN §7.11
+- [ ] **Crear les 6 insígnies a Discourse**: `GiT_FLAB_Ale_Llarg`,
+      `GiT_FLAB_Registre`, `GiT_FLAB_Respiracio`, `GiT_FLAB_Vibrato`,
+      `GiT_FLAB_Veus`, `GiT_FLAB_Dits_Solts`, i apuntar-ne l'id al full.
+      **Han d'estar-hi abans de publicar els nodes**, o el validador para
+- [ ] **Penjar els 29 mp3 a Drive i omplir `matN_tipus` + `matN_url`.** Les tres
+      columnes alhora: el tipus sense URL és error. I per `<iframe>` de
+      `/preview`, no per `<audio>` (DESIGN §7.9)
+- [ ] `FLAB_D_C_05` parla de tres segones veus alternatives (A, B i variació) i
+      només n'hi ha mp3 de dues. El límit de materials ja no és un obstacle
+      (2026-10-13): si apareix la variació, són tres columnes més al full
+- [ ] Repassar els noms de `matN_nom`: ara porten el nom del fitxer
+      (`RL1_un_compas.mp3`), que és el que es pinta **en negreta** al tema del
+      fòrum
 
 - [ ] Definir les fites de la branca de **dolçaina** — `M-11`.
       **Decisió pendent abans de crear cap node** (2026-09-24, l'autor pregunta
       als alumnes qui va a gaita i qui a tabal): si els itineraris se separen,
       cal decidir si l'arbre té dues branques grans des de `GiT_INICI` i, sobre
       tot, **què compta la barra de progrés** per a qui només fa un instrument
-- [ ] Afegir material `pdf` (partitures) — `M-12`
-- [ ] Afegir material `mp3` (pistes d'acompanyament) amb reproductor incrustat — `M-12`
-- [ ] Publicar o eliminar els 36 nodes `valid=FALSE`
+- [ ] Afegir material `pdf` (partitures) — `M-12`. Cap node en té encara.
+      La primera candidata és `que_es_lestiu_per_a_mi_exercicis.pdf`
+- [x] Afegir material `mp3` amb reproductor incrustat — 2026-09-24, 20 materials
+      `mp3` al CSV — `M-12`
+- [x] Publicar o eliminar els nodes `valid=FALSE` — 2026-09-24: els 111 del CSV
+      estan tots actius i publicats
 - [ ] Reenviar a Discourse els 15 nodes amb `force_update=TRUE`
 - [ ] `GiT_INICI` no té cap material: afegir-hi una benvinguda en vídeo
 
@@ -199,6 +228,15 @@ operatiu i tot el que és massa menut per a tindre fitxa pròpia.
 - [x] **Prova de punta a punta amb un alumne real** — 2026-09-24: feta, i amb
       gent poc tecnològica. Registre → completar branca → reclamar insígnia →
       sincronitzar. **El nivell 2 de persistència ja no és teòric** — `M-20`
+- [x] **Hue per família verificat al navegador** — 2026-10-08. 138 targetes amb
+      els 27 de flabiol carregats, classes `fam-*` correctes, variables `--nc-*`
+      resoltes, lluminàncies compositades mesurades, cap error de consola
+- [ ] **Provar el clic del metrònom amb la dolçaina sonant.** És el motiu pel
+      qual es va refer i encara no s'ha comprovat al taller
+- [ ] **Confirmar d'oïda les agrupacions de 7/8 i 11/16.** Les que hi ha ara
+      (2+2+3 i 3+2+2; 2+2+3+2+2 i 3+2+2+2+2) són una suposició
+- [ ] Veure el hue damunt d'un node de gaita **desbloquejat**. Ara tots estan en
+      preparació, així que només s'ha vist la vora discontínua
 - [ ] Provar en Firefox i en Safari (`foreignObject` sol donar sorpreses)
 - [ ] Provar la publicació de veritat (branca ERM, 14 temes) — **en curs
       2026-09-11**

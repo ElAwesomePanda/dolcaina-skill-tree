@@ -81,24 +81,28 @@ Objectiu: que un alumne amb un mòbil el puga fer servir sense frustrar-se.
 
 Objectiu: validar el bucle sencer de gamificació abans d'escalar-lo.
 
-- [ ] **M-12** Afegir material real de tipus `pdf` i `mp3` a nodes existents
-      (reproductor d'àudio incrustat al modal)
-- [ ] Publicar els 36 nodes `valid=FALSE` que estiguen realment llestos, o
-      llevar-los del CSV si no ho estan
-- [ ] **M-20** Prova de punta a punta amb un alumne real: registre a L'Ardada →
-      completar una branca → publicar al topic → el moderador atorga el badge →
-      sincronitzar a l'arbre
-- [ ] **M-11** Branca de dolçaina: **primer les fites**, després els nodes, i
-      només d'una branca
+- [x] **M-12** Afegir material real de tipus `mp3` a nodes existents — 2026-09-24.
+      20 materials `mp3` al CSV. Van per `<iframe>` de Drive, **no** per
+      `<audio>` (DESIGN §7.9). De `pdf` encara no n'hi ha cap.
+- [x] Publicar els nodes `valid=FALSE` que estigueren llestos — 2026-09-24.
+      Els 111 nodes del CSV estan tots actius i tots publicats.
+- [x] **M-20** Prova de punta a punta — 2026-09-24. Feta per l'autor i també
+      amb gent poc tecnològica del taller: registre → completar → badge →
+      sincronitzar.
+- [ ] **M-11** Primera branca d'instrument de vent: **flabiol**, no dolçaina
+      (vegeu el registre de canvis de 2026-10-08). 27 graons escrits i validats
+      a `flabiol_nodes.csv`; falta importar-los al full, crear les 6 insígnies
+      `GiT_FLAB_*` i penjar els mp3.
 
 > ### ⛳ Punt de control 3
-> - Un alumne que no és l'autor ha completat una branca sencera i el badge s'ha
->   sincronitzat correctament a l'arbre en un dispositiu diferent.
-> - La branca de dolçaina té les fites definides i **una** subbranca publicada i
->   provada.
+> - ~~Un alumne que no és l'autor ha completat una branca sencera i el badge
+>   s'ha sincronitzat correctament.~~ **Passat el 2026-09-24.**
+> - La branca de flabiol té les fites definides i **una** subbranca publicada i
+>   provada. ← *pendent*
 >
-> **No generar la resta de la branca de dolçaina fins que aquest punt de control
-> passe.** El motiu és empíric: ja hi ha 36 nodes creats i mai validats.
+> **No generar més branques d'instrument fins que aquest punt de control passe.**
+> El motiu és empíric: ja va passar una vegada que hi havia 36 nodes creats i
+> mai validats.
 
 ---
 
@@ -106,7 +110,9 @@ Objectiu: validar el bucle sencer de gamificació abans d'escalar-lo.
 
 Objectiu: qualitat de vida, una vegada el contingut siga estable.
 
-- [ ] **M-07** Filtres per família i etiqueta (necessari en superar els ~100 nodes)
+- [ ] **M-07** Filtres per família i etiqueta. **El llindar ja s'ha superat**:
+      111 nodes publicats i 24 etiquetes en ús. La columna `familia` ja té ús
+      visual (el hue, DESIGN §3.4), que és mitja passa cap ací.
 - [ ] **M-10** Metrònom lligat al node (botó «Practicar» amb el temporitzador posat)
 - [ ] **M-09** Decidir sobre `badgeSVG()`: *tiers* visuals o esborrar-lo
 - [ ] **M-13** Llevar l'exportació manual del CSV
@@ -132,8 +138,8 @@ Objectiu: qualitat de vida, una vegada el contingut siga estable.
 
 Decisions preses per a **no** fer, i el motiu:
 
-- **Flabiol.** El disseny original el menciona, però amb la dolçaina encara
-  sense començar no té sentit obrir un tercer instrument.
+- ~~**Flabiol.**~~ **Ja no està fora d'abast des del 2026-10-08**: és la primera
+  branca de vent que es fa, per davant de la dolçaina. Vegeu el registre.
 - **Compte d'usuari propi.** L'autenticació la fa Discourse. Duplicar-la seria
   mantindre dos sistemes d'identitat per a un taller de poble.
 - **Progrés per alumne visible per al professor.** Implicaria emmagatzematge de
@@ -146,6 +152,28 @@ Decisions preses per a **no** fer, i el motiu:
 
 ## Registre de canvis de pla
 
+- **2026-10-08** — **El flabiol passa de «fora d'abast» a ser la primera branca
+  de vent**, per davant de la dolçaina. El motiu no és de planificació sinó de
+  material: ja existia una progressió escrita de respiració i digitació sobre
+  «Què és l'estiu per a mi?» i 29 mp3 sintetitzats dels exercicis, així que la
+  branca es podia muntar sencera en una tarda. La dolçaina continua sense
+  començar.
+  - Els 27 graons queden a `flabiol_nodes.csv` amb `valid=FALSE`: entren a
+    l'arbre com a «en preparació», visibles i no clicables.
+  - **Gaita i flabiol comparteixen `familia=Gaita`**; la partícula `FLAB_` de
+    l'id és el que els distingeix. Es va descartar una família pròpia per a no
+    partir el color de la branca de vent en dos.
+  - S'afegeix el hue per família a les targetes (DESIGN §3.4). No estava a cap
+    fase: surt de la necessitat pràctica de distingir dos instruments en el
+    mateix arbre.
+  - La barra de progrés **continua sent global sobre tots els nodes publicats**,
+    sense mirar la família. Amb dos instruments això vol dir que el percentatge
+    ja no significa gran cosa per a un alumne concret. **Decisió pendent**, i
+    és previ a M-07.
+- **2026-09-24** — Punt de control 3 passat en la part de badges: prova de punta
+  a punta feta amb gent del taller, no només per l'autor. Es desamaga la
+  lateralitat i es publiquen tots els nodes pendents (111 al CSV, tots actius i
+  publicats).
 - **2026-09-10** — Creació d'aquest document a partir d'`originaldesign.md` i
   d'una revisió completa del codi. Diferències respecte de la llista de
   «pròxims passos» original:

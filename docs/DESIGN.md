@@ -51,7 +51,7 @@
 
 | Fitxer | Versionat | Paper |
 | --- | --- | --- |
-| `index.html` | sí | Aplicació sencera: HTML + CSS + JS en un fitxer (1583 línies) |
+| `index.html` | sí | Aplicació sencera: HTML + CSS + JS en un fitxer (1883 línies) |
 | `nodes.json` | sí | Dades generades (els nodes actius) que carrega `index.html` |
 | `GiT_nodes.csv` | **no** | Font de veritat de les dades. Viu al disc de l'autor |
 | `GiT_nodes.exemple.csv` | sí | 4 files de mostra, per a entendre l'esquema |
@@ -83,7 +83,7 @@ Tipografies: `Cinzel` (400/600/700) i `Crimson Pro` via Google Fonts (`@import`)
 
 ## 2. Forma de les dades
 
-### 2.1 Capçalera del CSV (22 columnes)
+### 2.1 Capçalera del CSV (22 columnes al full actual)
 
 ```
 id,actiu,valid,force_update,familia,tags,titol,descripcio,prerequisits,es_fita,
@@ -99,9 +99,19 @@ el 2026-09-11 en segona posició, i res es va trencar tret de la comprovació de
   Qualsevol altra cosa (inclòs buit) es tracta com a fals.
 - `tags` i `prerequisits` són llistes separades per comes **dins d'un camp
   entrecometat** (`"A,B"`), perquè el separador del CSV també és la coma.
-- **Màxim 2 materials per node** (`mat1_*`, `mat2_*`). És una limitació dura de
-  l'esquema, no una convenció.
-- El fitxer té **1000 línies** però només **73 tenen `id`**. La resta són files
+- **Els materials no tenen límit** des del 2026-10-13. El full en porta dos
+  (`mat1_*`, `mat2_*`), però `materialsDeFila(row)` recorre `mat1_`, `mat2_`,
+  `mat3_`… i s'atura al primer índex del qual **no existeix cap** de les tres
+  columnes. Afegir una ranura és afegir `matN_tipus`, `matN_nom` i `matN_url` al
+  full; **no es toca codi**. Funciona perquè `parseCsv()` construeix la fila com
+  un objecte amb les claus de la capçalera: una columna que no existeix dona
+  `undefined` i una que existeix buida dona `''`, i eixa diferència és tota la
+  detecció.
+- `materialsDeFila()` torna **també les ranures buides**, amb el seu índex `i`,
+  perquè el validador necessita poder dir «mat3». Qui vulga només els materials
+  reals ha de filtrar per `tipus`, com fan `generarCos()` i `filelaANode()`.
+  `filelaANode()` lleva la `i` abans d'escriure a `nodes.json`.
+- El fitxer té **1000 línies** però només **111 tenen `id`**. La resta són files
   buides d'una exportació de Google Sheets; `rows.filter(r => r.id)` les descarta.
 
 ### 2.2 Node a `nodes.json`
@@ -136,24 +146,35 @@ el 2026-09-11 en segona posició, i res es va trencar tret de la comprovació de
   camp es continua comportant com abans (tots completables).
 - `material` sempre és un array (pot ser buit).
 
-### 2.3 Estat de les dades (2026-09-24)
+### 2.3 Estat de les dades (2026-10-08)
 
-- **91 nodes al CSV**, dels quals **43 actius** (els que es dibuixen) i
-  **48 amagats** amb `actiu=FALSE`.
+- **111 nodes al CSV**, **tots actius i tots publicats**. Cap «en preparació».
+  **12 fites.**
 
-  | Branca | Prefix | Al CSV | Actius |
-  | --- | --- | --- | --- |
-  | Arrel | `GiT_INICI` | 1 | 1 |
-  | Tocs bàsics | `PERC_PL`, `PERC_DE`, `PERC_DDEE`, `PERC_DEDx`, `PERC_PLD`, `PERC_PLE` | 24 | 24 |
-  | Lateralitat (Lat. 001-011) | `PERC_LAT` | 48 | **0** |
-  | St. Antoni L'ermità | `PERC_ERM` | 14 | 14 |
-  | Nit de Llampecs | `PERC_LLAM` | 3 | 3 |
-  | Dimonis de Massalfassar | `PERC_DIM` | 1 | 1 |
+  | Branca | Prefix | Al CSV | Actius | Publicats |
+  | --- | --- | --- | --- | --- |
+  | Arrel | `GiT_INICI` | 1 | 1 | 1 |
+  | Tocs bàsics | `PERC_PL`, `PERC_DE`, `PERC_DDEE`, `PERC_DED`, `PERC_PLD`, `PERC_PLE` | 24 | 24 | 24 |
+  | Lateralitat (Lat. 001-011) | `PERC_LAT` | 48 | 48 | 48 |
+  | St. Antoni L'ermità | `PERC_ERM` | 14 | 14 | 14 |
+  | 6x8 bàsics i caminet | `PERC_6x8_BASICS`, `PERC_6x8_CAMINET` | 18 | 18 | 18 |
+  | Nit de Llampecs | `PERC_LLAM` | 3 | 3 | 3 |
+  | Matxa | `PERC_MATX` | 2 | 2 | 2 |
+  | Dimonis de Massalfassar | `PERC_DIM` | 1 | 1 | 1 |
 
-- Els 43 actius estan **tots publicats**; cap «en preparació». 11 fites al CSV.
-- La lateralitat està amagada des del 2026-09-11 per a centrar les sessions del
-  taller. Es desfà posant `actiu` a `TRUE`. **És una configuració temporal**:
-  no la prengues com l'estat definitiu del projecte.
+- La lateralitat **ja no està amagada**: va estar-ho del 2026-09-11 al
+  2026-09-24 per a centrar les sessions del taller. El mecanisme (`actiu=FALSE`)
+  continua existint i no s'ha llevat.
+- Famílies en ús: `General` (1) i `Percussió` (110). La columna admet qualsevol
+  valor i el dibuix en treu el hue de la targeta (§3.4).
+- Fora del CSV real, a `flabiol_nodes.csv` i `flabiol_nodes.tsv` hi ha **27
+  nodes de flabiol** preparats i validats però **encara no importats al full**:
+  la progressió de respiració i digitació de «Què és l'estiu per a mi?»
+  (`FLAB_R_L/N/C/V_*` i `FLAB_D_C/V_*`), amb `familia=Gaita`, `valid=FALSE` i
+  sense `discourse_topic_id`. Porten el nom del mp3 a `mat1_nom`/`mat2_nom`
+  **amb el tipus i la URL buits a posta**: amb `matN_tipus` buit el validador
+  se'ls salta i `filelaANode()` els descarta, així que no es publiquen ni es
+  dibuixen fins que algú òmpliga les tres columnes alhora.
 - El projecte ha passat d'exercicis solts a **peces del repertori**: ERM, LLAM i
   DIM són obres, no patrons. Les peces pengen de `GiT_INICI` o d'una altra peça.
 - Arrel única: `GiT_INICI`.
@@ -162,10 +183,11 @@ el 2026-09-11 en segona posició, i res es va trencar tret de la comprovació de
   directament de `GiT_INICI`, per això amagar la resta no trenca el graf.
 - **Cap node inassolible.** Lat. 009 es va arreglar el 2026-09-11 penjant
   `PERC_LAT_11_21_41_1` de `PERC_LAT_11_12_11_21_4`.
-- Tipus de material presents: `video`, `image` i `mp3` (14 nodes d'ERM).
+- Tipus de material presents: `video` (75), `image` (55) i `mp3` (20).
 - Cap prerequisit penjant. Cap node sense descripció. Només `GiT_INICI` sense material.
-- Etiquetes en ús: `Taller, Benvinguda, Tabal, Beat, Mètronom, Resistència, D-E,
-  DD-EE, DEDx, PL-D, Combinació, PL-E, Lateralitat, 1/2, 1/4`.
+- Etiquetes en ús (24): `Taller, Benvinguda, Tabal, Beat, Mètronom, Resistència,
+  D-E, DD-EE, DEDx, PL-D, Combinació, PL-E, Lateralitat, 1/2, 1/4, Peça, Ermità,
+  Redoble, Llampecs, Dimonis, Volta, 6x8, 3x4, Dinàmiques`.
 
 ---
 
@@ -241,13 +263,42 @@ Acaba centrant la vista sobre la mitjana x dels nodes sense prerequisits, a
 - Classes d'estat de la targeta: `.node-card`, `+ .completed`, `+ .locked`,
   `+ .preparacio`. Es decideixen amb aquest ordre de prioritat:
   `preparacio → completed → locked → (res, és a dir disponible)`.
+- A més de l'estat, la targeta porta **una classe de família**: `fam-general`,
+  `fam-percussio`, `fam-gaita`… La genera `famClass(familia)` → `' fam-<slug>'`
+  o `''` si la família està buida. El slug fa `normalize('NFD')`, lleva els
+  diacrítics amb `/\p{Diacritic}/gu`, passa a minúscules i canvia tot el que no
+  és `[a-z0-9]` per `-`. Provat: `Percussió`→`fam-percussio`,
+  `Dolçaina i Tabalet`→`fam-dolcaina-i-tabalet`, `''`/`null`/`undefined`→`''`.
 - Textos de `.nc-status`: `En preparació` · `Completat` · `Disponible` ·
   `Bloquejat`.
 - Contingut de la targeta: `.nc-id`, `.nc-title`, `.nc-badge`, `.nc-status`,
   més `.nc-lock` (🔒) o `.nc-check` (✓). **El cadenat no es pinta als nodes en
   preparació**: allà el que bloqueja no és el progrés de l'alumne.
-- **`n.tags` i `n.familia` no es pinten mai a la targeta.** `familia` només
-  apareix al modal.
+- **`n.tags` no es pinta mai a la targeta.** `familia` no es pinta com a text,
+  però **sí que decideix el color** de la targeta, i apareix escrita al modal.
+
+**El hue per família.** Les quatre variables viuen dins de `.node-card`, **no a
+`:root`**, i això no és estil sinó necessitat: `--gold-dim` es gasta en unes 25
+regles de fora de l'arbre (panells, modal, camps, barra de progrés) i canviar-la
+repintaria mitja interfície.
+
+| Variable | Per defecte (`.node-card`) | `.node-card.fam-gaita` | On es gasta |
+| --- | --- | --- | --- |
+| `--nc-line` | `var(--gold-dim)` `#7a6430` | `#5e7a93` | vora, `::before`, `.nc-id`, `.nc-badge`, `.nc-status.unlocked` |
+| `--nc-line-hi` | `var(--gold)` `#c9a84c` | `#8fb4cf` | `:hover` |
+| `--nc-glow` | `201, 168, 76` | `143, 180, 207` | `box-shadow` del `:hover` |
+| `--nc-prep` | `var(--locked-border)` `#2a2520` | `#5e7a93` | vora discontínua de `.preparacio` |
+
+- `--nc-glow` va en **components separats per comes**, no en `#hex`, perquè
+  s'injecta dins d'un `rgba()`: `rgba(var(--nc-glow), 0.15)`. Amb un `#hex` el
+  `box-shadow` desapareix i **no ix cap error de consola**. Comprovat a la
+  pàgina: resol a `rgba(143, 180, 207, 0.15)`, idèntic al mateix valor escrit
+  sense `var()`.
+- `.locked` i `.completed` **no** agafen el hue: sobreescriuen vora i fons amb
+  `--locked-*` i el verd. És deliberat — «fet» i «blocat» han de voler dir el
+  mateix a tot l'arbre, siga quin siga l'instrument.
+- Donar color a una família nova és **afegir una regla de CSS i res més**. Una
+  família sense regla pròpia es queda amb el daurat; no peta.
 
 ### 3.5 Zoom i navegació
 
@@ -573,6 +624,12 @@ Scripts d'npm: `validate`, `dry`, `nodes`, `publish`, `serve`.
   dobles i escapament `""`. **No suporta salts de línia dins d'un camp.**
 - `serializeCsv(rows, headers)` → `string`. Entrecometa si el valor conté `,`,
   `"` o `\n`. Acaba amb `\n`.
+- `materialsDeFila(row)` → `Array<{i, tipus, nom, url}>`. Recorre `mat1_`,
+  `mat2_`, `mat3_`… i para al primer índex del qual no existeix **cap** de les
+  tres columnes. `i` és el número de la ranura, per als missatges del validador.
+  **Torna també les ranures buides**; filtra per `tipus` qui vulga els materials
+  reals. Els seus tres consumidors són `generarCos()`, `filelaANode()` i el
+  bucle de materials del validador.
 
 ### 4.2 Discourse
 
@@ -1018,6 +1075,36 @@ sentit quan ja véns del full. Va passar el 2026-09-24 amb
 `PERC_DIM_SENCERA_01`: el tema 1387 estava al CSV local i a `ids_nous.csv`,
 però mai es va arribar a enganxar al full.
 
+### 7.12 Un color apagat a `.preparacio` desapareix (2026-10-08)
+
+`.node-card.preparacio` porta `opacity: 0.45` damunt d'un fons `--bg: #0e0c08`,
+que és quasi negre. Això vol dir que **qualsevol color que hi poses es
+composita cap avall**, i la intuïció de triar un to apagat perquè l'estat quede
+discret fa justament que el color deixe d'existir.
+
+El primer `--nc-prep` de gaita va ser `#3a4a57`, un blau fosc. Compositat:
+
+| | vora efectiva | lluminància |
+| --- | --- | --- |
+| percussió **blocat** (opacitat 1) | `42,37,32` | 37,7 |
+| gaita **en preparació** amb `#3a4a57` | `40,39,40` | 38,9 |
+| gaita **en preparació** amb `#5e7a93` | `50,62,71` | **60,1** |
+| disponible, daurat (opacitat 1) | `122,100,48` | 100,9 |
+
+Amb `#3a4a57` la diferència contra el gris de «blocat» era d'**1,2 punts de
+lluminància**: el hue hi era, les variables resolien correctament i a la
+pantalla no es veia res. No hi ha cap error ni cap avís que ho delate; l'única
+manera de detectar-ho és mesurar.
+
+Per això `--nc-prep` val **el mateix to que `--nc-line`** i no un de més fosc.
+Si algun dia algú el «corregeix» perquè li sembla massa cridaner, que sàpiga
+que per davall d'uns 45 de lluminància compositada el color es fon amb l'estat
+blocat.
+
+Contrapartida acceptada: la vora d'«en preparació» és ara més clara que la de
+«blocat», encara que la targeta sencera continua sent la més apagada (fons
+transparent, text en `--locked-text`, vora discontínua).
+
 ---
 
 ## 8. «Sembla un bug, però és deliberat»
@@ -1080,30 +1167,74 @@ però mai es va arribar a enganxar al full.
 - Discourse envia CORS directe per a l'origin de GitHub Pages (§7.5).
 - La clau d'API filtrada ja no apareix a `/admin/api/keys`: està revocada.
 
+### Verificat el 2026-09-24 (per l'autor, al taller)
+
+Açò ho va confirmar l'autor després d'usar-ho de veritat, no una revisió de codi:
+
+- **Mòbil provat i funcionant.** Continua sense haver-hi cap `@media` al CSS; el
+  que falla per mòbil, quan falle, no serà per falta de proves sinó de disseny
+  responsiu.
+- **Flux complet de badges provat de punta a punta**, i no només per l'autor:
+  també amb gent poc tecnològica del taller. Això tanca el buit que estava
+  marcat ací des del 2026-09-11.
+- Els dos vídeos de Nit de Llampecs enganxats i visibles al modal.
+- Escriptura real contra Discourse executada diverses vegades (publicació dels
+  nodes de lateralitat, amb els 429 de §4.2).
+
+### Verificat el 2026-10-08 (executat al navegador)
+
+- `famClass()` provada amb 6 entrades: `Percussió`, `Gaita`, `General`,
+  `Dolçaina i Tabalet`, `''` i `null`. Totes donen el slug esperat.
+- L'arbre carregat amb els 27 nodes de flabiol dins d'un `nodes.json` de prova:
+  138 targetes, `fam-gaita` 27 · `fam-percussio` 110 · `fam-general` 1. Cap
+  error de consola.
+- Les variables `--nc-*` resolen a la pàgina; el `rgba(var(--nc-glow), 0.15)`
+  dona el mateix resultat que el literal (§3.4).
+- Lluminàncies compositades mesurades a la pàgina (§7.12).
+- Camí daurat sense regressió: l'arrel i els nodes de percussió continuen donant
+  exactament `#7a6430`.
+- `flabiol_nodes.csv` validat concatenat amb el CSV real **en una còpia a part**:
+  0 errors, 6 avisos (les 6 insígnies per crear), 138 nodes.
+
 ### **No** verificat
 
-- **El flux complet de badges de punta a punta**: ningú ha completat una branca
-  i reclamat la insígnia de veritat. El botó «Sincronitzar fites» no s'ha premut
-  mai amb un usuari real des de la pàgina.
-- No s'ha fet cap crida real d'escriptura a Discourse ni a GitHub en aquesta
-  revisió (només `--dry-run` i `--only-nodes`).
-- El metrònom **no s'ha provat**, ni en escriptori ni en mòbil.
-- El modal **no s'ha obert** en aquesta revisió: ni vídeo, ni imatge de Drive,
-  ni el botó de completar.
-- Només s'ha provat en el navegador de la vista prèvia. Ni Firefox, ni Safari,
-  ni cap mòbil real.
+- El metrònom **no s'ha provat amb la dolçaina sonant**: no sabem si el clic nou
+  travessa el soroll real del taller, que era el motiu de refer-lo.
+- Les agrupacions de **7/8 i 11/16** són una suposició. L'autor havia de
+  confirmar d'oïda quina gasten els balls i l'havanera.
+- Els 27 nodes de flabiol **no s'han importat al full** ni publicat. Les 6
+  insígnies de `GiT_FLAB_*` **no existeixen** a Discourse.
+- El hue de família **no s'ha vist mai damunt d'un node desbloquejat**: tots els
+  de gaita estan en preparació, així que només s'ha comprovat la vora
+  discontínua. El `:hover` i el `--nc-line-hi` de `fam-gaita` estan verificats
+  per càlcul, no per ull.
+- Els mp3 de flabiol **no tenen URL**: no s'ha provat que cap d'ells sone al
+  modal.
+- Ni Firefox, ni Safari. Només el navegador de la vista prèvia i el mòbil de
+  l'autor.
 - No hi ha cap prova automatitzada al projecte.
 
 ### Deute
 
-- Zero `@media` al CSS: **no hi ha cap adaptació a mòbil**.
+- Zero `@media` al CSS: **no hi ha cap adaptació a mòbil**. L'autor l'ha provat
+  i li funciona, però això és sort de l'arbre amb zoom, no disseny responsiu.
 - Zero atributs `aria-*` o `tabindex`: l'arbre no és navegable per teclat ni
   utilitzable amb lector de pantalla.
-- `familia` i `tags` es guarden però no serveixen per a res a la interfície.
+- `tags` es guarda però no serveix per a res a la interfície. `familia` ja sí
+  (el hue, §3.4), però continua sense haver-hi cap filtre.
+- Amb 111 nodes publicats, l'arbre ha passat el llindar de ~100 on el ROADMAP
+  deia que faria falta filtrar (M-07). Encara no s'ha fet.
 - `badgeSVG()` continua sent codi mort (§8).
 - `render()` continua reiniciant el zoom (§0, invariant 7).
 - `getDescendants()` continua sense protecció de cicles.
 - `syncDiscourse()` no passa el `username` per `encodeURIComponent`.
-- Màxim de 2 materials per node, imposat per l'esquema del CSV.
+- ~~Màxim de 2 materials per node.~~ **Llevat el 2026-10-13** (§2.1). El full
+  encara en porta dos, però ampliar-lo ja no toca codi. El cas que ho va
+  motivar: `FLAB_D_C_05` parla de tres segones veus alternatives (A, B i
+  variació) i només hi cabien dos.
 - El CSV real té 927 files buides d'una exportació de Google Sheets.
-- No hi ha branca de dolçaina ni de flabiol: 72 de 73 nodes són de percussió.
+- **110 dels 111 nodes publicats són de percussió.** Els 27 de flabiol estan
+  escrits i validats però fora del full. De dolçaina no n'hi ha cap.
+- **El camí de tornada del `discourse_topic_id` continua sent manual.** La
+  connexió amb el full és de només lectura, i és la causa d'arrel de §7.11 i de
+  l'incident de `PERC_DIM_SENCERA_01`. L'arreglament de veritat és M-13.

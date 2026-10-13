@@ -49,6 +49,33 @@ function parseCsv(text) {
     });
 }
 
+// Els materials d'una fila: mat1_*, mat2_*, mat3_*… sense límit escrit enlloc.
+//
+// parseCsv() construeix cada fila com un objecte amb les claus de la capçalera,
+// així que una columna que no existeix dona `undefined` i una que existeix
+// buida dona `''`. Eixa diferència és el que permet saber on s'acaba la sèrie
+// sense configurar res: s'atura al primer índex del qual no existeix CAP de
+// les tres columnes.
+//
+// Conseqüència pràctica: ampliar el nombre de materials és afegir
+// `matN_tipus`, `matN_nom` i `matN_url` al full i res més. No es toca codi.
+//
+// Torna SEMPRE les ranures declarades, també les buides, perquè el validador
+// necessita saber l'índex de cadascuna per als seus missatges. Qui només vulga
+// els materials reals ha de filtrar per `tipus`, com fan generarCos() i
+// filelaANode().
+function materialsDeFila(row) {
+  const out = [];
+  for (let i = 1; ; i++) {
+    const tipus = row[`mat${i}_tipus`];
+    const nom   = row[`mat${i}_nom`];
+    const url   = row[`mat${i}_url`];
+    if (tipus === undefined && nom === undefined && url === undefined) break;
+    out.push({ i, tipus, nom, url });
+  }
+  return out;
+}
+
 function parseCsvRow(line) {
   const result = [];
   let current = '';
@@ -101,10 +128,7 @@ function generarCos(row) {
   if (row.tags)        lines.push(`**Etiquetes:** ${row.tags.split(',').map(t => `\`${t.trim()}\``).join(' ')}`);
   if (row.prerequisits) lines.push(`**Prerequisits:** ${row.prerequisits.split(',').map(p => `\`${p.trim()}\``).join(', ')}`);
 
-  const materials = [
-    { tipus: row.mat1_tipus, nom: row.mat1_nom, url: row.mat1_url },
-    { tipus: row.mat2_tipus, nom: row.mat2_nom, url: row.mat2_url },
-  ].filter(m => m.tipus);
+  const materials = materialsDeFila(row).filter(m => m.tipus);
 
   if (materials.length > 0) {
     lines.push('');
@@ -245,11 +269,11 @@ function filelaANode(row) {
   // Un node sense tema al fòrum es dibuixa «en preparació»: visible, però no
   // es pot completar ni compta per al progrés. Vegeu esPublicat().
   node.publicat = esPublicat(row);
-  const materials = [
-    { tipus: row.mat1_tipus, nom: row.mat1_nom, url: row.mat1_url },
-    { tipus: row.mat2_tipus, nom: row.mat2_nom, url: row.mat2_url },
-  ].filter(m => m.tipus);
-  node.material = materials;
+  // Es lleva `i` (l'índex de la ranura al CSV): a nodes.json no fa cap servici
+  // i index.html no el mira. La llista va en l'ordre de les columnes.
+  node.material = materialsDeFila(row)
+    .filter(m => m.tipus)
+    .map(({ tipus, nom, url }) => ({ tipus, nom, url }));
   return node;
 }
 
@@ -451,9 +475,9 @@ function validar(rows) {
       }
     }
 
-    // materials
-    for (const i of [1, 2]) {
-      const tipus = r[`mat${i}_tipus`];
+    // materials: tantes ranures com en declare la capçalera (vegeu
+    // materialsDeFila). Amb mat1 i mat2 a soles es comporta igual que abans.
+    for (const { i, tipus } of materialsDeFila(r)) {
       if (!tipus) continue;
       if (!TIPUS_MATERIAL.includes(tipus)) {
         const parescut = idMesParegut(tipus, TIPUS_MATERIAL);
