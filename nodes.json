@@ -2902,7 +2902,14 @@
     "prerequisits": [
       "PERC_6x8_CAMINET_06"
     ],
-    "es_fita": false,
+    "es_fita": true,
+    "fita": {
+      "nom": "6x8=48",
+      "descripcio": "Ja comprens el compàs de 6x8",
+      "icona": "",
+      "discourse_badge_id": 124,
+      "discourse_badge_name": ""
+    },
     "discourse_topic_id": 1487,
     "publicat": true,
     "material": [
@@ -2950,7 +2957,14 @@
     "prerequisits": [
       "PERC_6x8_CAMINET_05"
     ],
-    "es_fita": false,
+    "es_fita": true,
+    "fita": {
+      "nom": "Primera dinàmica",
+      "descripcio": "Ja comences a captar les dinàmiques.",
+      "icona": "",
+      "discourse_badge_id": 125,
+      "discourse_badge_name": "PERC_6x8_DINAMICA_01"
+    },
     "discourse_topic_id": 1495,
     "publicat": true,
     "material": [
