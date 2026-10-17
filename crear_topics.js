@@ -473,6 +473,26 @@ function validar(rows) {
                `${com} No corre pressa, però ha d'estar-hi ABANS de publicar-lo.`);
         }
       }
+    } else {
+      // El cas contrari: les columnes de fita omplides però es_fita=FALSE.
+      // `es_fita` és l'interruptor i les altres cinc columnes no es miren si
+      // està apagat: filelaANode() no construeix l'objecte `fita`, generarCos()
+      // no escriu la secció al tema, i la insígnia es queda al fòrum sense que
+      // ningú la puga reclamar mai.
+      //
+      // No és error perquè pot ser una fita a mig preparar, i perquè omplir
+      // les columnes abans d'activar-la és una manera raonable de treballar.
+      // Però no deixar cap rastre tampoc valia: va passar amb FLAB_LAM_08 el
+      // 2026-10-17, amb les cinc columnes correctes i la insígnia 134 creada
+      // al fòrum, i no ho va detectar ni el validador ni insignies.mjs.
+      const omplides = ['fita_nom', 'fita_descripcio', 'fita_icona',
+                        'discourse_badge_name', 'discourse_badge_id']
+        .filter(c => r[c]);
+      if (omplides.length) {
+        avis(`${r.id}: té ${omplides.join(', ')} però es_fita no és TRUE`,
+             `Posa es_fita=TRUE si havia de ser fita; si no, buida eixes columnes. ` +
+             `Tal com està, la insígnia no s'escriu al tema ni es pot guanyar.`);
+      }
     }
 
     // materials: tantes ranures com en declare la capçalera (vegeu

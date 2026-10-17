@@ -225,10 +225,22 @@ h1 {
   --nc-line-hi: var(--gold);
   --nc-glow: 201, 168, 76;
   --nc-prep: var(--locked-border);
+  /* El gris de «blocat», per família. La gràcia és que els valors tenen la
+     MATEIXA lluminància (37,7) i només canvien de temperatura, així que un
+     node blocat continua sent igual de callat que sempre i no competeix amb
+     els disponibles, però es veu de quina branca és. Fa falta perquè quan tot
+     està publicat i l'alumne comença de zero, la immensa majoria de nodes
+     estan blocats: sense això, l'arbre sencer és d'un sol color. */
+  --nc-locked: var(--locked-border);
+  /* Els fons, també per família i també a igual lluminància. La vora és 1px i
+     es veu poc; el fons és tota la targeta, i és el que de veritat fa que una
+     branca es distingisca de l'altra d'un colp d'ull. */
+  --nc-bg: var(--bg2);
+  --nc-bg-locked: var(--locked);
 
   width: 100%;
   height: 100%;
-  background: var(--bg2);
+  background: var(--nc-bg);
   border: 1px solid var(--nc-line);
   border-radius: 4px;
   padding: 10px;
@@ -244,14 +256,32 @@ h1 {
   border-color: var(--nc-line-hi);
   box-shadow: 0 4px 20px rgba(var(--nc-glow), 0.15);
 }
-/* Gaita i flabiol comparteixen hue: la partícula FLAB_ de l'id ja els
-   distingix. La classe ix de la columna `familia` del CSV, slugificada al
-   dibuix dels nodes («Percussió» → fam-percussio), així que donar color a una
-   família nova és afegir una regla ací i res més. */
-.node-card.fam-gaita {
+/* El hue va per INSTRUMENT, no per família: el full en té cinc i no són cinc
+   instruments. `Gaita` i `Flabiol` són vent i van blaus; `Percussió` i `Tabal`
+   són el mateix instrument i es queden amb el daurat per defecte, que per això
+   no tenen regla pròpia ací.
+
+   La classe ix de la columna `familia` del CSV, slugificada al dibuix dels
+   nodes («Percussió» → fam-percussio). Una família sense regla es queda amb el
+   daurat i no peta, cosa que té una cara dolenta: quan el full va passar de
+   dues famílies a cinc (2026-10-17), els 60 nodes de picat i lligat es van
+   quedar daurats en silenci perquè `fam-flabiol` no existia ací. Si afiges una
+   família al full, afig-la també en aquesta llista o comprova que el daurat és
+   el que vols. */
+.node-card.fam-gaita,
+.node-card.fam-flabiol {
   --nc-line: #5e7a93;
   --nc-line-hi: #8fb4cf;
   --nc-glow: 143, 180, 207;
+  /* Mateixa lluminància que el #2a2520 de --locked-border (37,7 les dues),
+     només canvia la temperatura: càlid per a percussió, fred per a vent. */
+  --nc-locked: #1f272c;
+  /* Igual amb els fons: 20,3 i 24,2, els mateixos que --bg2 i --locked.
+     Són valors apagats a posta. Un blau pur a eixa lluminància (#00182f) té
+     la mateixa claror però sembla una targeta blava, no una targeta amb
+     temperatura. */
+  --nc-bg: #111519;
+  --nc-bg-locked: #14191e;
   /* El mateix to que --nc-line, i no un de més apagat, perquè .preparacio
      porta opacity: 0.45 damunt d'un fons quasi negre i això ja l'apaga tot.
      Un blau fosc ací es composita a la mateixa lluminància que el gris de
@@ -259,11 +289,11 @@ h1 {
   --nc-prep: #5e7a93;
 }
 .node-card.locked {
-  background: var(--locked);
-  border-color: var(--locked-border);
+  background: var(--nc-bg-locked);
+  border-color: var(--nc-locked);
   cursor: default;
 }
-.node-card.locked:hover { border-color: var(--locked-border); box-shadow: none; }
+.node-card.locked:hover { border-color: var(--nc-locked); box-shadow: none; }
 /* «En preparació»: node definit al CSV però encara sense tema al fòrum.
    Es dibuixa perquè es veja l'itinerari que ve, però no es pot completar.
    Ha de ser l'estat MÉS callat de tots: ni tan sols està en joc encara, i no
@@ -287,7 +317,7 @@ h1 {
   border-top: 1px solid var(--nc-line);
   border-left: 1px solid var(--nc-line);
 }
-.node-card.locked::before { border-color: var(--locked-border); }
+.node-card.locked::before { border-color: var(--nc-locked); }
 .node-card.preparacio::before { display: none; }
 .node-card.completed::before { border-color: var(--green-dim); }
 
@@ -348,6 +378,19 @@ h1 {
   font-size: 11px;
   color: var(--green);
 }
+/* L'instrument. Va baix a la dreta perquè dalt a la dreta ja hi ha el cadenat
+   i el tic, i perquè així queda enfront del text d'estat sense tocar-lo.
+   Es pinta en TOTS els estats a posta: és l'únic senyal de branca que no
+   desapareix quan el node està blocat, que és com es veu l'arbre el primer
+   dia. */
+.nc-instrument {
+  position: absolute;
+  bottom: 7px; right: 8px;
+  font-size: 13px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+.node-card.preparacio .nc-instrument { opacity: 0.25; }
 
 /* Modal */
 .modal-overlay {
@@ -894,18 +937,55 @@ let currentNode = null;
 function saveState() { localStorage.setItem(STATE_KEY, JSON.stringify([...completed])); }
 function isUnlocked(node) { return node.prerequisits.every(p => completed.has(p)); }
 
-// La columna `familia` del CSV es convertix en classe CSS per a donar-li un
-// hue propi a la targeta: 'Percussió' → ' fam-percussio'. El NFD separa
-// l'accent de la lletra i \p{Diacritic} els lleva, que és el que permet
-// que el valor del CSV vaja en valencià sense haver de mantindre una taula de
-// traducció. Torna '' si la família està buida, i aleshores la targeta es
-// queda amb el daurat per defecte de .node-card.
-function famClass(familia) {
-  const slug = String(familia || '')
+// La columna `familia` del CSV es normalitza a un slut usable com a classe
+// CSS i com a clau: 'Percussió' → 'percussio'. El NFD separa l'accent de la
+// lletra i \p{Diacritic} els lleva, que és el que permet que el valor del CSV
+// vaja en valencià sense mantindre cap taula de traducció.
+function famSlug(familia) {
+  return String(familia || '')
     .normalize('NFD').replace(/\p{Diacritic}/gu, '')
     .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+// Torna '' si la família està buida, i aleshores la targeta es queda amb el
+// daurat per defecte de .node-card.
+function famClass(familia) {
+  const slug = famSlug(familia);
   return slug ? ' fam-' + slug : '';
 }
+
+// ─── INSTRUMENT ──────────────────────────────────────────────────────────────
+// Les famílies del CSV NO són instruments: n'hi ha de separades per peça
+// («Tabal» són els nodes del lament i «Percussió» la resta, encara que siga el
+// mateix tambor; igual amb «Gaita» i «Flabiol»). Ací s'agrupen en els dos
+// instruments de veritat, i eixe grup és el que decidix el color de la
+// targeta, l'emoji i el color de les arestes.
+//
+// Una família que no estiga en aquesta taula cau a 'calid' i no peta, però
+// aleshores es confon amb la percussió. Quan afiges una família al full,
+// afig-la també ací i a la regla de CSS corresponent. Ja ha passat una vegada:
+// el 2026-10-17 el full va passar de dues famílies a cinc i els 60 nodes de
+// picat i lligat es van quedar daurats en silenci.
+const GRUP_FAMILIA = {
+  percussio: 'calid',
+  tabal:     'calid',
+  flabiol:   'fred',
+  gaita:     'fred',
+  // 'general' queda fora a posta: GiT_INICI és l'arrel de tots dos itineraris
+  // i no ha de semblar d'un instrument concret.
+};
+
+// 🥁 és antic i es veu a tot arreu. 🪈 és Unicode 14 (2021): en mòbils vells
+// pot eixir com a quadrat buit. Si passa, el recanvi segur és 🎵.
+const EMOJI_FAMILIA = {
+  percussio: '🥁',
+  tabal:     '🥁',
+  flabiol:   '🪈',
+  gaita:     '🪈',
+};
+
+function grupDe(familia)  { return GRUP_FAMILIA[famSlug(familia)] || 'calid'; }
+function emojiDe(familia) { return EMOJI_FAMILIA[famSlug(familia)] || ''; }
 // El progrés compta només sobre els nodes PUBLICATS: els que estan «en
 // preparació» no es poden completar, així que ni sumen ni resten. El numerador
 // també es filtra, perquè `completed` pot arrossegar ids que ja no compten
@@ -1017,31 +1097,33 @@ function render() {
     .attr('width', W)
     .attr('height', H - topH);
 
-  // Defs: arrowhead
+  // Defs: puntes de fletxa, una per cada color d'aresta.
+  //
+  // El color d'una aresta el decidix el node de DESTÍ, no el d'origen: la
+  // fletxa apunta cap a on vas, i això fa que el salt de percussió a vent
+  // (p. ex. PERC_LAM_03 → FLAB_LAM_01) ja es pinte del color de la branca
+  // nova des del principi.
+  //
+  // «Completat» és verd per a tots dos instruments i no es tenyix: ha de voler
+  // dir el mateix a tot l'arbre.
+  const COLOR_ARESTA = {
+    'calid-locked':   '#2a2520',
+    'calid-unlocked': '#7a6430',
+    'fred-locked':    '#1f272c',
+    'fred-unlocked':  '#5e7a93',
+    'completed':      '#3d6b4a',
+  };
+
   const defs = svg.append('defs');
-  defs.append('marker')
-    .attr('id', 'arrow-locked')
-    .attr('viewBox', '0 0 10 10')
-    .attr('refX', 5).attr('refY', 5)
-    .attr('markerWidth', 6).attr('markerHeight', 6)
-    .attr('orient', 'auto-start-reverse')
-    .append('path').attr('d', 'M 0 0 L 10 5 L 0 10 z').attr('fill', '#2a2520');
-
-  defs.append('marker')
-    .attr('id', 'arrow-unlocked')
-    .attr('viewBox', '0 0 10 10')
-    .attr('refX', 5).attr('refY', 5)
-    .attr('markerWidth', 6).attr('markerHeight', 6)
-    .attr('orient', 'auto-start-reverse')
-    .append('path').attr('d', 'M 0 0 L 10 5 L 0 10 z').attr('fill', '#7a6430');
-
-  defs.append('marker')
-    .attr('id', 'arrow-completed')
-    .attr('viewBox', '0 0 10 10')
-    .attr('refX', 5).attr('refY', 5)
-    .attr('markerWidth', 6).attr('markerHeight', 6)
-    .attr('orient', 'auto-start-reverse')
-    .append('path').attr('d', 'M 0 0 L 10 5 L 0 10 z').attr('fill', '#3d6b4a');
+  for (const [clau, color] of Object.entries(COLOR_ARESTA)) {
+    defs.append('marker')
+      .attr('id', 'arrow-' + clau)
+      .attr('viewBox', '0 0 10 10')
+      .attr('refX', 5).attr('refY', 5)
+      .attr('markerWidth', 6).attr('markerHeight', 6)
+      .attr('orient', 'auto-start-reverse')
+      .append('path').attr('d', 'M 0 0 L 10 5 L 0 10 z').attr('fill', color);
+  }
 
   g = svg.append('g');
 
@@ -1070,8 +1152,12 @@ function render() {
       const x2 = target.x + NODE_W / 2;
       const y2 = target.y + NODE_H;
 
-      const color = edgeDone ? '#3d6b4a' : edgeUnlocked ? '#7a6430' : '#2a2520';
-      const arrowId = edgeDone ? 'arrow-completed' : edgeUnlocked ? 'arrow-unlocked' : 'arrow-locked';
+      // La clau de color combina l'instrument del destí amb l'estat, excepte
+      // «completat», que és verd per a tothom. Vegeu COLOR_ARESTA.
+      const clau = edgeDone ? 'completed'
+                            : grupDe(target.familia) + (edgeUnlocked ? '-unlocked' : '-locked');
+      const color = COLOR_ARESTA[clau];
+      const arrowId = 'arrow-' + clau;
 
       g.append('path')
         .attr('d', `M${x1},${y1} C${x1},${(y1+y2)/2} ${x2},${(y1+y2)/2} ${x2},${y2}`)
@@ -1115,6 +1201,11 @@ function render() {
     }
     if (done) {
       div.append('xhtml:span').attr('class', 'nc-check').text('✓');
+    }
+    // L'instrument, en qualsevol estat. GiT_INICI no en porta: és de tots dos.
+    const emoji = emojiDe(n.familia);
+    if (emoji) {
+      div.append('xhtml:span').attr('class', 'nc-instrument').text(emoji);
     }
 
     div.append('xhtml:div').attr('class', 'nc-id').text(n.id);
