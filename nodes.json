@@ -4501,7 +4501,7 @@
     "titol": "Bordó a la peça",
     "descripcio": "Toca el bordó de Mi durant tota la peça, amb el grup o amb el MIDI. Respira entre nota i nota sense tallar tots alhora: si sou diversos al bordó, repartiu-vos les respiracions. Convé tindre feta la nota llarga de dos compassos (FLAB_R_L_02).",
     "prerequisits": [
-      "PERC_LAM_03"
+      "PERC_LAM_01"
     ],
     "es_fita": false,
     "discourse_topic_id": 1605,
