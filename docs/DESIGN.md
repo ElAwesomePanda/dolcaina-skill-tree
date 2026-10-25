@@ -223,13 +223,36 @@ cadenat.
 - `saveState()` → `void`. Escriu `[...completed]` a `localStorage`.
 - `isUnlocked(node)` → `boolean`. `node.prerequisits.every(p => completed.has(p))`.
   Un node sense prerequisits sempre és desbloquejat.
-- `getCompletionPct()` → `number`. Denominador: els nodes amb
-  `publicat !== false` (ara 40). Numerador: els ids de `completed` que estiguen
-  en eixe conjunt. **Es filtren les dues bandes** perquè `completed` pot
-  arrossegar ids del `localStorage` que ja no compten (esborranys marcats abans
-  que existira l'estat «en preparació», o nodes llevats del CSV); sense el
-  filtre el percentatge podria passar del 100 %.
-- `updateProgress()` → `void`. Pinta `#progressFill` i `#progressPct`.
+- `pctPerGrup()` → `Array<{grup, emoji, nom, fets, total, pct}>`. **Una entrada
+  per INSTRUMENT**, no per família ni global, en l'ordre d'`ORDRE_GRUPS`.
+  Va substituir `getCompletionPct()` el 2026-10-25: amb dos instruments al
+  mateix arbre, un percentatge global no vol dir res per a qui només en toca
+  un, perquè els 119 nodes de percussió ofeguen els 68 de vent.
+
+  Tres exclusions del denominador, totes deliberades:
+  1. Els nodes amb `publicat === false` («en preparació»): no es poden
+     completar, així que ni sumen ni resten.
+  2. Els nodes de famílies que estan a `SENSE_INSTRUMENT` (ara només
+     `general`). Avui això és `GiT_INICI`: és l'arrel dels dos itineraris, i
+     sumar-lo a les dues barres les faria començar per damunt de zero sense
+     haver tocat cap instrument.
+  3. Les famílies que no estan ni a `GRUP_FAMILIA` ni a `SENSE_INSTRUMENT`.
+     Això és un **error de dades**, no una decisió: vegeu la trampa de §3.4b.
+
+  El numerador filtra per les mateixes condicions. **Es filtren les dues
+  bandes** perquè `completed` pot arrossegar ids del `localStorage` que ja no
+  compten (esborranys marcats abans que existira l'estat «en preparació», o
+  nodes llevats del CSV); sense el filtre el percentatge podria passar del
+  100 %.
+
+  Un grup sense cap node publicat **no pinta barra**, en lloc de pintar-ne una
+  a 0/0 que no es mouria mai.
+- `updateProgress()` → `void`. Buida `#progresWrap` i hi pinta una fila per
+  cada entrada de `pctPerGrup()`. Cada fila porta la classe `grup-<nom>`, que
+  és el que li dona el color (§3.4b).
+- `avisarFamiliesDesconegudes(nodes)` → `void`. `console.warn` a l'arrancada si
+  hi ha famílies publicades que no estan ni a `GRUP_FAMILIA` ni a
+  `SENSE_INSTRUMENT`. No trenca res; existeix perquè l'oblit deixe rastre.
 
 ### 3.3 Layout (Sugiyama simplificat)
 
@@ -299,12 +322,21 @@ emojiDe(familia) → EMOJI_FAMILIA[famSlug(familia)] || ''
 `'general'` queda fora de les dues taules **a posta**: `GiT_INICI` és l'arrel
 dels dos itineraris i no ha de semblar d'un instrument.
 
-> **TRAMPA.** Una família que no estiga a `GRUP_FAMILIA` cau a `'calid'` i una
-> que no estiga al CSS es queda amb el daurat. **No peta i no avisa: es
-> confon amb la percussió.** Va passar el 2026-10-17: el full va passar de dues
-> famílies a cinc, `fam-flabiol` no existia al CSS, i els 60 nodes de picat i
-> lligat van estar daurats fins que l'autor va dir «no veig la diferència».
-> Quan afiges una família al full, afig-la a **les dues taules i al CSS**.
+`SENSE_INSTRUMENT` és el conjunt de famílies que **no són cap instrument a
+posta** (ara només `general`). Ha de ser una llista explícita: és l'única
+manera de distingir «açò no té instrument» de «t'has oblidat de registrar-la».
+
+> **TRAMPA.** Una família que no estiga a `GRUP_FAMILIA` es pinta com si fora
+> percussió (`grupDe()` cau a `'calid'`) **però no suma a cap barra de
+> progrés** (`pctPerGrup()` l'exclou). Les dues coses sense petar i sense
+> avisar. Va passar el 2026-10-17: el full va passar de dues famílies a cinc,
+> `fam-flabiol` no existia al CSS, i els 60 nodes de picat i lligat van estar
+> daurats fins que l'autor va dir «no veig la diferència».
+>
+> Quan afiges una família al full, afig-la a **`GRUP_FAMILIA`,
+> `EMOJI_FAMILIA` i al CSS** — o a `SENSE_INSTRUMENT` si no ha de comptar.
+> Des del 2026-10-25, `avisarFamiliesDesconegudes()` ho diu per consola a
+> l'arrancada, que és l'únic rastre que en queda.
 
 **Les variables de color.** Viuen dins de `.node-card`, **no a `:root`**, i això
 no és estil sinó necessitat: `--gold-dim` es gasta en unes 25 regles de fora de
@@ -1232,7 +1264,9 @@ transparent, text en `--locked-text`, vora discontínua).
   cadenat, totes amb `cursor: default` i el text `En preparació`.
 - Arrel única `GiT_INICI`, 7 fites.
 - `getCompletionPct()`: amb 4 nodes publicats i 1 id fantasma al `Set`, dona
-  10 %, no 12 %.
+  10 %, no 12 %. **Aquesta funció ja no existeix** (la va substituir
+  `pctPerGrup()` el 2026-10-25); el filtre de les dues bandes que provava
+  aquest cas sí que s'hi ha conservat.
 - Progrés màxim assolible calculat a la pàgina: **85 % (34 de 40)**, el mateix
   número que reporta el validador. Les dues implementacions coincideixen.
 

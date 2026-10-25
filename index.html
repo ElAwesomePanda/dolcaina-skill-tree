@@ -152,20 +152,37 @@ h1 {
 .discourse-status.ok { color: var(--green); }
 .discourse-status.err { color: #8c4a4a; }
 
-.progress-bar-wrap {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 6px 16px;
+/* Una barra per INSTRUMENT, no per família ni global. Amb dos instruments al
+   mateix arbre, un percentatge global no vol dir res per a qui només en toca
+   un: 119 nodes de percussió ofegarien els 68 de vent. */
+.progres-wrap {
+  padding: 5px 16px 6px;
   border-top: 1px solid #1e1c17;
 }
-.progress-label {
+.progres-fila {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 1.5px 0;
+}
+.progres-emoji {
+  font-size: 11px;
+  opacity: 0.55;
+  width: 14px;
+  text-align: center;
+  flex: none;
+}
+.progres-nom {
   font-family: 'Cinzel', serif;
   font-size: 0.58rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--gold-dim);
+  color: var(--nc-line);
   white-space: nowrap;
+  /* Fix perquè les dues barres comencen al mateix punt. Si es deixa que
+     l'amplària la pose el text, «PERCUSSIÓ» i «VENT» desalineen les barres. */
+  width: 5.6rem;
+  flex: none;
 }
 .progress-bar {
   flex: 1; height: 2px;
@@ -175,13 +192,18 @@ h1 {
 }
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+  background: linear-gradient(90deg, var(--nc-line), var(--nc-line-hi));
   transition: width 0.5s ease;
 }
 .progress-pct {
   font-family: 'Cinzel', serif;
   font-size: 0.65rem;
-  color: var(--gold);
+  color: var(--nc-line-hi);
+  /* Amplària fixa: si no, la barra pega un bot cada vegada que el número
+     passa d'una xifra a dos o de dos a tres. */
+  width: 2.4rem;
+  text-align: right;
+  flex: none;
 }
 
 .legend {
@@ -219,7 +241,11 @@ h1 {
 #canvas:active { cursor: grabbing; }
 
 /* Node foreign objects */
-.node-card {
+/* La paleta per instrument va en una regla PRÒPIA i no dins de .node-card
+   perquè també la gasta la barra de progrés. Si la tornes a ficar dins de
+   .node-card, les barres perden el color i es queden daurades les dues. */
+.node-card,
+.progres-fila {
   /* Hue per família. El valor per defecte és el daurat de tot l'arbre; una
      família que en vulga un de propi només redefinix estes quatre variables
      (vegeu .node-card.fam-gaita). Van ACÍ DINS i no a :root a propòsit:
@@ -247,7 +273,9 @@ h1 {
      pujar-lo per a que la targeta es veja al mòbil (contrast 1,06 → 1,50). */
   --nc-bg: #373026;
   --nc-bg-locked: var(--locked);
+}
 
+.node-card {
   width: 100%;
   height: 100%;
   background: var(--nc-bg);
@@ -279,7 +307,8 @@ h1 {
    família al full, afig-la també en aquesta llista o comprova que el daurat és
    el que vols. */
 .node-card.fam-gaita,
-.node-card.fam-flabiol {
+.node-card.fam-flabiol,
+.progres-fila.grup-fred {
   --nc-line: #5e7a93;
   --nc-line-hi: #8fb4cf;
   --nc-glow: 143, 180, 207;
@@ -850,11 +879,8 @@ h1 {
     <button class="ctrl-btn" onclick="toggleMetronom()">♩ Mètronom</button>
     <button class="ctrl-btn ctrl-btn-danger" onclick="resetNodes()">↺ Reset</button>
   </div>
-  <div class="progress-bar-wrap">
-    <span class="progress-label">Progrés</span>
-    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-    <span class="progress-pct" id="progressPct">0%</span>
-  </div>
+  <!-- Les files les pinta updateProgress(), una per instrument. -->
+  <div class="progres-wrap" id="progresWrap"></div>
   <div class="legend">
     <div class="legend-item"><div class="legend-dot dot-completed"></div> Completat</div>
     <div class="legend-item"><div class="legend-dot dot-unlocked"></div> Disponible</div>
@@ -1010,6 +1036,36 @@ const EMOJI_FAMILIA = {
   gaita:     '🪈',
 };
 
+// L'ordre de les barres de progrés i el nom que hi ix. Fix i no derivat de
+// les dades, perquè si no l'ordre dependria de com estiga ordenat el CSV i
+// canviaria sol.
+const ORDRE_GRUPS = ['calid', 'fred'];
+const NOM_GRUP = { calid: 'Percussió', fred: 'Vent' };
+
+// Famílies que NO són cap instrument i que per això no sumen a cap barra de
+// progrés. Ha de ser una llista explícita: és l'única manera de distingir
+// «açò no té instrument a posta» de «t'has oblidat de registrar la família».
+const SENSE_INSTRUMENT = new Set(['general']);
+
+// Crida l'atenció sobre les famílies que no estan enlloc. No trenca res —la
+// targeta ix daurada i el node no suma a cap barra— i eixe és justament el
+// problema: sense açò, l'oblit és invisible. Ja ha passat dues vegades.
+function avisarFamiliesDesconegudes(nodes) {
+  const orfes = new Set();
+  for (const n of nodes) {
+    if (n.publicat === false) continue;
+    const slug = famSlug(n.familia);
+    if (!slug || GRUP_FAMILIA[slug] || SENSE_INSTRUMENT.has(slug)) continue;
+    orfes.add(n.familia);
+  }
+  if (orfes.size) {
+    console.warn(
+      `[arbre] Famílies sense instrument assignat: ${[...orfes].join(', ')}.\n` +
+      `Els seus nodes ixen daurats i NO sumen a cap barra de progrés.\n` +
+      `Afig-les a GRUP_FAMILIA i EMOJI_FAMILIA, i posa'ls una regla de CSS.`);
+  }
+}
+
 function grupDe(familia)  { return GRUP_FAMILIA[famSlug(familia)] || 'calid'; }
 function emojiDe(familia) { return EMOJI_FAMILIA[famSlug(familia)] || ''; }
 // El progrés compta només sobre els nodes PUBLICATS: els que estan «en
@@ -1017,12 +1073,34 @@ function emojiDe(familia) { return EMOJI_FAMILIA[famSlug(familia)] || ''; }
 // també es filtra, perquè `completed` pot arrossegar ids que ja no compten
 // (esborranys marcats abans, o nodes llevats del CSV): sense això el
 // percentatge podria passar del 100 %.
-function getCompletionPct() {
-  const publicats = new Set(NODES.filter(n => n.publicat !== false).map(n => n.id));
-  if (!publicats.size) return 0;
-  let fets = 0;
-  completed.forEach(id => { if (publicats.has(id)) fets++; });
-  return Math.round((fets / publicats.size) * 100);
+// Progrés PER INSTRUMENT. Torna una fila per cada grup de GRUP_FAMILIA que
+// tinga algun node publicat, en l'ordre d'ORDRE_GRUPS.
+//
+// Dos exclusions, les dues a posta:
+//   - Els nodes sense publicar («en preparació») no compten, ni al numerador
+//     ni al denominador. Vegeu esPublicat() a crear_topics.js.
+//   - Els nodes sense instrument tampoc. Avui això és només GiT_INICI, de
+//     família «General»: és l'arrel dels dos itineraris, i sumar-lo a les dues
+//     barres faria que totes dues començaren per damunt de zero sense haver
+//     tocat cap instrument.
+//
+// Un grup sense cap node publicat NO pinta barra, en lloc de pintar-ne una a
+// 0/0 que no es mouria mai.
+function pctPerGrup() {
+  const acc = {};
+  for (const n of NODES) {
+    if (n.publicat === false) continue;
+    const slug = famSlug(n.familia);
+    const grup = GRUP_FAMILIA[slug];
+    if (!grup) continue;
+    if (!acc[grup]) acc[grup] = { grup, emoji: EMOJI_FAMILIA[slug] || '', fets: 0, total: 0 };
+    acc[grup].total++;
+    if (completed.has(n.id)) acc[grup].fets++;
+  }
+  return ORDRE_GRUPS
+    .filter(g => acc[g])
+    .map(g => ({ ...acc[g], nom: NOM_GRUP[g] || g,
+                 pct: Math.round(acc[g].fets / acc[g].total * 100) }));
 }
 
 // ─── SUGIYAMA LAYOUT ─────────────────────────────────────────────────────────
@@ -1484,9 +1562,37 @@ function resetNodes() {
 
 // ─── PROGRESS ────────────────────────────────────────────────────────────────
 function updateProgress() {
-  const pct = getCompletionPct();
-  document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('progressPct').textContent = pct + '%';
+  const wrap = document.getElementById('progresWrap');
+  if (!wrap) return;
+  wrap.textContent = '';
+
+  for (const d of pctPerGrup()) {
+    const fila = document.createElement('div');
+    fila.className = 'progres-fila grup-' + d.grup;
+    fila.title = `${d.fets} de ${d.total} nodes`;
+
+    const emoji = document.createElement('span');
+    emoji.className = 'progres-emoji';
+    emoji.textContent = d.emoji;
+
+    const nom = document.createElement('span');
+    nom.className = 'progres-nom';
+    nom.textContent = d.nom;
+
+    const barra = document.createElement('div');
+    barra.className = 'progress-bar';
+    const omplit = document.createElement('div');
+    omplit.className = 'progress-fill';
+    omplit.style.width = d.pct + '%';
+    barra.appendChild(omplit);
+
+    const pct = document.createElement('span');
+    pct.className = 'progress-pct';
+    pct.textContent = d.pct + '%';
+
+    fila.append(emoji, nom, barra, pct);
+    wrap.appendChild(fila);
+  }
 }
 
 // ─── BADGE MAP (dinàmic) ──────────────────────────────────────────────────────
@@ -2049,6 +2155,7 @@ async function init() {
     const res = await fetch('nodes.json');
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     NODES = await res.json();
+    avisarFamiliesDesconegudes(NODES);
     discourseBadgeMap = buildBadgeMap(NODES);
     // El pèndol es lleva DESPRÉS de render(), no abans: dibuixar 188
     // foreignObject no és instantani i abans quedava un bocí de pantalla
