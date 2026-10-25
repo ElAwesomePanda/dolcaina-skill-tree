@@ -265,10 +265,12 @@ Acaba centrant la vista sobre la mitjana x dels nodes sense prerequisits, a
   `preparacio → completed → locked → (res, és a dir disponible)`.
 - A més de l'estat, la targeta porta **una classe de família**: `fam-general`,
   `fam-percussio`, `fam-gaita`… La genera `famClass(familia)` → `' fam-<slug>'`
-  o `''` si la família està buida. El slug fa `normalize('NFD')`, lleva els
-  diacrítics amb `/\p{Diacritic}/gu`, passa a minúscules i canvia tot el que no
-  és `[a-z0-9]` per `-`. Provat: `Percussió`→`fam-percussio`,
-  `Dolçaina i Tabalet`→`fam-dolcaina-i-tabalet`, `''`/`null`/`undefined`→`''`.
+  o `''` si la família està buida, damunt de `famSlug(familia)` → `'<slug>'`.
+  Van separades perquè el slug fa falta en tres llocs: la classe CSS,
+  `GRUP_FAMILIA` i `EMOJI_FAMILIA` (§3.4b). El slug fa `normalize('NFD')`, lleva
+  els diacrítics amb `/\p{Diacritic}/gu`, passa a minúscules i canvia tot el que
+  no és `[a-z0-9]` per `-`. Provat: `Percussió`→`percussio`,
+  `Dolçaina i Tabalet`→`dolcaina-i-tabalet`, `''`/`null`/`undefined`→`''`.
 - Textos de `.nc-status`: `En preparació` · `Completat` · `Disponible` ·
   `Bloquejat`.
 - Contingut de la targeta: `.nc-id`, `.nc-title`, `.nc-badge`, `.nc-status`,
@@ -277,28 +279,104 @@ Acaba centrant la vista sobre la mitjana x dels nodes sense prerequisits, a
 - **`n.tags` no es pinta mai a la targeta.** `familia` no es pinta com a text,
   però **sí que decideix el color** de la targeta, i apareix escrita al modal.
 
-**El hue per família.** Les quatre variables viuen dins de `.node-card`, **no a
-`:root`**, i això no és estil sinó necessitat: `--gold-dim` es gasta en unes 25
-regles de fora de l'arbre (panells, modal, camps, barra de progrés) i canviar-la
-repintaria mitja interfície.
+### 3.4b Distinció visual per instrument
 
-| Variable | Per defecte (`.node-card`) | `.node-card.fam-gaita` | On es gasta |
-| --- | --- | --- | --- |
-| `--nc-line` | `var(--gold-dim)` `#7a6430` | `#5e7a93` | vora, `::before`, `.nc-id`, `.nc-badge`, `.nc-status.unlocked` |
-| `--nc-line-hi` | `var(--gold)` `#c9a84c` | `#8fb4cf` | `:hover` |
-| `--nc-glow` | `201, 168, 76` | `143, 180, 207` | `box-shadow` del `:hover` |
-| `--nc-prep` | `var(--locked-border)` `#2a2520` | `#5e7a93` | vora discontínua de `.preparacio` |
+**L'eix d'açò no és la família, és l'instrument.** Les famílies del CSV no són
+instruments: n'hi ha de separades per peça. El 2026-10-17 el full tenia cinc
+famílies per a dos instruments (`Percussió` 110 i `Tabal` 9 són el mateix
+tambor; `Flabiol` 60 i `Gaita` 8 la mateixa canya; `General` 1 és l'arrel).
+
+`GRUP_FAMILIA` ([index.html:969](../index.html)) agrupa els slugs de família en
+dos grups, `'calid'` i `'fred'`, i eixe grup decidix color, emoji i arestes:
+
+```js
+const GRUP_FAMILIA = { percussio:'calid', tabal:'calid', flabiol:'fred', gaita:'fred' };
+const EMOJI_FAMILIA = { percussio:'🥁', tabal:'🥁', flabiol:'🪈', gaita:'🪈' };
+grupDe(familia)  → GRUP_FAMILIA[famSlug(familia)] || 'calid'
+emojiDe(familia) → EMOJI_FAMILIA[famSlug(familia)] || ''
+```
+
+`'general'` queda fora de les dues taules **a posta**: `GiT_INICI` és l'arrel
+dels dos itineraris i no ha de semblar d'un instrument.
+
+> **TRAMPA.** Una família que no estiga a `GRUP_FAMILIA` cau a `'calid'` i una
+> que no estiga al CSS es queda amb el daurat. **No peta i no avisa: es
+> confon amb la percussió.** Va passar el 2026-10-17: el full va passar de dues
+> famílies a cinc, `fam-flabiol` no existia al CSS, i els 60 nodes de picat i
+> lligat van estar daurats fins que l'autor va dir «no veig la diferència».
+> Quan afiges una família al full, afig-la a **les dues taules i al CSS**.
+
+**Les variables de color.** Viuen dins de `.node-card`, **no a `:root`**, i això
+no és estil sinó necessitat: `--gold-dim` es gasta en unes 25 regles de fora de
+l'arbre (panells, modal, camps, barra de progrés) i canviar-la repintaria mitja
+interfície.
+
+Són 7: `--nc-line` (vora, `::before`, `.nc-id`, `.nc-badge`,
+`.nc-status.unlocked`), `--nc-line-hi` (`:hover`), `--nc-glow` (el
+`box-shadow` del `:hover`), `--nc-prep` (vora de `.preparacio`), `--nc-locked`
+(vora de `.locked`), `--nc-bg` i `--nc-bg-locked` (els fons).
+
+Els valors viuen a `.node-card` i a `.node-card.fam-gaita, .node-card.fam-flabiol`.
+**Ací no es copien a posta**: són hex que es treuen amb un `grep` i que es
+toquen sovint, i una taula de hex a la documentació es desfasa a la primera.
+El que sí que cal saber abans de tocar-los són les dues regles de baix.
+
+**REGLA 1 — els parells càlid/fred han de tindre la MATEIXA lluminància.**
+Només han de canviar de temperatura. És el que permet que un node blocat
+continue sent igual de callat que un altre node blocat i no competisca amb els
+disponibles: la família es nota pel to, no per la claror. Si canvies un valor
+d'un parell, **recalcula l'altre**. Per davall d'uns 45 de lluminància
+compositada, el color es fon amb l'estat blocat i desapareix sense avisar
+(§7.12).
+
+**REGLA 2 — hi ha un terra de contrast, i ve del mòbil.** Fins al 2026-10-25
+els fons de les targetes estaven a contrast WCAG **1,06** contra el fons de la
+pàgina: la targeta i el fons eren el mateix color i el node només es veia per
+la vora daurada. Als mòbils del taller els nodes blocats no es veien. Els
+mínims d'ara: **1,35** als fons, **2,6** a les vores blocades, **3,0** al text
+blocat. No els baixes.
+
+Les dues regles es comproven amb la fórmula de WCAG (amb correcció gamma), que
+**no** és la suma ponderada simple que es gasta per a casar temperatures. Són
+dues mètriques diferents i fan falta les dues.
+
+**L'emoji d'instrument** (`.nc-instrument`, [index.html:386](../index.html)):
+`position: absolute`, `bottom: 7px; right: 8px`, `font-size: 13px`,
+`opacity: 0.35` (0.25 en `.preparacio`), `pointer-events: none`. Va baix a la
+dreta perquè dalt a la dreta ja hi ha `.nc-lock` i `.nc-check`.
+
+Es pinta **en tots els estats**, i eixe és tot el seu motiu: amb tot publicat i
+un alumne que comença de zero, 187 dels 188 nodes estan blocats, i el color per
+si sol no bastava. Comptat a la pàgina: 119 🥁, 68 🪈, 1 sense (`GiT_INICI`).
+
+> 🪈 és **Unicode 14 (2021)**: en mòbils vells pot eixir com a quadrat buit. 🥁
+> és antic i va a tot arreu. El recanvi segur per al vent és 🎵.
+
+**Les arestes.** `COLOR_ARESTA` ([index.html:1109](../index.html)) és la font
+única, i els 5 marcadors del `defs` es generen en bucle a partir d'ella:
+
+Té 5 claus: `calid-locked`, `calid-unlocked`, `fred-locked`, `fred-unlocked` i
+`completed`. **Si afiges una clau, ix el marcador sol**: el `defs` es genera
+recorrent l'objecte, no hi ha cap llista paral·lela que mantindre.
+
+El color el decidix el node de **DESTÍ**, no el d'origen: la fletxa apunta cap
+a on vas, així que el salt de `PERC_LAM_03` a `FLAB_LAM_01` ix ja del color de
+la branca nova. Comptades amb l'arbre buit: 115 càlides blocades, 67 fredes
+blocades, 4 càlides obertes, 1 freda oberta.
+
+**Les arestes blocades van a un contrast més baix que les vores dels nodes**
+(1,9 contra 2,6) i això és deliberat: amb el mateix valor, les 182 arestes
+blocades convertien l'arbre en una teranyina i les targetes deixaven de manar.
+
+**El que NO es tenyix mai:**
 
 - `--nc-glow` va en **components separats per comes**, no en `#hex`, perquè
   s'injecta dins d'un `rgba()`: `rgba(var(--nc-glow), 0.15)`. Amb un `#hex` el
   `box-shadow` desapareix i **no ix cap error de consola**. Comprovat a la
   pàgina: resol a `rgba(143, 180, 207, 0.15)`, idèntic al mateix valor escrit
   sense `var()`.
-- `.locked` i `.completed` **no** agafen el hue: sobreescriuen vora i fons amb
-  `--locked-*` i el verd. És deliberat — «fet» i «blocat» han de voler dir el
-  mateix a tot l'arbre, siga quin siga l'instrument.
-- Donar color a una família nova és **afegir una regla de CSS i res més**. Una
-  família sense regla pròpia es queda amb el daurat; no peta.
+- **`.completed` no agafa mai el hue**, ni la targeta ni l'aresta: el verd ha de
+  voler dir el mateix a tot l'arbre, siga quin siga l'instrument.
 
 ### 3.5 Zoom i navegació
 
@@ -1196,20 +1274,45 @@ Açò ho va confirmar l'autor després d'usar-ho de veritat, no una revisió de 
 - `flabiol_nodes.csv` validat concatenat amb el CSV real **en una còpia a part**:
   0 errors, 6 avisos (les 6 insígnies per crear), 138 nodes.
 
+### Verificat el 2026-10-17
+
+**Al taller, per l'autor:**
+
+- **El clic nou del metrònom travessa el soroll real.** Era el motiu de
+  refer-lo i estava sense provar des del 2026-10-05.
+
+**Al navegador:**
+
+- L'arbre amb els 188 nodes reals: 119 🥁, 68 🪈, 1 sense emoji. Cap error de
+  consola.
+- Les 7 variables `--nc-*` resolen per als 5 slugs de família, i les
+  lluminàncies compositades casen amb les documentades a §3.4b.
+- Els 5 marcadors de fletxa existeixen al `defs` amb el color correcte, i les
+  arestes es reparteixen 115/67/4/1.
+- **Regressió del pipeline**: amb el CSV real de 22 columnes, el `nodes.json`
+  generat per `materialsDeFila()` és idèntic (mateix JSON) al d'abans del canvi.
+- El validador amb un CSV de 28 columnes: 4 materials en ordre al node i al
+  tema del fòrum, i l'índex correcte (`mat3`, `mat4`) als missatges.
+- L'avís nou d'`es_fita`: amb el validador d'abans el CSV donava «cap problema»
+  i amb el nou dona 18 avisos, tots reals.
+
+**Contra el fòrum (només lectura):**
+
+- `insignies.mjs`: les 23 fites tenen la seua insígnia ben posada. 79 insígnies
+  al fòrum, 1 òrfena (`GiT_Beat_I_Complet`, id 107, anterior a tot açò).
+
 ### **No** verificat
 
-- El metrònom **no s'ha provat amb la dolçaina sonant**: no sabem si el clic nou
-  travessa el soroll real del taller, que era el motiu de refer-lo.
 - Les agrupacions de **7/8 i 11/16** són una suposició. L'autor havia de
   confirmar d'oïda quina gasten els balls i l'havanera.
-- Els 27 nodes de flabiol **no s'han importat al full** ni publicat. Les 6
-  insígnies de `GiT_FLAB_*` **no existeixen** a Discourse.
-- El hue de família **no s'ha vist mai damunt d'un node desbloquejat**: tots els
-  de gaita estan en preparació, així que només s'ha comprovat la vora
-  discontínua. El `:hover` i el `--nc-line-hi` de `fam-gaita` estan verificats
-  per càlcul, no per ull.
-- Els mp3 de flabiol **no tenen URL**: no s'ha provat que cap d'ells sone al
-  modal.
+- **🪈 només s'ha vist renderitzat en Windows 11.** És Unicode 14; en Android
+  vell pot eixir com a quadrat buit i ningú ho ha comprovat.
+- El hue **no s'ha vist damunt d'un node completat de vent**, perquè no n'hi ha
+  cap. El verd no es tenyix per disseny, però no s'ha vist amb l'ull.
+- Els 36 nodes de picat i lligat **sense vídeo**: publiquen bé, però el modal
+  no s'ha obert per a comprovar com queda un node sense cap material.
+- Els 27 nodes de `flabiol_nodes.csv` (progressió de «Què és l'estiu per a mi?»)
+  **no estan al full** ni publicats. El pla va canviar cap a picat i lligat.
 - Ni Firefox, ni Safari. Només el navegador de la vista prèvia i el mòbil de
   l'autor.
 - No hi ha cap prova automatitzada al projecte.

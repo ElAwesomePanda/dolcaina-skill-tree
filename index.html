@@ -17,9 +17,16 @@
   --gold-dim: #7a6430;
   --cream: #f0e6cc;
   --cream-dim: #9a8e78;
-  --locked: #1a1815;
-  --locked-border: #2a2520;
-  --locked-text: #4a4438;
+  /* Pujats el 2026-10-25 perquè a algunes pantalles de mòbil no es veien.
+     Els valors vells (#1a1815, #2a2520, #4a4438) donaven un contrast WCAG de
+     1,10, 1,29 i 2,02 contra el fons: la targeta i el fons eren pràcticament
+     el mateix color i només la salvava la vora daurada dels nodes oberts.
+     Ara: 1,35, 2,61 i 3,00. Vegeu §3.4b de DESIGN.md.
+     Només els gasta l'arbre; --bg2 NO s'ha tocat perquè el comparteixen el
+     modal i els panells. */
+  --locked: #2c2924;
+  --locked-border: #5e5348;
+  --locked-text: #655d4d;
   --green: #4a8c5c;
   --green-dim: #3d6b4a;
   --node-w: 200;
@@ -235,7 +242,10 @@ h1 {
   /* Els fons, també per família i també a igual lluminància. La vora és 1px i
      es veu poc; el fons és tota la targeta, i és el que de veritat fa que una
      branca es distingisca de l'altra d'un colp d'ull. */
-  --nc-bg: var(--bg2);
+  /* Literal i no var(--bg2): --bg2 també el gasten el modal, el panell del
+     metrònom i la capçalera, i allà el fons fosc està bé. Ací feia falta
+     pujar-lo per a que la targeta es veja al mòbil (contrast 1,06 → 1,50). */
+  --nc-bg: #373026;
   --nc-bg-locked: var(--locked);
 
   width: 100%;
@@ -275,13 +285,13 @@ h1 {
   --nc-glow: 143, 180, 207;
   /* Mateixa lluminància que el #2a2520 de --locked-border (37,7 les dues),
      només canvia la temperatura: càlid per a percussió, fred per a vent. */
-  --nc-locked: #1f272c;
+  --nc-locked: #455763;
   /* Igual amb els fons: 20,3 i 24,2, els mateixos que --bg2 i --locked.
      Són valors apagats a posta. Un blau pur a eixa lluminància (#00182f) té
      la mateixa claror però sembla una targeta blava, no una targeta amb
      temperatura. */
-  --nc-bg: #111519;
-  --nc-bg-locked: #14191e;
+  --nc-bg: #28323b;
+  --nc-bg-locked: #222b33;
   /* El mateix to que --nc-line, i no un de més apagat, perquè .preparacio
      porta opacity: 0.45 damunt d'un fons quasi negre i això ja l'apaga tot.
      Un blau fosc ací es composita a la mateixa lluminància que el gris de
@@ -391,6 +401,22 @@ h1 {
   pointer-events: none;
 }
 .node-card.preparacio .nc-instrument { opacity: 0.25; }
+
+/* Pèndol de càrrega. El transform-origin és el pivot de baix de la vara, no
+   el centre de la caixa, que és el que fa que oscil·le com un metrònom i no
+   com una hèlix. `prefers-reduced-motion` el deixa quiet i inclinat: qui tinga
+   l'opció posada continua veient que hi ha alguna cosa carregant. */
+.carregant-pendol {
+  transform-origin: 0 0;
+  animation: tic 1.6s ease-in-out infinite alternate;
+}
+@keyframes tic {
+  from { transform: rotate(-24deg); }
+  to   { transform: rotate(24deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .carregant-pendol { animation: none; transform: rotate(-12deg); }
+}
 
 /* Modal */
 .modal-overlay {
@@ -1106,10 +1132,14 @@ function render() {
   //
   // «Completat» és verd per a tots dos instruments i no es tenyix: ha de voler
   // dir el mateix a tot l'arbre.
+  // Les blocades van a contrast 1,9: pujades respecte del 1,29 d'abans perquè
+  // es vegen al mòbil, però per davall del 2,6 de les vores dels nodes. Amb el
+  // mateix valor que la vora, 182 arestes blocades convertien l'arbre en una
+  // teranyina i les targetes deixaven de manar.
   const COLOR_ARESTA = {
-    'calid-locked':   '#2a2520',
+    'calid-locked':   '#483f37',
     'calid-unlocked': '#7a6430',
-    'fred-locked':    '#1f272c',
+    'fred-locked':    '#35424b',
     'fred-unlocked':  '#5e7a93',
     'completed':      '#3d6b4a',
   };
@@ -1942,29 +1972,91 @@ actualitzarInfoRampa();
 if (discourseUser) document.getElementById('discourseUser').value = discourseUser;
 window.addEventListener('resize', () => { if (NODES.length) render(); });
 
+// Pèndol de metrònom mentre carrega. Tot SVG + CSS, sense dependències i
+// sense temporitzadors de JS: l'animació la porta el navegador, així que no
+// competix amb el fil que està parsejant el JSON i dibuixant els nodes.
+//
+// El moviment és `rotate` damunt d'un <g> amb transform-origin al pivot. Un
+// `ease-in-out` imita el pèndol real, que va lent als extrems.
+//
+// Torna { fora(), error(text) }. `fora()` és idempotent: es pot cridar encara
+// que ja s'haja llevat.
+function pendolCarregant(canvas) {
+  const NS = 'http://www.w3.org/2000/svg';
+  const g = document.createElementNS(NS, 'g');
+  g.setAttribute('class', 'carregant');
+  // El centrat el fa l'<svg> de dins amb x/y al 50%. Ací NO va cap transform:
+  // els transform d'SVG no admeten percentatges i `translate(50%, 50%)` peta
+  // amb «Expected ')'» a la consola, encara que la resta continue funcionant.
+
+  const wrap = document.createElementNS(NS, 'svg');
+  wrap.setAttribute('x', '50%'); wrap.setAttribute('y', '50%');
+  wrap.setAttribute('overflow', 'visible');
+
+  const pal = document.createElementNS(NS, 'g');
+  pal.setAttribute('class', 'carregant-pendol');
+  const vara = document.createElementNS(NS, 'line');
+  vara.setAttribute('x1', 0); vara.setAttribute('y1', -4);
+  vara.setAttribute('x2', 0); vara.setAttribute('y2', -46);
+  vara.setAttribute('stroke', '#7a6430');
+  vara.setAttribute('stroke-width', 2);
+  vara.setAttribute('stroke-linecap', 'round');
+  const pes = document.createElementNS(NS, 'rect');
+  pes.setAttribute('x', -7); pes.setAttribute('y', -34);
+  pes.setAttribute('width', 14); pes.setAttribute('height', 9);
+  pes.setAttribute('rx', 1.5);
+  pes.setAttribute('fill', '#c9a84c');
+  pal.appendChild(vara); pal.appendChild(pes);
+
+  const base = document.createElementNS(NS, 'path');
+  base.setAttribute('d', 'M -18 2 L 18 2 L 12 -6 L -12 -6 Z');
+  base.setAttribute('fill', 'none');
+  base.setAttribute('stroke', '#7a6430');
+  base.setAttribute('stroke-width', 1.5);
+  base.setAttribute('stroke-linejoin', 'round');
+
+  const text = document.createElementNS(NS, 'text');
+  text.setAttribute('y', 28);
+  text.setAttribute('text-anchor', 'middle');
+  text.setAttribute('fill', '#7a6430');
+  text.setAttribute('font-family', 'Cinzel,serif');
+  text.setAttribute('font-size', '13');
+  text.setAttribute('letter-spacing', '0.08em');
+  text.textContent = 'Carregant l’arbre…';
+
+  wrap.appendChild(pal); wrap.appendChild(base); wrap.appendChild(text);
+  g.appendChild(wrap);
+  canvas.appendChild(g);
+
+  return {
+    fora() { if (g.parentNode) g.parentNode.removeChild(g); },
+    error(missatge) {
+      pal.style.display = 'none';
+      base.setAttribute('stroke', '#8c4a4a');
+      text.setAttribute('fill', '#8c4a4a');
+      text.textContent = missatge;
+    },
+  };
+}
+
 async function init() {
   const canvas = document.getElementById('canvas');
   const topH = document.querySelector('.top-ui').getBoundingClientRect().height;
   canvas.style.marginTop = topH + 'px';
-  const loadingMsg = document.createElementNS('http://www.w3.org/2000/svg','text');
-  loadingMsg.setAttribute('x','50%'); loadingMsg.setAttribute('y','50%');
-  loadingMsg.setAttribute('text-anchor','middle');
-  loadingMsg.setAttribute('fill','#7a6430');
-  loadingMsg.setAttribute('font-family','Cinzel,serif');
-  loadingMsg.setAttribute('font-size','14');
-  loadingMsg.textContent = 'Carregant nodes…';
-  canvas.appendChild(loadingMsg);
+  const carrega = pendolCarregant(canvas);
 
   try {
     const res = await fetch('nodes.json');
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     NODES = await res.json();
     discourseBadgeMap = buildBadgeMap(NODES);
-    canvas.removeChild(loadingMsg);
+    // El pèndol es lleva DESPRÉS de render(), no abans: dibuixar 188
+    // foreignObject no és instantani i abans quedava un bocí de pantalla
+    // buida entre que desapareixia el missatge i apareixia l'arbre.
     render();
+    carrega.fora();
   } catch(e) {
-    loadingMsg.setAttribute('fill','#8c4a4a');
-    loadingMsg.textContent = 'Error carregant nodes.json: ' + e.message;
+    carrega.error('Error carregant nodes.json: ' + e.message);
     console.error('Error carregant nodes.json:', e);
   }
 }
